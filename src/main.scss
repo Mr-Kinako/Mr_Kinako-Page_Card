@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&family=Yomogi&family=Yuji+Syuku&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cherry+Bomb+One&family=Hachi+Maru+Pop&family=Klee+One:wght@400;600&family=RocknRoll+One&family=Yomogi&family=Zen+Kurenaido&display=swap');
+
+:root {
+  background-color: $color-bg-system;
+  color: $color-text-main;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: $font-main;
+  height: 100vh;
+  overflow: hidden;
+  background-color: $color-bg-system;
+
+  &::selection {
+    background: rgba($color-text-main, 0.1);
+  }
+}
+
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: rgba($color-text-main, 0.15);
+  border-radius: 10px;
+}

@@ -1,0 +1,27 @@
+@use "sass:color";
+
+// --- Цветовая палитра ---
+$color-bg-system: #3e3c46ff;                 // Основной фон
+$color-bg-secondary: #f0f0f0ff;              // Фон аватара и плейсхолдеров
+$color-text-main: #dfd7e3ff;                 // Основной текст
+$color-text-muted: #aaaaaaff;                // Второстепенный (лейблы)
+$color-text-description: #b7aac2ff;          // Текст описания
+$color-accent: #000000ff;                    // Цвет активных элементов
+$color-border: rgba(0, 0, 0, 0.05);          // Линии в списках
+$color-border-tabs: rgba(255,255,255,0.4);   // Линии в табах и превью
+
+// --- Типографика ---
+$font-main: 'JetBrains Mono', 'Inter', monospace;
+
+// --- Размеры и Радиусы ---
+$container-max-width: 800px;
+$avatar-radius: 8%;
+$preview-width: 280px;
+
+// --- Слойность (Z-index) ---
+$z-bg: -1;
+$z-app: 1;
+$z-preview: 9999;
+
+// --- Вспомогательные функции ---
+$color-text-very-muted: color.adjust($color-text-main, $alpha: -0.6);
