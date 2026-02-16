@@ -2,143 +2,148 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-bottom: 20px;
-  margin-bottom: 20px;
-  border-bottom: 1px solid $color-border-tabs;
+  padding: 8px 16px;
+  background: rgba($color-bg-system, 0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba($color-accent, 0.2);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 
-  .terminalHeader {
-    font-family: $font-main;
-    font-size: 1.1rem;
-    display: flex;
-    align-items: center;
+  &.terminating {
+    filter: brightness(0.4) grayscale(1) sepia(0.5);
+    pointer-events: none;
+  }
+}
 
-    .userHost {
-      color: $color-console-user;
-      font-weight: bold;
-      margin-right: 10px;
-    }
+.terminalLine {
+  display: flex;
+  align-items: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.9rem;
+}
 
-    .path {
-      color: $color-text-main;
-      display: flex;
-      align-items: center;
-    }
+.userHost {
+  color: $color-console-user;
+  font-weight: bold;
+  margin-right: 8px;
+}
 
-    .editablePath {
-      cursor: text;
-      padding: 0 4px;
-      transition: all 0.2s;
-      display: flex;
-      align-items: center;
+.pathWrapper {
+  display: flex;
+  align-items: center;
+}
 
-      &:hover {
-        background: rgba(88, 101, 242, 0.2);
-        color: $color-accent;
-      }
-    }
+.basePath {
+  color: $color-text-muted;
+  margin-right: 2px;
+}
 
-    .subPath {
-      color: $color-console-string;
-      display: flex;
-      align-items: center;
+.inputContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
 
-      &::before {
-        content: "/";
-        margin: 0 4px;
-        color: $color-text-muted;
-      }
+.terminalInput {
+  background: rgba($color-accent, 0.1);
+  border: none;
+  border-bottom: 2px solid $color-accent;
+  color: $color-console-string;
+  font-family: inherit;
+  font-size: inherit;
+  outline: none;
+  padding: 0 4px;
+  caret-color: $color-accent;
+}
 
-      .extension {
-        font-size: 0.7rem;
-        opacity: 0.5;
-        margin-left: 2px;
-        color: $color-console-string;
-      }
-    }
+.hints {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  min-width: 160px;
+  background: #16161a;
+  border: 1px solid rgba($color-accent, 0.3);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+  border-radius: 2px;
+  z-index: 10000;
 
-    .terminalInput {
-      background: transparent;
-      border: none;
-      outline: none;
-      color: $color-accent;
-      font-family: inherit;
-      font-size: inherit;
-      min-width: 50px;
-      border-bottom: 1px solid $color-accent;
-      padding: 0;
-    }
-
-    .cursor {
-      width: 8px;
-      height: 1.2rem;
-      background: $color-accent;
-      display: inline-block;
-      margin-left: 5px;
-      animation: blink 1s step-end infinite;
-    }
+  &::before {
+    content: "AUTOCOMPLETE";
+    display: block;
+    font-size: 9px;
+    padding: 4px 10px;
+    background: rgba($color-accent, 0.05);
+    color: $color-accent;
+    opacity: 0.6;
+    border-bottom: 1px solid rgba($color-accent, 0.1);
   }
 
-  .backBtn {
-    background: none;
-    border: 1px solid transparent;
-    cursor: pointer;
-    text-decoration: none;
-    color: $color-text-muted;
-    font-family: $font-main;
+  .hintItem {
+    display: block;
+    padding: 8px 12px;
     font-size: 0.8rem;
-    padding: 4px 8px;
-    transition: all 0.2s;
-    
-    &:hover { 
-      color: $color-console-error; 
-      border-color: rgba(255, 85, 85, 0.3);
+    color: #e0e0e0;
+    cursor: pointer;
+    transition: all 0.15s ease;
+
+    &:hover {
+      background: $color-accent;
+      color: #000;
     }
   }
 }
 
-.terminalHelp {
-  background: rgba(0, 0, 0, 0.3);
-  border: 1px dashed rgba(88, 101, 242, 0.4);
-  padding: 15px;
-  margin-bottom: 30px;
-  font-family: $font-main;
-  animation: slideDown 0.3s ease-out;
-
-  .helpTitle { 
-    display: block; 
-    font-size: 0.7rem; 
-    color: $color-console-string; 
-    margin-bottom: 8px; 
-    text-transform: uppercase;
-    letter-spacing: 1px;
-  }
+.editableArea {
+  cursor: text;
+  display: flex;
+  align-items: center;
   
-  .helpItems { 
-    display: flex; 
-    gap: 20px; 
-    flex-wrap: wrap; 
-  }
-  
-  .helpItem { 
-    font-size: 0.85rem; 
-    color: $color-console-user; 
+  &:hover {
+    .currentDir { color: $color-accent; }
   }
 }
 
-.terminating {
-  opacity: 0.5;
-  filter: grayscale(1);
-  pointer-events: none;
-  transition: all 0.5s ease;
+.currentDir {
+  color: $color-text-main;
+  transition: color 0.2s;
 }
 
-.activeExit {
-  color: $color-console-error !important;
-  border-color: $color-console-error !important;
+.filePart {
+  color: $color-console-string;
+  .ext { opacity: 0.5; }
 }
 
-@keyframes blink { 50% { opacity: 0; } }
-@keyframes slideDown { 
-  from { opacity: 0; transform: translateY(-10px); } 
-  to { opacity: 1; transform: translateY(0); } 
+.cursor {
+  @include cursor-blink($color-accent);
+  margin-left: 4px;
+}
+
+.exitBtn {
+  background: transparent;
+  border: none;
+  color: $color-text-muted;
+  font-family: inherit;
+  font-size: 0.7rem;
+  padding: 4px 12px;
+  cursor: pointer;
+  transition: all 0.3s;
+
+  &:hover {
+    color: $color-console-error;
+    border: 1px solid rgba($color-console-error, 0.3);
+    background: rgba($color-console-error, 0.05);
+  }
+
+  &.activeExit {
+    background: $color-console-error;
+    color: #fff;
+    animation: pulse 0.5s infinite;
+  }
+}
+
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.5; }
+  100% { opacity: 1; }
 }

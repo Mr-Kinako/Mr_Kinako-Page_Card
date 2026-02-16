@@ -20,8 +20,12 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       scss: {
-        additionalData:`@use "/src/styles/_variables.scss" as *; @use "sass:color"; @use "sass:math";`
-      }
-    }
-  }
-})
+        additionalData:`
+          @use "/src/styles/variables" as *;
+          @use "/src/styles/shared" as *;
+          @use "sass:color";
+          @use "sass:math";`
+      },
+    },
+  },
+});

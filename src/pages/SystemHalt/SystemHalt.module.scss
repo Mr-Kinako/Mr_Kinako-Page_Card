@@ -1,16 +1,18 @@
 .haltPage {
-  background: #0a0a0a;
-  color: #aaaaaa;
-  height: 100vh;
+  background: #0a0a0a; // Глубокий черный для эффекта выключения
+  color: $color-text-muted;
+  height: 100dvh;
   padding: 40px;
   font-family: $font-main;
-  font-size: 0.9rem;
   line-height: 1.6;
+  overflow-y: auto;
+
+  @include mobile { padding: 20px; font-size: 0.8rem; }
 
   .console {
     max-width: 800px;
     margin: 0 auto;
-    p { margin: 2px 0; }
+    p { margin: 4px 0; word-break: break-all; }
   }
 
   .path { color: $color-console-user; margin-top: 20px !important; }
@@ -18,24 +20,26 @@
   .fileList {
     display: flex;
     flex-direction: column;
-    margin: 10px 0;
-    
-    span, .link { white-space: pre; text-decoration: none; color: #888; }
+    margin: 15px 0;
     .link {
       color: $color-accent;
-      &:hover { background: rgba(88, 101, 242, 0.1); }
+      text-decoration: none;
+      &:hover { background: rgba($color-accent, 0.1); }
     }
-    .muted { opacity: 0.3; }
   }
 
-  .prompt { margin-top: 30px !important; color: #fff; font-weight: bold; }
-
-  .blink {
-    display: inline-block;
-    width: 8px;
-    height: 15px;
-    background: #fff;
-    margin-left: 10px;
-    animation: blink 1s step-end infinite;
+  .prompt { 
+    margin-top: 30px !important; 
+    color: #fff; 
+    font-weight: bold;
+    .blink {
+      @include cursor-blink(#fff);
+      background: #fff;
+      width: 8px;
+      height: 1.2rem;
+      display: inline-block;
+      margin-left: 10px;
+      animation: blink 1s step-end infinite;
+    }
   }
 }

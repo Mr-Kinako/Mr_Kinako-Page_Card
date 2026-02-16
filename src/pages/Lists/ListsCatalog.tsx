@@ -1,5 +1,5 @@
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { DETAILED_LISTS } from '@/constants/lists';
+import { DETAILED_LISTS } from '@/constants/docs';
 import { normalizePath } from '@/utils/pathUtils';
 import TerminalHeader from '@/components/TerminalHeader/TerminalHeader';
 import styles from './Lists.module.scss';
@@ -17,8 +17,8 @@ const ListsCatalog = () => {
   return (
     <div className={styles.rulesPage}>
       <TerminalHeader 
-        basePath={basePath} 
-        currentDir="catalog"
+        basePath={basePath}
+        currentDir=''
         availableDirs={Object.keys(DETAILED_LISTS)}
         onExit={handleExit}
         exitLabel={serverId ? "SERVER_ROOT" : "EXIT"}
