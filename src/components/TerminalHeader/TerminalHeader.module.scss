@@ -1,0 +1,144 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid $color-border-tabs;
+
+  .terminalHeader {
+    font-family: $font-main;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+
+    .userHost {
+      color: $color-console-user;
+      font-weight: bold;
+      margin-right: 10px;
+    }
+
+    .path {
+      color: $color-text-main;
+      display: flex;
+      align-items: center;
+    }
+
+    .editablePath {
+      cursor: text;
+      padding: 0 4px;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+
+      &:hover {
+        background: rgba(88, 101, 242, 0.2);
+        color: $color-accent;
+      }
+    }
+
+    .subPath {
+      color: $color-console-string;
+      display: flex;
+      align-items: center;
+
+      &::before {
+        content: "/";
+        margin: 0 4px;
+        color: $color-text-muted;
+      }
+
+      .extension {
+        font-size: 0.7rem;
+        opacity: 0.5;
+        margin-left: 2px;
+        color: $color-console-string;
+      }
+    }
+
+    .terminalInput {
+      background: transparent;
+      border: none;
+      outline: none;
+      color: $color-accent;
+      font-family: inherit;
+      font-size: inherit;
+      min-width: 50px;
+      border-bottom: 1px solid $color-accent;
+      padding: 0;
+    }
+
+    .cursor {
+      width: 8px;
+      height: 1.2rem;
+      background: $color-accent;
+      display: inline-block;
+      margin-left: 5px;
+      animation: blink 1s step-end infinite;
+    }
+  }
+
+  .backBtn {
+    background: none;
+    border: 1px solid transparent;
+    cursor: pointer;
+    text-decoration: none;
+    color: $color-text-muted;
+    font-family: $font-main;
+    font-size: 0.8rem;
+    padding: 4px 8px;
+    transition: all 0.2s;
+    
+    &:hover { 
+      color: $color-console-error; 
+      border-color: rgba(255, 85, 85, 0.3);
+    }
+  }
+}
+
+.terminalHelp {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px dashed rgba(88, 101, 242, 0.4);
+  padding: 15px;
+  margin-bottom: 30px;
+  font-family: $font-main;
+  animation: slideDown 0.3s ease-out;
+
+  .helpTitle { 
+    display: block; 
+    font-size: 0.7rem; 
+    color: $color-console-string; 
+    margin-bottom: 8px; 
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  .helpItems { 
+    display: flex; 
+    gap: 20px; 
+    flex-wrap: wrap; 
+  }
+  
+  .helpItem { 
+    font-size: 0.85rem; 
+    color: $color-console-user; 
+  }
+}
+
+.terminating {
+  opacity: 0.5;
+  filter: grayscale(1);
+  pointer-events: none;
+  transition: all 0.5s ease;
+}
+
+.activeExit {
+  color: $color-console-error !important;
+  border-color: $color-console-error !important;
+}
+
+@keyframes blink { 50% { opacity: 0; } }
+@keyframes slideDown { 
+  from { opacity: 0; transform: translateY(-10px); } 
+  to { opacity: 1; transform: translateY(0); } 
+}

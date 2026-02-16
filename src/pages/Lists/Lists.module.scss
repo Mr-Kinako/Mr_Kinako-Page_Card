@@ -1,0 +1,153 @@
+.rulesPage, .listView {
+  min-height: 100vh;
+  padding: 40px 20px;
+  color: #e0e0e0;
+  font-family: 'JetBrains Mono', monospace;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 20px;
+
+  .terminalHeader {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    font-size: 1.1rem;
+
+    .userHost { color: #4ec9b0; font-weight: bold; }
+    .path { color: #fff; }
+    .cursor {
+      width: 8px;
+      height: 1.2rem;
+      background: #5865F2;
+      animation: blink 1s step-end infinite;
+    }
+  }
+}
+
+.title {
+  font-size: 1.8rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin: 20px 0 30px 0;
+  color: #fff;
+}
+
+.backBtn {
+  text-decoration: none;
+  background: transparent;
+  color: $color-text-muted;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  border: 1px solid transparent;
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    color: #5865F2;
+    border-color: rgba(88, 101, 242, 0.3);
+  }
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.ruleCard {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 24px;
+  border-radius: 4px;
+  transition: all 0.3s;
+  position: relative;
+  text-decoration: none;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: #5865F2;
+    transform: translateY(-2px);
+    
+    .id { color: #fff; }
+  }
+
+  .ruleHeader {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+
+    .id {
+      font-size: 0.7rem;
+      color: rgba(255, 255, 255, 0.3);
+      border: 1px solid currentColor;
+      padding: 1px 4px;
+    }
+
+    h3 { margin: 0; font-size: 1.1rem; color: #fff; }
+  }
+
+  p {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.5);
+  }
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 30px 0;
+
+  .item {
+    padding: 12px 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    gap: 15px;
+    line-height: 1.6;
+
+    .marker {
+      color: #5865F2;
+      font-weight: bold;
+    }
+  }
+}
+
+.noteContainer {
+  margin-top: 40px;
+  padding: 20px;
+  background: rgba(255, 166, 0, 0.03);
+  border-left: 2px solid orange;
+
+  .noteLabel {
+    display: block;
+    font-size: 0.7rem;
+    color: orange;
+    margin-bottom: 8px;
+    font-weight: bold;
+  }
+
+  .note {
+    margin: 0;
+    font-size: 0.9rem;
+    font-style: italic;
+    color: #ffcc80;
+  }
+}
+
+.error {
+  text-align: center;
+  padding: 50px;
+  color: #ff5555;
+}
+
+@keyframes blink { 50% { opacity: 0; } }
