@@ -4,6 +4,7 @@ import { RULES_DATA, SERVER_MAP } from '@/constants/docs';
 import { renderDescription } from '@/utils/pathUtils';
 import TerminalHeader from '@/components/TerminalHeader/TerminalHeader';
 import styles from './Rules.module.scss';
+import github_icon from '@/assets/github.png'
 
 const Rules = () => {
   const { serverId, rulesCategory, ruleId } = useParams();
@@ -20,12 +21,13 @@ const Rules = () => {
   , [data, ruleId]);
 
   const currentRuleRef = useRef<HTMLDivElement>(null);
+  const hrefGithub = 'https://github.com/Mr-Kinako/Mr_Kinako-Personal-Page'
 
   useEffect(() => {
     if (isRuleValid && currentRuleRef.current) {
       currentRuleRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
-  }, [isRuleValid, ruleId]); // Добавлен ruleId в зависимости
+  }, [isRuleValid, ruleId]);
 
   const handleExit = () => {
     navigate(serverId ? `/system/${serverId}` : '/system/halt');
@@ -49,6 +51,24 @@ const Rules = () => {
 
   return (
     <div className={styles.rulesPage}>
+      <div className={styles.containerLinks}>
+        <a
+          className={styles.linkGithub}
+          href={hrefGithub}
+          target='_blank'
+          rel='noopener noreferrer'
+          draggable={false}
+        >
+          <img
+            src={github_icon}
+            title='Github Repository this page'
+            aria-label='Github Repository'
+            alt='Github Repository'
+            draggable={false}
+          />
+        </a>
+      </div>
+
       <div className={styles.headerContainer}>
         <TerminalHeader 
           basePath={`/${serverId}/rules`}

@@ -2,7 +2,73 @@
   @extend .pageLayout;
   max-width: 1400px;
   overflow: hidden; 
+  margin: 0 auto;
   padding: 8px 16px !important;
+}
+
+.containerLinks {
+  position: fixed;
+  left: 24px;
+  display: inline-flex;
+  align-items: center;
+  margin: 12px 0;
+  padding: 0;
+  z-index: 100;
+  user-select: none;
+
+  .linkGithub {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.4 0, 0.2, 1);
+
+    img {
+      width: 48px;
+      height: 48px;
+      background: #fff;
+      border-radius: 60%;
+    }
+
+    &:hover {
+      img {
+        transform: scale(1.05);
+      }
+    }
+  }
+
+  @media (max-width: 1600px) {
+    left: 10px;
+    margin: 12px 10px;
+    
+    .linkGithub img {
+      width: 40px;
+      height: 40px;
+    }
+  }
+  @media (max-width: 1550px) {
+    left: 5px;
+    .linkGithub img {
+      width: 32px;
+      height: 32px;
+      opacity: 0.7;
+    }
+  }
+  @media (max-width: 1500px) {
+    left: 5px;
+    .linkGithub img {
+      position: absolute;
+      width: 32px;
+      height: 32px;
+      opacity: 0.6;
+      top: 46px;
+      left: 0;
+    }
+  }
+  @media (max-width: 1024px) {
+    position: absolute;
+    left: 5px;
+    top: 8px;
+  }
 }
 
 .headerContainer {
@@ -21,7 +87,7 @@
 .containerWarnRules {
   display: flex;
   flex-direction: column;
-  max-width: 42%;
+  max-width: 50%;
   background: color.adjust($color-bg-system, $lightness: -4%);
   border-radius: 8px;
   padding: 12px 14px 12px 14px;
@@ -147,7 +213,7 @@
 }
 
 .error {
-  @extend .error; // Если есть общий стиль ошибок
+  @extend .error;
   text-align: center;
   padding: 50px;
   color: $color-console-error;
