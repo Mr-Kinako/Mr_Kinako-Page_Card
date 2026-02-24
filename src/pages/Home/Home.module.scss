@@ -5,14 +5,57 @@
   padding: 10vh 8px 8px 8px;
 }
 
+.containerLinks {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  margin: 12px 0;
+  user-select: none;
+  gap: 6px;
+
+  .linkGithub {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.4 0, 0.2, 1);
+
+    img {
+      width: 36px;
+      height: 36px;
+      background: #fff;
+      border-radius: 60%;
+    }
+
+    &:hover {
+      img {
+        transform: scale(1.05);
+      }
+    }
+  }
+  .gitTooltip {
+    display: flex;
+    background: #00000025;
+    border-radius: 25px;
+    max-width: fit-content;
+    padding: 2px 4px;
+    
+    .gitInfoText {
+      color: $color-text-muted;
+
+      &:hover {
+        color: color.adjust($color-text-muted, $lightness: 10%);
+      }
+    }
+  }
+}
+
 .grid {
   display: grid;
-  // На широких экранах (больше 900px) делаем 2 колонки
   grid-template-columns: 1fr 1fr; 
-  gap: 0 40px; // Отступ между колонками
+  gap: 0 40px;
   
   @include tablet {
-    grid-template-columns: 1fr; // На планшетах и ниже - в одну колонку
+    grid-template-columns: 1fr;
   }
 }
 

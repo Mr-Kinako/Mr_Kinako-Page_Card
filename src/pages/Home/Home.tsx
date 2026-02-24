@@ -4,6 +4,7 @@ import Tabs from '@/components/Tabs';
 import { TABS_DATA } from '@/constants/content';
 import type { TabType, HardwareItem, GameItem, MediaItem, MediaType } from '@/constants/content';
 import styles from './Home.module.scss';
+import github_icon from '@/assets/github.png'
 
 const Home = () => {
   const [activeTab, setActiveTab] = useState<TabType>('PC-Hardware');
@@ -11,6 +12,8 @@ const Home = () => {
   
   const [hoveredVideo, setHoveredVideo] = useState<string | null>(null);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  
+  const hrefGithub = 'https://github.com/Mr-Kinako/Mr_Kinako-Personal-Page'
 
   const filteredMedia = useMemo(() => {
     return TABS_DATA.MEDIA.filter(item => item.type === activeMediaFilter);
@@ -29,6 +32,29 @@ const Home = () => {
   return (
     <div className={styles.home} onMouseMove={handleMouseMove}>
       <Profile />
+      <div className={styles.containerLinks}>
+        <a
+          className={styles.linkGithub}
+          href={hrefGithub}
+          target='_blank'
+          rel='noopener noreferrer'
+          draggable={false}
+        >
+          <img
+            src={github_icon}
+            title='Github Repository this page'
+            aria-label='Github Repository'
+            alt='Github Repository'
+            draggable={false}
+          />
+        </a>
+
+        <div className={styles.gitTooltip}>
+          <span className={styles.gitInfoText}>
+            This page's Git repository is public
+          </span>
+        </div>
+      </div>
       <Tabs activeTab={activeTab} onTabChange={setActiveTab} />
       
       <section className={styles.content}>
