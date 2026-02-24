@@ -129,6 +129,7 @@
   padding: 20px;
   background: rgba(255, 166, 0, 0.03);
   border-left: 2px solid orange;
+  width: fit-content;
 
   @media (max-width: 600px) {
     padding: 15px;
@@ -137,7 +138,7 @@
 
   .noteLabel {
     display: block;
-    font-size: 0.7rem;
+    font-size: 0.95rem;
     color: orange;
     margin-bottom: 8px;
     font-weight: bold;
@@ -164,6 +165,7 @@
   border-radius: 4px;
   transition: all 0.3s;
   text-decoration: none;
+
   &:hover {
     background: rgba(255, 255, 255, 0.06);
     border-color: #5865F2;

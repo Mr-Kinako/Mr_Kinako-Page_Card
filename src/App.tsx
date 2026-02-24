@@ -17,19 +17,19 @@ function App() {
           <Route path='/system/halt' element={<SystemHalt />} />
           
           {/* 3. Глобальные Списки */}
-          <Route path='/lists' element={<ListsCatalog />} />
-          <Route path='/lists/:listId' element={<ListView />} />
+          <Route path='/lists/catalog' element={<ListsCatalog />} />
+          <Route path='/lists/catalog/:listId' element={<ListView />} />
 
           {/* 3. Списки в контексте сервера */}
-          <Route path='/:serverId/lists' element={<ListsCatalog />} />
-          <Route path='/:serverId/lists/:listId' element={<ListView />} />
+          <Route path='/:serverId/lists/catalog' element={<ListsCatalog />} />
+          <Route path='/:serverId/lists/catalog/:listId' element={<ListView />} />
 
           {/* 4. Правила сервера */}
           <Route path='/:serverId/rules/:rulesCategory' element={<Rules />} />
           <Route path='/:serverId/rules/:rulesCategory/:ruleId' element={<Rules />} />
           
           {/* 5. Заглушка сервера */}
-          <Route path='/:serverId' element={<SystemHalt />} />
+          <Route path='/system/:serverId' element={<SystemHalt />} />
 
           {/* 6. Фоллбэк */}
           <Route path='*' element={<Navigate to='/' />} />

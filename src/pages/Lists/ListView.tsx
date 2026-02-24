@@ -11,7 +11,7 @@ const ListView = () => {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   
   const list = listId ? DETAILED_LISTS[listId] : null;
-  const parentPath = normalizePath(serverId ? `/${serverId}/lists` : '/lists');
+  const parentPath = normalizePath(serverId ? `/${serverId}/lists/catalog` : '/lists/catalog');
 
   if (!list) return <div className={styles.error}>Error: System list not found.</div>;
 

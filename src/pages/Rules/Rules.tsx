@@ -28,7 +28,7 @@ const Rules = () => {
   }, [isRuleValid, ruleId]); // Добавлен ruleId в зависимости
 
   const handleExit = () => {
-    navigate(serverId ? `/${serverId}` : '/system/halt');
+    navigate(serverId ? `/system/${serverId}` : '/system/halt');
   };
 
   const handleSelectRule = (id: string) => {
@@ -45,6 +45,7 @@ const Rules = () => {
     const fullUrl = `${window.location.origin}/${serverId}/rules/${rulesCategory}/${id}`;
     navigator.clipboard.writeText(fullUrl);
   };
+  const isCozyBar = serverId === 'CozyBar';
 
   return (
     <div className={styles.rulesPage}>
@@ -65,6 +66,16 @@ const Rules = () => {
         </div>
       ) : (
         <div className={styles.scrollArea}>
+          {isCozyBar && (
+            <div className={styles.containerWarnRules}>
+              <h2>Важно для прочтения</h2>
+              <div className={styles.containerDescWR}>
+                <p className={styles.descWarnRules}>Правила могут быть не идеальными, и мы понимаем, что угодить всем невозможно.
+                  Предложения по улучшению раздела приветствуются, если они подаются без негатива.</p>
+              </div>
+            </div>
+          )}            
+
           {data.map((cat, idx) => (
             <section key={idx} className={styles.category}>
               <h2 className={styles.categoryTitle}>{cat.categoryName}</h2>
@@ -75,6 +86,7 @@ const Rules = () => {
                     ref={rule.id === ruleId ? currentRuleRef : null}
                     onClick={() => handleSelectRule(rule.id)}
                     className={`${styles.ruleCard} ${rule.id === ruleId ? styles.highlight : ''}`}
+                    draggable={false}
                   >
                     <div className={styles.ruleHeader}>
                       <span className={styles.id}>#{rule.id}</span>

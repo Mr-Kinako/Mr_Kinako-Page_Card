@@ -13,6 +13,7 @@
     max-width: 800px;
     margin: 0 auto;
     p { margin: 4px 0; word-break: break-all; }
+    b { color: lab(82.57% -45.43 18.06); }
   }
 
   .path { color: $color-console-user; margin-top: 20px !important; }
@@ -24,6 +25,8 @@
     .link {
       color: $color-accent;
       text-decoration: none;
+      width: fit-content;
+      display: block;
       &:hover { background: rgba($color-accent, 0.1); }
     }
   }

@@ -8,10 +8,10 @@ const ListsCatalog = () => {
   const { serverId } = useParams();
   const navigate = useNavigate();
 
-  const basePath = normalizePath(serverId ? `/${serverId}/lists` : '/lists');
+  const basePath = normalizePath(serverId ? `/${serverId}/lists/catalog` : '/lists/catalog');
 
   const handleExit = () => {
-    navigate(serverId ? normalizePath(`/${serverId}`) : '/system/halt');
+    navigate(serverId ? normalizePath(`system/${serverId}`) : '/system/halt');
   };
 
   return (
@@ -23,7 +23,7 @@ const ListsCatalog = () => {
         onExit={handleExit}
         exitLabel={serverId ? "SERVER_ROOT" : "EXIT"}
       />
-      <h1 className={styles.title}>Технические списки</h1>
+      <h1 className={styles.title}>Списки для правил</h1>
       <div className={styles.grid}>
         {Object.entries(DETAILED_LISTS).map(([key, list]) => (
           <Link 
@@ -31,6 +31,7 @@ const ListsCatalog = () => {
             to={normalizePath(`${basePath}/${key}`)} 
             className={styles.ruleCard} 
             style={{ textDecoration: 'none' }}
+            draggable={false}
           >
             <div className={styles.ruleHeader}>
               <span className={styles.id}>FILE</span>
