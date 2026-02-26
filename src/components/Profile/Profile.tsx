@@ -1,6 +1,6 @@
 import styles from './Profile.module.scss';
 // Пример локального импорта (если положишь картинку в src/assets)
-import localAvatar from '@/assets/icon.jpg'; 
+// import localAvatar from '@/assets/icon.jpg'; 
 
 const Profile = () => {
   // Универсальная переменная для аватара
@@ -8,14 +8,14 @@ const Profile = () => {
   // 1. Ссылку: "https://example.com/photo.jpg"
   // 2. Локальный путь: localAvatar
   // 3. null или "" для показа плейсхолдера
-  const avatarSource: string | null = localAvatar;
+  const avatarSource: string | null = null;
 
   return (
     <header className={styles.profile}>
       <div className={styles.avatarWrapper}>
         {avatarSource ? (
           <img 
-            src={avatarSource} 
+            src={avatarSource}
             alt="Avatar" 
             className={styles.avatarImage} 
             // Обработка ошибки, если ссылка битая
