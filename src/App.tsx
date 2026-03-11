@@ -14,6 +14,7 @@ function App() {
           {/* 1. Главная */}
           <Route path='/' element={<Home />} />
           <Route path='/discord-invite/mfs' element={<DiscordInvite />} />
+          <Route path='/ds-invite/MFS' element={<DiscordInvite />} />
           <Route path='/ds-invite/MyFurryServer' element={<DiscordInvite />} />
           
           {/* 2. Статические служебные роуты */}
