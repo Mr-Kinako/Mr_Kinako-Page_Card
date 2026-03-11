@@ -1,10 +1,10 @@
 import { useState, useMemo } from 'react';
-import Profile from '@/components/Profile';
-import Tabs from '@/components/Tabs';
-import { TABS_DATA } from '@/constants/content';
+import Profile from '@comp/Profile';
+import Tabs from '@comp/Tabs';
+import GitLink from '@comp/GitLink/GitLink';
+import { TABS_DATA } from '@constants/content';
 import type { TabType, HardwareItem, GameItem, MediaItem, MediaType } from '@/constants/content';
 import styles from './Home.module.scss';
-import github_icon from '@/assets/github.png'
 
 const Home = () => {
   const [activeTab, setActiveTab] = useState<TabType>('PC-Hardware');
@@ -32,29 +32,10 @@ const Home = () => {
   return (
     <div className={styles.home} onMouseMove={handleMouseMove}>
       <Profile />
-      <div className={styles.containerLinks}>
-        <a
-          className={styles.linkGithub}
-          href={hrefGithub}
-          target='_blank'
-          rel='noopener noreferrer'
-          draggable={false}
-        >
-          <img
-            src={github_icon}
-            title='Github Repository this page'
-            aria-label='Github Repository'
-            alt='Github Repository'
-            draggable={false}
-          />
-        </a>
-
-        <div className={styles.gitTooltip}>
-          <span className={styles.gitInfoText}>
-            This page's Git repository is public
-          </span>
-        </div>
-      </div>
+      <GitLink
+        href={hrefGithub}
+        className={styles.homeGitPos}
+      />
       <Tabs activeTab={activeTab} onTabChange={setActiveTab} />
       
       <section className={styles.content}>

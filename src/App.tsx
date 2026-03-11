@@ -1,8 +1,9 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import Home from '@/pages/Home';
-import Rules from '@/pages/Rules';
-import { ListsCatalog, ListView } from '@/pages/Lists';
-import SystemHalt from '@/pages/SystemHalt';
+import Home from '@pages/Home';
+import DiscordInvite from '@pages/DiscordInvite';
+import Rules from '@pages/Rules';
+import { ListsCatalog, ListView } from '@pages/Lists';
+import SystemHalt from '@pages/SystemHalt';
 import styles from '@/App.module.scss';
 
 function App() {
@@ -12,6 +13,8 @@ function App() {
         <Routes>
           {/* 1. Главная */}
           <Route path='/' element={<Home />} />
+          <Route path='/discord-invite/mfs' element={<DiscordInvite />} />
+          <Route path='/ds-invite/MyFurryServer' element={<DiscordInvite />} />
           
           {/* 2. Статические служебные роуты */}
           <Route path='/system/halt' element={<SystemHalt />} />

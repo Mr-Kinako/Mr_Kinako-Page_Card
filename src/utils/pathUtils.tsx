@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import styles from '@/pages/Rules/Rules.module.scss';
+import styles from '@pages/Rules/Rules.module.scss';
 
 /**
  * Очищает путь: убирает дубли слешей и слеш в конце.

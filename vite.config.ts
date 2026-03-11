@@ -28,6 +28,12 @@ export default defineConfig(({ mode }) => {
     resolve: {
       alias: {
         "@": path.resolve(__dirname, "src"),
+        "@assets": path.resolve(__dirname, "src/assets"),
+        "@comp": path.resolve(__dirname, "src/components"),
+        "@constants": path.resolve(__dirname, "src/constants"),
+        "@pages": path.resolve(__dirname, "src/pages"),
+        "@styles": path.resolve(__dirname, "src/styles"),
+        "@utils": path.resolve(__dirname, "src/utils"),
       },
     },
     css: {

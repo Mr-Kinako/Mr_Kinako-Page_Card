@@ -1,0 +1,193 @@
+@keyframes FadeIn {
+   from { opacity: 0; transform: translateY(5px); }
+   to { opacity: 1; transform: translateY(0); }
+}
+
+.wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background-color: $color-bg-system;
+}
+
+.loader {
+  font-family: $font-main;
+  color: $color-text-muted;
+  @include cursor-blink($color-accent);
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #43b581; 
+  box-shadow: 0 0 10px rgba(67, 181, 129, 0.4);
+  
+  // Желтый цвет для статического режима (Idle)
+  &.idle {
+    background: #faa61a; 
+    box-shadow: 0 0 10px rgba(250, 166, 26, 0.4);
+  }
+
+  &.offline { // На случай полного дисконнекта
+    background: #747f8d;
+    box-shadow: none;
+  }
+}
+
+.card {
+  width: 100%;
+  max-width: 460px;
+  padding: 40px 40px 10px 40px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid $color-border;
+  border-radius: 24px;
+  animation: fadeIn 0.6s ease-out;
+}
+
+.header {
+  margin-bottom: 24px;
+}
+
+.statusBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: $color-text-muted;
+  margin-bottom: 12px;
+
+  .dot {
+    width: 6px;
+    height: 6px;
+    background: #43b581;
+    border-radius: 50%;
+    box-shadow: 0 0 8px rgba(67, 181, 129, 0.4);
+  }
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 600;
+  margin: 0;
+  color: $color-text-main;
+  animation: fadeIn 0.8s ease-out;
+}
+
+.description {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: $color-text-description;
+  margin-bottom: 32px;
+}
+
+.stats {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  margin-bottom: 32px;
+  padding: 20px 0;
+  border-top: 1px solid $color-border;
+  border-bottom: 1px solid $color-border;
+}
+
+.statItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+
+  .statLabel {
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    color: $color-text-muted;
+    letter-spacing: 0.5px;
+  }
+
+  .statValue {
+    font-size: 1rem;
+    font-weight: 500;
+    color: $color-text-main;
+  }
+}
+
+.divider {
+  width: 1px;
+  height: 30px;
+  background: $color-border;
+}
+
+.extraInfo {
+  margin-bottom: 32px;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.01);
+  border-radius: 12px;
+  border-left: 2px solid $color-accent;
+
+  h3 {
+    font-size: 0.8rem;
+    color: $color-text-main;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    
+    li {
+      font-size: 0.85rem;
+      color: $color-text-description;
+      margin-bottom: 4px;
+      padding-left: 12px;
+      position: relative;
+
+      &::before {
+        content: '•';
+        position: absolute;
+        left: 0;
+        color: $color-accent;
+      }
+    }
+  }
+}
+
+.joinButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  padding: 16px;
+  background: $color-accent;
+  color: white;
+  text-decoration: none;
+  border-radius: 12px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    background: color.adjust($color-accent, $lightness: 5%);
+    box-shadow: 0 10px 20px rgba($color-accent, 0.2);
+
+    .arrow { transform: translateX(4px); }
+  }
+
+  .arrow {
+    transition: transform 0.3s ease;
+  }
+}
+
+.inviteGitPos {
+   display: flex;
+   margin-top: 12px;
+   margin-left: 3.4em;
+}

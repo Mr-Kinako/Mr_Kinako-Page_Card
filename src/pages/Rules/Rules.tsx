@@ -1,10 +1,10 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useRef, useMemo } from 'react';
-import { RULES_DATA, SERVER_MAP } from '@/constants/docs';
-import { renderDescription } from '@/utils/pathUtils';
-import TerminalHeader from '@/components/TerminalHeader/TerminalHeader';
+import { RULES_DATA, SERVER_MAP } from '@constants/docs';
+import { renderDescription } from '@utils/pathUtils';
+import TerminalHeader from '@comp/TerminalHeader/TerminalHeader';
+import GitLink from '@/components/GitLink/GitLink';
 import styles from './Rules.module.scss';
-import github_icon from '@/assets/github.png'
 
 const Rules = () => {
   const { serverId, rulesCategory, ruleId } = useParams();
@@ -51,23 +51,11 @@ const Rules = () => {
 
   return (
     <div className={styles.rulesPage}>
-      <div className={styles.containerLinks}>
-        <a
-          className={styles.linkGithub}
-          href={hrefGithub}
-          target='_blank'
-          rel='noopener noreferrer'
-          draggable={false}
-        >
-          <img
-            src={github_icon}
-            title='Github Repository this page'
-            aria-label='Github Repository'
-            alt='Github Repository'
-            draggable={false}
-          />
-        </a>
-      </div>
+      <GitLink
+        href={hrefGithub}
+        showText={false}
+        className={styles.rulesGitPos}
+      />
 
       <div className={styles.headerContainer}>
         <TerminalHeader 
