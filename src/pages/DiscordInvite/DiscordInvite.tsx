@@ -69,7 +69,9 @@ const DiscordInvite = () => {
           <div className={styles.stats}>
             <div className={styles.statItem}>
               <span className={styles.statLabel}>Members</span>
-              <span className={styles.statValue}>{MANUAL_DATA.totalMembers}</span>
+              <span className={styles.statValue}>{MANUAL_DATA.totalMembers} 
+                <p className={styles.totalMembers__actuallyStatus}>(static data)</p>
+              </span>
             </div>
             
             <div className={styles.divider} />

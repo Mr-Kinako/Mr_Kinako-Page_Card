@@ -111,15 +111,24 @@
   }
 
   .statValue {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
     font-size: 1rem;
     font-weight: 500;
     color: $color-text-main;
+  }
+
+  .totalMembers__actuallyStatus {
+    color: $color-text-very-muted;
+    font-size: 0.69rem;
+    margin: 0; padding: 0;
   }
 }
 
 .divider {
   width: 1px;
-  height: 30px;
+  height: 60px;
   background: $color-border;
 }
 
@@ -128,7 +137,7 @@
   padding: 16px;
   background: rgba(255, 255, 255, 0.01);
   border-radius: 12px;
-  border-left: 2px solid $color-accent;
+  border-left: 3px solid color.adjust($color-accent, $lightness: 8%);
 
   h3 {
     font-size: 0.8rem;
@@ -153,7 +162,7 @@
         content: '•';
         position: absolute;
         left: 0;
-        color: $color-accent;
+        color: color.adjust($color-accent, $lightness: 8%);
       }
     }
   }
