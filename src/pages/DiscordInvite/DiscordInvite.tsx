@@ -13,7 +13,7 @@ const MANUAL_DATA = {
   name: "МойФурриСервер [МФС]",
   description: "мили фурри фембой сервер, мяу <3",
   inviteLink: "https://discord.gg/WqZHBH3zdj",
-  totalMembers: "1.920",
+  totalMembers: "1.930±",
   membersFallback: "Active Community",
   platform: "Discord"
 };
