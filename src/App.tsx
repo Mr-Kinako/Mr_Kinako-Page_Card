@@ -4,7 +4,7 @@ import classes from './App.module.scss';
 import { GitHubIcon } from "./assets/svg/GitHubIcon";
 import { YouTubeIcon } from "./assets/svg/YouTubeIcon";
 import avatar from '/9h5CQ0Xs.ico';
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 
 const LINKS = {
     SOCIALS: {
@@ -46,37 +46,56 @@ const NavLinks = () => {
     );
 };
 
-const ThemeSwitcher = () => {
-    const [theme, setTheme] = useState('dark');
+// const ThemeSwitcher = () => {
+//     const [theme, setTheme] = useState('dark');
 
-    const toggleTheme = () => {
-        const newTheme = theme === 'dark' ? 'light' : 'dark';
-        setTheme(newTheme);
-        document.documentElement.setAttribute('data-theme', newTheme);
-        localStorage.setItem('theme', newTheme);
-    };
+//     const toggleTheme = () => {
+//         const newTheme = theme === 'dark' ? 'light' : 'dark';
+//         setTheme(newTheme);
+//         document.documentElement.setAttribute('data-theme', newTheme);
+//         localStorage.setItem('theme', newTheme);
+//     };
 
-    useEffect(() => {
-        const savedTheme = localStorage.getItem('theme') || 'dark';
-        setTheme(savedTheme);
-        document.documentElement.setAttribute('data-theme', savedTheme);
-    }, []);
+//     useEffect(() => {
+//         const savedTheme = localStorage.getItem('theme') || 'dark';
+//         setTheme(savedTheme);
+//         document.documentElement.setAttribute('data-theme', savedTheme);
+//     }, []);
 
+//     return (
+//         <button onClick={toggleTheme} style={{
+//             display: "none",
+//             position: "absolute",
+//             left: "10px", top: "10px",
+//             backgroundColor: "var(--card-bg-color)",
+//             border: "none",
+//             borderRadius: "8px",
+//             color: "var(--text-color)",
+//             cursor: "pointer",
+//             transition: "background 0.3s ease",
+//             zIndex: "2"
+//         }}>
+//             Switch Theme
+//         </button>
+//     );
+// };
+
+const WidgetLinks = () => {
     return (
-        <button onClick={toggleTheme} style={{
-            display: "none",
-            position: "absolute",
-            left: "10px", top: "10px",
-            backgroundColor: "var(--card-bg-color)",
-            border: "none",
-            borderRadius: "8px",
-            color: "var(--text-color)",
-            cursor: "pointer",
-            transition: "background 0.3s ease",
-            zIndex: "2"
-        }}>
-            Switch Theme
-        </button>
+        <div className={classes.invisibleContainer}>
+            <div className={classes.widgetLinks_Container}>
+                <a
+                    className={classes.widgetLink}
+                    target="_blank"
+                    href="https://mr-kinako.github.io/Iris-page-by-Mr_Kinako/"
+                    rel="noopener noreferrer"
+                    aria-label="Iris Git Page (opens in a new tab)"
+                    title="Iris Git Page (opens in a new tab)"
+                >
+                    Site for Iris ❤️
+                </a>
+            </div>
+        </div>
     );
 };
 
@@ -132,6 +151,7 @@ const Home = () => {
                     </p>
                 </div>
             </div>
+            <WidgetLinks />
         </main>
     );
 };
@@ -147,7 +167,7 @@ export const App = () => {
                 
                 <div className={classes['app-content']}>
                     <NavLinks  />
-                    <ThemeSwitcher />
+                    {/* <ThemeSwitcher /> */}
 
                     <Routes>
                         <Route path="/"
