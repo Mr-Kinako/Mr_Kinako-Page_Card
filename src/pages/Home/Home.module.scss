@@ -101,5 +101,11 @@ $max-width: 700px;
       font-size: 0.85rem;
       color: #556666;
     }
+
+    .sourceCode {
+      color: #a57aeb;
+      text-decoration: none;
+      &:hover { text-decoration: underline; }
+    }
   }
 }
