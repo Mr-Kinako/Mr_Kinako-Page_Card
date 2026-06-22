@@ -1,47 +1,30 @@
-import { defineConfig, loadEnv } from 'vite'
-import { createHtmlPlugin } from 'vite-plugin-html'
-import react from '@vitejs/plugin-react'
-import path from 'path'
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import { fileURLToPath } from 'url';
+import path from 'path';
 
-export default defineConfig(({ mode }) => {
-    const env = loadEnv(mode, process.cwd(), '');
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-    return {
-        base: '/',
-        plugins: [
-            react(),
-            createHtmlPlugin({
-                inject: {
-                    data: {
-                        OG_IMAGE: `${env.VITE_SITE_URL}/og-image.png`,
-                    }
-                }
-            })
-        ],
-        publicDir: "public",
-        server: {
-        host: 'localhost',
-        port: 3000,
-        strictPort: true,
-        open: false
-        },
-        resolve: {
-            alias: {
-                "@": path.resolve(__dirname, "src"),
-                "@styles": path.resolve(__dirname, "src/styles"),
-                "@assets": path.resolve(__dirname, "src/assets")
-            },
-        },
-        css: {
-            preprocessorOptions: {
-                scss: {
-                    additionalData: `
-                        @use "@styles/variables" as *;
-                        @use "sass:color";
-                        @use "sass:math";
-                    `
-                },
-            },
-        },
-    };
+// https://vitejs.dev/config/
+export default defineConfig({
+  plugins: [react()],
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src'),
+    },
+  },
+  css: {
+    modules: {
+      // Делает имена классов в DOM удобными для чтения при разработке (напр. Home_container__H3aK1)
+      generateScopedName: '[name]__[local]___[hash:base64:5]',
+    },
+    preprocessorOptions: {
+      scss: {
+        additionalData: `
+          @use "sass:color";
+          @use "@/styles/_variables.scss" as *;
+        `
+      },
+    },
+  },
 });

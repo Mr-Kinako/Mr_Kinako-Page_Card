@@ -1,16 +1,16 @@
-import React from 'react';
+import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { App } from './App';
-import './styles/index.scss';
+import App from './App.tsx';
+import './main.scss';
 
-const container = document.getElementById('root');
-if (container) {
-    const root = createRoot(container);
-    root.render(
-        <React.StrictMode>
-            <App />
-        </React.StrictMode>,
-    );
-} else {
-    console.error("Не удалось найти корневой элемент в DOM.");
+const rootElement = document.getElementById('root');
+
+if (!rootElement) {
+  throw new Error("Failed to find the root element");
 }
+
+createRoot(rootElement).render(
+  <StrictMode>
+    <App />
+  </StrictMode>,
+);
