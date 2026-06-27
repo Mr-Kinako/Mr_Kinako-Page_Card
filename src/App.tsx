@@ -29,7 +29,7 @@ function App() {
             }/>
 
             <Route path='/media' element={
-              <Media isDev={isDev} />
+              <Media />
             }/>
           </Route>
 
