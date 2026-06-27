@@ -1,5 +1,5 @@
 import { AboutMe } from '@/components/AboutMe';
-import { Tumblers, isAboutMe } from '@/tumblers';
+import { isDev, isProd, Tumblers } from '@/tumblers';
 import { useState } from 'react';
 import styles from './Home.module.scss';
 
@@ -21,7 +21,6 @@ export const Home = ({
   }
 
   return (
-    <>
     <main className={styles.home}>
       <section className={styles.heroSection}>
         <h1 className={styles.title}>
@@ -33,7 +32,7 @@ export const Home = ({
         </p>
       </section>
 
-      {isAboutMe && (
+      {(isDev || isProd) && (
         <div className={styles.openAboutMe}>
           <button onClick={toggleAboutMe} disabled={isAnimating}>
             About Me
@@ -42,23 +41,6 @@ export const Home = ({
       )}
 
       <AboutMe isOpen={isActiveAboutMe} />
-
-      <footer className={styles.footer}>
-        <p>
-          &copy; {new Date().getFullYear()} Mr_Kinako
-        </p>
-        <p>Лицензия MIT • {" "}
-          <a className={styles.sourceCode}
-            href="https://github.com/Mr-Kinako/Mr_Kinako-Page_Card"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Исходный код
-          </a>
-        </p>
-      </footer>
     </main>
-
-    </>
   );
 };

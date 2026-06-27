@@ -5,11 +5,11 @@ $max-width: 700px;
   max-width: $max-width;
   margin: 0 auto;
 
-  background-color: rgb(195, 212, 212);
-  padding: max(8vh, 40px) 16px 24px 16px;
+  background-color: $primaryBGPageColor;
+  padding: max(10vh, 40px) 16px 24px 16px;
   @media (min-width: $max-width) {
-    border-left: 4px solid rgba(154, 255, 255, 0.8);
-    border-right: 4px solid rgba(154, 255, 255, 0.8);
+    border-left: 3px solid color.change($bgBorderColor, $alpha: 0.5);
+    border-right: 3px solid color.change($bgBorderColor, $alpha: 0.5);
   }
 
   flex-grow: 1;
@@ -19,22 +19,27 @@ $max-width: 700px;
   gap: 16px;
 
   .openAboutMe {
-    margin-bottom: 32px;
+    margin: 12px 0;
+
     button {
       background: rgba(255, 255, 255, 0.6);
-      color: #3a4a4a;
+      color: $primaryTextColor;
       font-size: 1rem;
       font-weight: 600;
       padding: 14px 16px;
       border: 1px solid rgba(0, 0, 0, 0.32);
       border-radius: 32px;
+
       cursor: pointer;
+      user-select: none;
       transition: background-color 0.2s ease;
 
       appearance: none;
 
       &:disabled {
-        background: rgba(255, 255, 255, 0.3);
+        background: rgba(255, 255, 255, 0.2);
+        color: color.change($primaryTextColor, $alpha: 0.5);
+        border: 1px solid transparent;
         cursor: not-allowed;
       }
     }
@@ -89,23 +94,6 @@ $max-width: 700px;
       color: $secondaryTextColor;
       font-size: 0.95rem;
       line-height: 1.4;
-    }
-  }
-
-  .footer {
-    margin-top: auto;
-    padding-top: 40px;
-    text-align: center;
-    
-    p {
-      font-size: 0.85rem;
-      color: #556666;
-    }
-
-    .sourceCode {
-      color: #a57aeb;
-      text-decoration: none;
-      &:hover { text-decoration: underline; }
     }
   }
 }

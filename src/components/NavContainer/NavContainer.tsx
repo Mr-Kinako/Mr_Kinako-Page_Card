@@ -1,10 +1,10 @@
 import { NavLink } from 'react-router';
-import { isMedia, isNavigation, isDev } from '@/tumblers';
+import { isDev, isProd } from '@/tumblers';
 import cn from 'classnames';
 import styles from './NavContainer.module.scss';
 
 export const NavContainer = () => {
-    if (!isNavigation) return null;
+    if (isDev || isProd)
     return (
         <nav className={styles.navigationContainer}>
             <div className={styles.navBubble}>
@@ -20,28 +20,18 @@ export const NavContainer = () => {
                     Home
                 </NavLink>
 
-                {(
-                    isMedia ||
-                    isMedia && !isDev
-                ) && (
-                    <span className={styles.separator}></span>
-                )}
+                <span className={styles.separator}></span>
 
-                {(
-                    isMedia ||
-                    isMedia && !isDev
-                ) && (
-                    <NavLink
-                        to="/media"
-                        className={({ isActive }) => 
-                            cn(styles.link, {
-                                [styles.active]: isActive
-                            })
-                        }
-                    >
-                        Media
-                    </NavLink>
-                )}
+                <NavLink
+                    to="/media"
+                    className={({ isActive }) => 
+                        cn(styles.link, {
+                            [styles.active]: isActive
+                        })
+                    }
+                >
+                    Media
+                </NavLink>
             </div>
         </nav>
     );

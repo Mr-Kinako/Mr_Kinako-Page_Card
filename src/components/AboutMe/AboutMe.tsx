@@ -2,8 +2,6 @@ import { useEffect, useState } from 'react';
 import styles from './AboutMe.module.scss';
 import cn from 'classnames';
 
-
-
 interface AboutMeProps {
     isOpen: boolean;
 }
@@ -24,6 +22,7 @@ export const AboutMe = ({
     if (!shouldRender) return null;
 
     return (
+        <>
         <section className={cn(styles.aboutMe, {
             [styles.aboutMeOpen]: isOpen,
             [styles.aboutMeClose]: !isOpen
@@ -34,20 +33,17 @@ export const AboutMe = ({
             <p>
                 Я Мистер Кинако, или же просто Кинако. <br />
 
-                Ко мне также можно обращаться как к: Кино, Кина, Кинак, Лисёнок. <br /><br />
+                Ко мне также можно обращаться как к: Кино, Кина, Кинак, Лисёнок. <br />
 
-                Мой возраст 16 на 170-180+- роста, и я мужского пола.<br />
+                Мой возраст 16 на 170-180+- роста.<br /><br />
 
-                Я имею хорошего для себя друга, которому пообещал, навсегда быть с ним рядом.. <span style={
-                    {
-                        color: "rgba(42, 49, 49, 0.45)"
-                    }
-                }>
-                    (а также, я до сих пор очень люблю своего Ириську..💘).
+                <span style={{ color: "#15181870" }}>
+                    Также я очень люблю своего Ириську, не смотря ни на что.. И я сдержу своё обещание, которое у нас было 💘
                 </span> <br />
 
                 Больше.. мне пока нечего рассказать тут, о себе.
             </p>
         </section>
+        </>
     );
 };

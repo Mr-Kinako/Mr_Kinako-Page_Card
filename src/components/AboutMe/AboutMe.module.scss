@@ -26,14 +26,14 @@
   backdrop-filter: blur(4px);
   border: 1px solid rgba(255, 255, 255, 0.4);
   border-radius: 16px;
-  padding: 16px;
+  padding: 14px 20px;
   gap: 12px;
 
   &.aboutMeOpen {
-    animation: fadeIn 0.4s ease-in-out forwards;
+    animation: fadeIn 0.5s ease-in-out forwards;
   }
   &.aboutMeClose {
-    animation: fadeOut 0.4s ease-in-out forwards;
+    animation: fadeOut 0.5s ease-in-out forwards;
   }
 
   h2 {

@@ -1,10 +1,16 @@
 @use "sass:color";
 
+$primaryBGPageColor:rgb(195, 212, 212);
+
 $primaryTextColor: rgb(43, 53, 53);
 $secondaryTextColor: rgb(78, 92, 92);
 
-$linkColor: rgb(85, 102, 102);
-$linkColorHover: rgb(55, 65, 65);
-$linkActiveColor: rgb(49, 58, 58);
+$pageLinkColor: rgb(85, 102, 102);
+$pageLinkColorHover: rgb(55, 65, 65);
+$pageLinkActiveColor: rgb(49, 58, 58);
 
 $separatorColor: rgba(85, 114, 114);
+
+$bgBorderColor: rgb(154, 255, 255);
+
+$linksColor: rgb(158, 126, 233);

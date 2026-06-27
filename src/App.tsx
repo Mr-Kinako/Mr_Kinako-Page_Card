@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate, Outlet } from 'react-router';
 import { Home } from '@/pages/Home';
 import { NavContainer } from './components/NavContainer';
+import { Footer } from './components/Footer';
 import { isDev } from './tumblers';
 import { Media } from './pages/Media/Media';
 import styles from './App.module.scss';
@@ -11,6 +12,8 @@ const Layout = () => {
       <NavContainer />
 
       <Outlet />
+
+      <Footer />
     </>
   );
 };
