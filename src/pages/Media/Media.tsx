@@ -1,86 +1,93 @@
-import { useState } from 'react';
-import cn from 'classnames';
-import styles from './Media.module.scss';
+import { useState } from "react";
+import cn from "classnames";
+import styles from "./Media.module.scss";
 
 // @ts-ignore
-const imageModules = import.meta.glob('/public/media/*.{jpg,jpeg,png,webp}', { eager: true });
+const imageModules = import.meta.glob("/public/media/*.{jpg,jpeg,png,webp}", {
+   eager: true,
+});
 
 const mediaList = Object.keys(imageModules).map((path, index) => ({
-    id: index + 1,
-    src: path.replace('/public', '')
+   id: index + 1,
+   src: path.replace("/public", ""),
 }));
 
 export const Media = () => {
-    const [activeSrc, setActiveSrc] = useState<string | null>(null);
-    const [isClosing, setIsClosing] = useState(false);
-    const [isAnimating, setIsAnimating] = useState(false);
+   const [activeSrc, setActiveSrc] = useState<string | null>(null);
+   const [isClosing, setIsClosing] = useState(false);
+   const [isAnimating, setIsAnimating] = useState(false);
 
-    const openOverlay = (src: string) => {
-        if (isAnimating || activeSrc) return;
+   const openOverlay = (src: string) => {
+      if (isAnimating || activeSrc) return;
 
-        setIsAnimating(true);
-        setActiveSrc(src);
-        setIsClosing(false);
+      setIsAnimating(true);
+      setActiveSrc(src);
+      setIsClosing(false);
 
-        setTimeout(() => {
-            setIsAnimating(false);
-        }, 320);
-    };
-    const closeOverlay = () => {
-        if (isAnimating || !activeSrc) return;
+      setTimeout(() => {
+         setIsAnimating(false);
+      }, 320);
+   };
+   const closeOverlay = () => {
+      if (isAnimating || !activeSrc) return;
 
-        setIsAnimating(true);
-        setIsClosing(true);
+      setIsAnimating(true);
+      setIsClosing(true);
 
-        setTimeout(() => {
-            setActiveSrc(null);
-            setIsClosing(false);
-            setIsAnimating(false);
-        }, 320);
-    };
+      setTimeout(() => {
+         setActiveSrc(null);
+         setIsClosing(false);
+         setIsAnimating(false);
+      }, 320);
+   };
 
-    return (
-        <div className={styles.mediaContainer}>
-            <h2 className={styles.pageTitle}>Галерея Медиа</h2>
+   return (
+      <div className={styles.mediaContainer}>
+         <h2 className={styles.pageTitle}>Галерея Медиа</h2>
 
-            <div className={styles.contentWindow}>
-                <div className={styles.masonryGrid}>
-                    {mediaList.map((item) => (
-                        <div key={item.id}
-                            className={styles.card}
-                            onClick={() => openOverlay(item.src)}
-                        >
-                            <img src={item.src}
-                                alt={`Media asset ${item.id}`}
-                                loading="lazy"
-                            />
-                        </div>
-                    ))}
-                </div>
+         <div className={styles.contentWindow}>
+            <div className={styles.masonryGrid}>
+               {mediaList.map((item) => (
+                  <div
+                     key={item.id}
+                     className={styles.card}
+                     onClick={() => openOverlay(item.src)}
+                  >
+                     <img
+                        src={item.src}
+                        alt={`Media asset ${item.id}`}
+                        loading="lazy"
+                     />
+                  </div>
+               ))}
             </div>
+         </div>
 
-            {activeSrc && (
-                <div className={cn(
-                        styles.overlay,
-                        isClosing ? styles.fadeOut : styles.fadeIn
-                    )}
-                    onClick={closeOverlay}
-                >
-                    <div className={styles.overlayContent}
-                        onClick={(e) => e.stopPropagation()}
-                    >
-                        <img src={activeSrc}
-                            alt="Full size view"
-                            decoding="async"
-                            onClick={closeOverlay}
-                        />
+         {activeSrc && (
+            <div
+               className={cn(
+                  styles.overlay,
+                  isClosing ? styles.fadeOut : styles.fadeIn,
+               )}
+               onClick={closeOverlay}
+            >
+               <div
+                  className={styles.overlayContent}
+                  onClick={(e) => e.stopPropagation()}
+               >
+                  <img
+                     src={activeSrc}
+                     alt="Full size view"
+                     decoding="async"
+                     onClick={closeOverlay}
+                  />
 
-                        <button className={styles.closeButton}
-                            onClick={closeOverlay}
-                        >×</button>
-                    </div>
-                </div>
-            )}
-        </div>
-    );
+                  <button className={styles.closeButton} onClick={closeOverlay}>
+                     ×
+                  </button>
+               </div>
+            </div>
+         )}
+      </div>
+   );
 };

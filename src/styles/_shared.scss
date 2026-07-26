@@ -1,0 +1,24 @@
+@use "@/styles/_variables.scss" as *;
+@use "sass:color";
+
+$max-width: 700px;
+
+@mixin page-styles {
+   width: 100%;
+   max-width: $max-width;
+   padding: max(10vh, 40px) 16px 24px 16px;
+   margin: 0 auto;
+
+   background-color: $primaryBGPageColor;
+
+   flex-grow: 1;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   gap: 1rem;
+
+   @media (min-width: $max-width) {
+      border-left: 3px solid color.change($bgBorderColor, $alpha: 0.5);
+      border-right: 3px solid color.change($bgBorderColor, $alpha: 0.5);
+   }
+}

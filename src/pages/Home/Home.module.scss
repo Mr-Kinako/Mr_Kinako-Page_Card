@@ -1,99 +1,86 @@
+@use "@/styles/_shared.scss" as shared;
+
 $max-width: 700px;
 
 .home {
-  width: 100%;
-  max-width: $max-width;
-  margin: 0 auto;
+   @include shared.page-styles;
 
-  background-color: $primaryBGPageColor;
-  padding: max(10vh, 40px) 16px 24px 16px;
-  @media (min-width: $max-width) {
-    border-left: 3px solid color.change($bgBorderColor, $alpha: 0.5);
-    border-right: 3px solid color.change($bgBorderColor, $alpha: 0.5);
-  }
+   .openAboutMe {
+      margin: 12px 0;
 
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 16px;
+      button {
+         background: rgba(255, 255, 255, 0.6);
+         color: $primaryTextColor;
+         font-size: 1rem;
+         font-weight: 600;
+         padding: 14px 16px;
+         border: 1px solid rgba(0, 0, 0, 0.32);
+         border-radius: 32px;
 
-  .openAboutMe {
-    margin: 12px 0;
+         cursor: pointer;
+         user-select: none;
+         transition: background-color 0.2s ease;
 
-    button {
-      background: rgba(255, 255, 255, 0.6);
-      color: $primaryTextColor;
-      font-size: 1rem;
-      font-weight: 600;
-      padding: 14px 16px;
-      border: 1px solid rgba(0, 0, 0, 0.32);
-      border-radius: 32px;
+         appearance: none;
 
-      cursor: pointer;
-      user-select: none;
-      transition: background-color 0.2s ease;
-
-      appearance: none;
-
-      &:disabled {
-        background: rgba(255, 255, 255, 0.2);
-        color: color.change($primaryTextColor, $alpha: 0.5);
-        border: 1px solid transparent;
-        cursor: not-allowed;
+         &:disabled {
+            background: rgba(255, 255, 255, 0.2);
+            color: color.change($primaryTextColor, $alpha: 0.5);
+            border: 1px solid transparent;
+            cursor: not-allowed;
+         }
       }
-    }
-  }
+   }
 
-  .heroSection {
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+   .heroSection {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
 
-    .title {
-      font-size: 2.2rem;
-      color: $primaryTextColor;
-      font-weight: 700;
-    }
+      .title {
+         font-size: 2.2rem;
+         color: $primaryTextColor;
+         font-weight: 700;
+      }
 
-    .subtitle {
-      font-size: 1.15rem;
-      font-weight: 500;
-      color: $secondaryTextColor;
-      line-height: 1.4;
-      max-width: 600px;
-      margin: 0 auto;
-    }
-  }
+      .subtitle {
+         font-size: 1.15rem;
+         font-weight: 500;
+         color: $secondaryTextColor;
+         line-height: 1.4;
+         max-width: 600px;
+         margin: 0 auto;
+      }
+   }
 
-  .contentSection {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
+   .contentSection {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+   }
 
-  .placeholderCard {
-    background: rgba(255, 255, 255, 0.5);
-    backdrop-filter: blur(4px);
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    border-radius: 8px;
-    padding: 16px;
-    text-align: center;
+   .placeholderCard {
+      background: rgba(255, 255, 255, 0.5);
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      border-radius: 8px;
+      padding: 16px;
+      text-align: center;
 
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
 
-    h3 {
-      color: $primaryTextColor;
-      font-size: 1.25rem;
-    }
+      h3 {
+         color: $primaryTextColor;
+         font-size: 1.25rem;
+      }
 
-    p {
-      color: $secondaryTextColor;
-      font-size: 0.95rem;
-      line-height: 1.4;
-    }
-  }
+      p {
+         color: $secondaryTextColor;
+         font-size: 0.95rem;
+         line-height: 1.4;
+      }
+   }
 }
