@@ -1,50 +1,78 @@
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-25px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+   from {
+      opacity: 0;
+      transform: translateY(-25px);
+   }
+   to {
+      opacity: 1;
+      transform: translateY(0);
+   }
 }
 @keyframes fadeOut {
-  from {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  to {
-    opacity: 0;
-    transform: translateY(-25px);
-  }
+   from {
+      opacity: 1;
+      transform: translateY(0);
+   }
+   to {
+      opacity: 0;
+      transform: translateY(-25px);
+   }
 }
 
 .aboutMe {
-  display: flex;
-  flex-direction: column;
-  background: rgba(255, 255, 255, 0.4);
-  backdrop-filter: blur(4px);
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  border-radius: 16px;
-  padding: 14px 20px;
-  gap: 12px;
+   display: flex;
+   flex-direction: column;
+   background: rgba(255, 255, 255, 0.4);
+   backdrop-filter: blur(4px);
+   border: 1px solid rgba(255, 255, 255, 0.4);
+   border-radius: 16px;
+   padding: 14px 20px;
+   gap: 12px;
 
-  &.aboutMeOpen {
-    animation: fadeIn 0.5s ease-in-out forwards;
-  }
-  &.aboutMeClose {
-    animation: fadeOut 0.5s ease-in-out forwards;
-  }
+   &.aboutMeOpen {
+      animation: fadeIn 0.5s ease-in-out forwards;
+   }
+   &.aboutMeClose {
+      animation: fadeOut 0.5s ease-in-out forwards;
+   }
 
-  h2 {
-    font-size: 1.2rem;
-    color: $primaryTextColor
-  }
+   .aboutMe_header {
+      font-size: 1.2rem;
+      color: $primaryTextColor;
+   }
 
-  p {
-    font-size: 1rem;
-    font-weight: 500;
-    color: $secondaryTextColor;
-    line-height: 1.4;
-  }
+   .aboutMe_contentContainer {
+      span {
+         font-size: 1rem;
+         font-weight: 500;
+         color: $secondaryTextColor;
+         line-height: 1.4;
+      }
+
+      .spoiler {
+         background-color: color.change(
+            $primaryTextColor,
+            $alpha: 0.6,
+            $lightness: 14%
+         );
+         user-select: none;
+         transition: background-color 0.2s ease;
+         cursor: pointer;
+
+         .spoilerText {
+            color: #ffffff00;
+            transition: background-color 0.2s ease;
+
+            &.visible {
+               color: color.change($primaryTextColor, $alpha: 0.5);
+            }
+         }
+
+         &.visible {
+            background-color: #ffffff00;
+            user-select: auto;
+            cursor: default;
+         }
+      }
+   }
 }

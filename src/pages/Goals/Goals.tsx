@@ -1,62 +1,18 @@
-import { CardContainer } from "@/components/CardContainer";
+import { CardContainer } from "@/components/UI-Kit/CardContainer";
 import s from "./Goals.module.scss";
-import { isProd } from "@/tumblers";
+import { getGoalsStatsList, goalStatCategory } from "./GoalsUtils";
+import { constantStatuses, GoalsData } from "./GoalsData";
 
-interface goalStatItem {
-   id: string;
-   title: string;
-   count: number;
-}
-export const goalsStatsList: goalStatItem[] = [
-   {
-      id: "projects",
-      title: "Кол-во проектов",
-      count: 2,
-   },
-   {
-      id: "allGoals",
-      title: "Всего целей (за исключением выполненных)",
-      count: 3,
-   },
-   {
-      id: "workPriority",
-      title: "Приоритет работы на данный момент",
-      count: 4,
-   },
-   {
-      id: "inProcess",
-      title: "В процессе",
-      count: 0,
-   },
-   {
-      id: "awaiting",
-      title: "Ожидают",
-      count: 3,
-   },
-   {
-      id: "completed",
-      title: "Выполнены",
-      count: 0,
-   },
-   {
-      id: "abandoned",
-      title: "Заброшены",
-      count: 0,
-   },
-];
 interface GoalsProps {
-   stats: goalStatItem[];
+   stats?: goalStatCategory;
 }
 
 export const Goals = ({ stats }: GoalsProps) => {
-   let hiddenTextStyle = 0;
-   if (isProd) {
-      hiddenTextStyle = 0;
-   }
+   const currentStats = stats || getGoalsStatsList();
 
    return (
       <div className={s["goals-page"]}>
-         <div className={s["header-container"]}>
+         <CardContainer customClass={s["header-container"]}>
             <div className={s.headerInfo}>
                <h1 className={s.headerTitle}>Мои зафиксированные цели</h1>
                <div className={s.headerDesc}>
@@ -67,29 +23,85 @@ export const Goals = ({ stats }: GoalsProps) => {
 
             <div className={s.headerStatsContainer}>
                <CardContainer customClass={s.editContainer}>
-                  {stats.map((item) => (
+                  {Object.values(currentStats).map((item) => (
                      <div key={item.id} className={s.goalItem}>
                         <div className={s.overlay}></div>
+
                         <span className={s.count}>{item.count}</span>
                         <h5 className={s.title}>{item.title}</h5>
+
+                        {item.id === "work-priority" && (
+                           <span className={s.priorityDesc}>
+                              высчитывается по формуле:
+                              <br />
+                              (inProcessGoals * 2.58) + (awaitingGoals * 1.08) +
+                              ((abandonedGoals * 1.24) +
+                              (abandonedProjectsCount) * 0.16) <br />
+                              Math.max(1.0, 20.0 - currentWeight) <br />
+                              parseFloat(rawPriority.toFixed(3))
+                           </span>
+                        )}
                      </div>
                   ))}
                </CardContainer>
             </div>
-         </div>
+         </CardContainer>
 
-         <div className={`${s["tasks-container"]} ${isProd ? s.hidden : null}`}>
-            <span style={{ opacity: hiddenTextStyle }}>
-               Молодцы, ваша внимательность очень хороша. Однако не знаю что
-               даст вам этот блок, вы увидите лишь сырую заготовку..
-            </span>
-            <ul>
-               <li>
-                  <h4>Задача #1</h4>
-                  <p>description</p>
-               </li>
-            </ul>
-         </div>
+         <CardContainer customClass={s["tasks-container"]}>
+            <div className={s.tasksContentContainer}>
+               {Object.entries(GoalsData).map(([projectKey, project]) => {
+                  const tasks = Object.entries(project.content || {});
+                  const activeGoalsCount = Object.values(
+                     project.content || {},
+                  ).filter(
+                     (task) => task.status !== constantStatuses.completed,
+                  ).length;
+                  const goalsCount = activeGoalsCount ? activeGoalsCount : 0;
+
+                  return (
+                     <div key={projectKey} className={s.projectCard}>
+                        <div className={s.projectHeaderTitle}>
+                           <h3 className={s.projectTitle}>{project.title}</h3>
+                           <CardContainer customClass={s.projectGoals}>
+                              <span className={s.goals}>
+                                 {goalsCount} целей
+                              </span>
+                           </CardContainer>
+                        </div>
+                        {project.description && (
+                           <p className={s.projectDesc}>
+                              {project.description}
+                           </p>
+                        )}
+
+                        {tasks.length > 0 ? (
+                           <ul className={s.taskList}>
+                              {Object.entries(project.content || {}).map(
+                                 ([taskKey, task]) => (
+                                    <CardContainer key={taskKey}>
+                                       <h4>{task.title}</h4>
+                                       <p>{task.description}</p>
+
+                                       <div className={s.taskMeta}>
+                                          <span>{task.priority}</span>
+                                          <span>{task.status}</span>
+                                       </div>
+                                    </CardContainer>
+                                 ),
+                              )}
+                           </ul>
+                        ) : (
+                           <div className={s.emptyContentFallback}>
+                              <span>
+                                 Задачи для этого проекта пока не сформированы.
+                              </span>
+                           </div>
+                        )}
+                     </div>
+                  );
+               })}
+            </div>
+         </CardContainer>
       </div>
    );
 };

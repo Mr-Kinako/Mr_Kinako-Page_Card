@@ -1,6 +1,7 @@
 import { useState } from "react";
 import cn from "classnames";
 import styles from "./Media.module.scss";
+import { isDev } from "@/tumblers";
 
 // @ts-ignore
 const imageModules = import.meta.glob("/public/media/*.{jpg,jpeg,png,webp}", {
@@ -41,53 +42,57 @@ export const Media = () => {
       }, 320);
    };
 
-   return (
-      <div className={styles.mediaContainer}>
-         <h2 className={styles.pageTitle}>Галерея Медиа</h2>
+   if (!isDev)
+      return (
+         <div className={styles.mediaContainer}>
+            <h2 className={styles.pageTitle}>Галерея Медиа</h2>
 
-         <div className={styles.contentWindow}>
-            <div className={styles.masonryGrid}>
-               {mediaList.map((item) => (
-                  <div
-                     key={item.id}
-                     className={styles.card}
-                     onClick={() => openOverlay(item.src)}
-                  >
-                     <img
-                        src={item.src}
-                        alt={`Media asset ${item.id}`}
-                        loading="lazy"
-                     />
-                  </div>
-               ))}
-            </div>
-         </div>
-
-         {activeSrc && (
-            <div
-               className={cn(
-                  styles.overlay,
-                  isClosing ? styles.fadeOut : styles.fadeIn,
-               )}
-               onClick={closeOverlay}
-            >
-               <div
-                  className={styles.overlayContent}
-                  onClick={(e) => e.stopPropagation()}
-               >
-                  <img
-                     src={activeSrc}
-                     alt="Full size view"
-                     decoding="async"
-                     onClick={closeOverlay}
-                  />
-
-                  <button className={styles.closeButton} onClick={closeOverlay}>
-                     ×
-                  </button>
+            <div className={styles.contentWindow}>
+               <div className={styles.masonryGrid}>
+                  {mediaList.map((item) => (
+                     <div
+                        key={item.id}
+                        className={styles.card}
+                        onClick={() => openOverlay(item.src)}
+                     >
+                        <img
+                           src={item.src}
+                           alt={`Media asset ${item.id}`}
+                           loading="lazy"
+                        />
+                     </div>
+                  ))}
                </div>
             </div>
-         )}
-      </div>
-   );
+
+            {activeSrc && (
+               <div
+                  className={cn(
+                     styles.overlay,
+                     isClosing ? styles.fadeOut : styles.fadeIn,
+                  )}
+                  onClick={closeOverlay}
+               >
+                  <div
+                     className={styles.overlayContent}
+                     onClick={(e) => e.stopPropagation()}
+                  >
+                     <img
+                        src={activeSrc}
+                        alt="Full size view"
+                        decoding="async"
+                        onClick={closeOverlay}
+                     />
+
+                     <button
+                        className={styles.closeButton}
+                        onClick={closeOverlay}
+                     >
+                        ×
+                     </button>
+                  </div>
+               </div>
+            )}
+         </div>
+      );
 };

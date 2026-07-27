@@ -1,56 +1,61 @@
 .navigationContainer {
-    width: 100%;
-    position: fixed;
-    display: flex;
-    justify-content: center;
-    margin: 12px 0 12px 0;
-    z-index: 100;
+   width: 100%;
+   position: fixed;
+   display: flex;
+   justify-content: center;
+   margin: 12px 0 12px 0;
+   z-index: 100;
 
-    .navBubble {
-        display: flex;
-        padding: 10px 16px 10px 16px;
-        background: rgba(255, 255, 255, 0.2);
-        backdrop-filter: blur(3px);
-        border: 1px solid rgba(255, 255, 255, 0.4);
-        border-radius: 32px;
-        gap: 10px;
-        user-select: none;
-    }
+   .navBubble {
+      display: flex;
+      padding: 10px 16px 10px 16px;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(3px);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      border-radius: 32px;
+      gap: 10px;
+      user-select: none;
+   }
 
-    .separator {
-        content: "";
-        width: 1px;
-        height: 100%;
-        position: relative;
-        display: block;
-        background: color.change($separatorColor, $alpha: 0.8);
+   .separator {
+      content: "";
+      width: 1px;
+      height: 100%;
+      position: relative;
+      display: block;
+      background: color.change($separatorColor, $alpha: 0.8);
 
-        &.isDev { display: none; }
-    }
+      &.notDev {
+         display: none;
+      }
+   }
 
-    a {
-        text-decoration: none;
-        color: $pageLinkColor;
-        font-weight: 400;
-        box-shadow: 1;
-        transition:
-            color 0.2s ease,
-            transform 0.2s ease;
+   a {
+      text-decoration: none;
+      color: $pageLinkColor;
+      font-weight: 400;
+      box-shadow: 1;
+      transition:
+         color 0.2s ease,
+         transform 0.2s ease;
 
-        &:hover {
-            color: $pageLinkColorHover;
-            transform: translateY(-1px)
-        }
+      &:hover {
+         color: $pageLinkColorHover;
+         transform: translateY(-1px);
+      }
 
-        &.active {
-            color: $pageLinkActiveColor;
-            font-weight: 500;
-            text-decoration: overline;
-            transform: translateY(-1px);
-        } &.active:hover {
-            color: color.adjust($pageLinkActiveColor, $lightness: 16%);
-        }
+      &.active {
+         color: $pageLinkActiveColor;
+         font-weight: 500;
+         text-decoration: overline;
+         transform: translateY(-1px);
+      }
+      &.active:hover {
+         color: color.adjust($pageLinkActiveColor, $lightness: 16%);
+      }
 
-        &.isDev { display: none; }
-    }
+      &.notDev {
+         display: none;
+      }
+   }
 }

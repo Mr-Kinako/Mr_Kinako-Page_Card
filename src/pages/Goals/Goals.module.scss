@@ -9,6 +9,7 @@
       color: #d8d8d8;
       line-height: 1.2;
       padding: 0 8px 8px 8px;
+      border: none;
       border-radius: 2px;
       box-shadow:
          0 4px 6px rgb(0, 0, 0, 0.5),
@@ -97,6 +98,13 @@
                margin-bottom: 2px;
                z-index: 8;
             }
+
+            .priorityDesc {
+               width: 360px;
+               font-size: 0.72rem;
+               color: color.adjust(#7e8a8e, $lightness: -20%);
+               z-index: 8;
+            }
          }
       }
    }
@@ -104,8 +112,16 @@
    .tasks-container {
       display: flex;
       flex-direction: column;
-      &.hidden {
-         opacity: 0;
+
+      .tasksContentContainer {
+         .projectCard {
+            .projectHeaderTitle {
+               display: flex;
+               justify-content: space-between;
+               align-items: center;
+               gap: 1rem;
+            }
+         }
       }
    }
 }
