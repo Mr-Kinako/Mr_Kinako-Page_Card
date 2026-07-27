@@ -2,4 +2,4 @@ export interface Tumblers {
     isDev?: boolean;
 }
 
-export const isDev = true;
+export const isDev = false;
