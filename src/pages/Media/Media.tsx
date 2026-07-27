@@ -42,7 +42,7 @@ export const Media = () => {
       }, 320);
    };
 
-   if (!isDev)
+   if (isDev)
       return (
          <div className={styles.mediaContainer}>
             <h2 className={styles.pageTitle}>Галерея Медиа</h2>
