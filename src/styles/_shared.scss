@@ -17,7 +17,8 @@ $max-width: 700px;
    align-items: center;
    gap: 1rem;
    overflow-y: auto;
-   scrollbar-width: thin;
+   overflow-x: hidden;
+   scrollbar-width: auto;
    scrollbar-gutter: stable both-edges;
 
    @media (min-width: $max-width) {

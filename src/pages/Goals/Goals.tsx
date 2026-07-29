@@ -2,11 +2,11 @@ import { CardContainer } from "@/components/UI-Kit/CardContainer";
 import s from "./Goals.module.scss";
 import {
    getGoalsStatsList,
-   goalStatCategory,
    PRIORITY_CLASSES,
    STATUS_CLASSES,
 } from "./GoalsUtils";
-import { constantStatuses, GoalsData } from "./GoalsData";
+import { constantStatuses, GoalsData, goalStatCategory } from "./GoalsData";
+import { useState } from "react";
 
 interface GoalsProps {
    stats?: goalStatCategory;
@@ -14,40 +14,87 @@ interface GoalsProps {
 
 export const Goals = ({ stats }: GoalsProps) => {
    const currentStats = stats || getGoalsStatsList();
+   const [isPriorityModalOpen, setIsPriorityModalOpen] = useState(false);
 
    return (
       <div className={s["goals-page"]}>
+         {isPriorityModalOpen && (
+            <div
+               className={s.modalOverlay}
+               onClick={() => setIsPriorityModalOpen(false)}
+            >
+               <CardContainer
+                  customClass={s.modalContent}
+                  onClick={(e) => e.stopPropagation()}
+               >
+                  <div className={s.modalHeader}>
+                     <h3>Формула расчёта приоритета</h3>
+                     <button
+                        className={s.closeBtn}
+                        onClick={() => setIsPriorityModalOpen(false)}
+                     >
+                        ⨉
+                     </button>
+                  </div>
+
+                  <div className={s.modalBody}>
+                     <p>
+                        Приоритет находится в жёстком диапазоне от{" "}
+                        <strong>1.000</strong> (высокий) до{" "}
+                        <strong>40.000</strong> (низкий).
+                     </p>
+                     <ul>
+                        <li>
+                           <strong>Backlog Score:</strong> Учитывает заброшенные
+                           и ожидающие задачи.
+                        </li>
+                        <li>
+                           <strong>Critical Anomalies:</strong> заброшенные
+                           задачи с высоким приоритетом/средним приоритетом
+                           сильно снижают число.
+                        </li>
+                        <li>
+                           <strong>Abstraction parameters:</strong> longtime,
+                           deadline, moral и myself price.
+                        </li>
+                     </ul>
+                     <p className={s.modalNote}>
+                        Обновляется автоматически каждые 24 часа.
+                     </p>
+                  </div>
+               </CardContainer>
+            </div>
+         )}
+
          <CardContainer customClass={s["header-container"]}>
             <div className={s.headerInfo}>
                <h1 className={s.headerTitle}>Мои зафиксированные цели</h1>
                <div className={s.headerDesc}>
-                  Данные тут могут быть не актуальны. <br />
-                  Больше всего могут быть актуальными данные в другом блоке.
+                  Тут находиться общий свод данных, в виде количества чего-то
+                  конкретного.
                </div>
             </div>
 
             <div className={s.headerStatsContainer}>
                <CardContainer customClass={s.editContainer}>
-                  {Object.values(currentStats).map((item) => (
-                     <div key={item.id} className={s.goalItem}>
-                        <div className={s.overlay}></div>
+                  {Object.values(currentStats).map((item) => {
+                     const isPriorityCard = item.id === "work-priority";
 
-                        <span className={s.count}>{item.count}</span>
-                        <h5 className={s.title}>{item.title}</h5>
+                     return (
+                        <div
+                           key={item.id}
+                           className={`${s.goalItem} ${isPriorityCard ? s.clickable : ""}`}
+                           onClick={() =>
+                              isPriorityCard && setIsPriorityModalOpen(true)
+                           }
+                        >
+                           <div className={s.overlay}></div>
 
-                        {item.id === "work-priority" && (
-                           <span className={s.priorityDesc}>
-                              высчитывается по формуле:
-                              <br />
-                              (inProcessGoals * 2.58) + (awaitingGoals * 1.08) +
-                              ((abandonedGoals * 1.24) +
-                              (abandonedProjectsCount) * 0.16) <br />
-                              Math.max(1.0, 20.0 - currentWeight) <br />
-                              parseFloat(rawPriority.toFixed(3))
-                           </span>
-                        )}
-                     </div>
-                  ))}
+                           <span className={s.count}>{item.count}</span>
+                           <h5 className={s.title}>{item.title}</h5>
+                        </div>
+                     );
+                  })}
                </CardContainer>
             </div>
          </CardContainer>
@@ -88,12 +135,14 @@ export const Goals = ({ stats }: GoalsProps) => {
                                     key={taskKey}
                                     customClass={s.contentContainer}
                                  >
-                                    <h4 className={s.taskTitle}>
-                                       {task.title}
-                                    </h4>
-                                    <p className={s.taskDesc}>
-                                       {task.description}
-                                    </p>
+                                    <div className={s.taskInfoContainer}>
+                                       <h4 className={s.taskTitle}>
+                                          {task.title}
+                                       </h4>
+                                       <p className={s.taskDesc}>
+                                          {task.description}
+                                       </p>
+                                    </div>
 
                                     <div className={s.taskMeta}>
                                        <CardContainer
