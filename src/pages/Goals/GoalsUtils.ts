@@ -1,4 +1,17 @@
-import { GoalsData, constantStatuses } from "./GoalsData";
+import { GoalsData, constantPriorities, constantStatuses } from "./GoalsData";
+import s from "./Goals.module.scss";
+
+export const STATUS_CLASSES: Record<string, string> = {
+   [constantStatuses.completed]: s.statusCompleted,
+   [constantStatuses.inProcess]: s.statusInProcess,
+   [constantStatuses.awaiting]: s.statusAwaiting,
+   [constantStatuses.abandoned]: s.statusAbandoned,
+}
+export const PRIORITY_CLASSES: Record<string, string> = {
+   [constantPriorities.high]: s.priorityHigh,
+   [constantPriorities.medium]: s.priorityMedium,
+   [constantPriorities.low]: s.priorityLow,
+}
 
 export interface GoalStatItem {
    id: string;
@@ -61,12 +74,12 @@ export const getGoalsStatsList = (): goalStatCategory => {
       },
       "in-process-goals": {
          id: "in-process-goals",
-         title: "В процессе (цели)",
+         title: "Цели в процессе",
          count: stats.inProcessGoals,
       },
       "awaiting-goals": {
          id: "awaiting-goals",
-         title: "Ожидают (цели)",
+         title: "Ожидают цели",
          count: stats.awaitingGoals,
       },
       "completed-goals": {

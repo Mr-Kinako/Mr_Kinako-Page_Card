@@ -26,15 +26,33 @@ export const constantStatuses = {
 
 export const GoalsData: Record<string, ProjectData> = {
    "web-osu-lazer-server": {
-      title: "osu! lazer server (web-development)",
-      description: "",
-      // content: {
-      //    0: {
-      //       title: "Показ активности",
-      //       description: "Сделать вместо текста \"Оффлайн\" зеленый значок возле аватарки, когда игрок онлайн, и серый когда оффлайн",
-      //       priority: constantPriorities.low,
-      //       status: constantStatuses.awaiting
-      //    }
-      // }
+      title: "Osu! Lazer Server (web-development)",
+      description: "I like to this server",
+      content: {
+         0: {
+            title: "Показ активности",
+            description: "Сделать вместо текста \"Оффлайн\" зеленый значок возле аватарки, когда игрок онлайн, и серый когда оффлайн",
+            priority: constantPriorities.low,
+            status: constantStatuses.awaiting
+         },
+         1: {
+            title: "Показ активности",
+            description: "Сделать вместо текста \"Оффлайн\" зеленый значок возле аватарки, когда игрок онлайн, и серый когда оффлайн",
+            priority: constantPriorities.high,
+            status: constantStatuses.inProcess
+         },
+         2: {
+            title: "Показ активности",
+            description: "Сделать вместо текста \"Оффлайн\" зеленый значок возле аватарки, когда игрок онлайн, и серый когда оффлайн",
+            priority: constantPriorities.low,
+            status: constantStatuses.abandoned
+         },
+         3: {
+            title: "Показ активности",
+            description: "Сделать вместо текста \"Оффлайн\" зеленый значок возле аватарки, когда игрок онлайн, и серый когда оффлайн",
+            priority: constantPriorities.medium,
+            status: constantStatuses.completed
+         },
+      }
    }
 }

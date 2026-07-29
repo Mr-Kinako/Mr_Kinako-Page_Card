@@ -1,6 +1,6 @@
 @use "sass:color";
 
-$primaryBGPageColor:rgb(195, 212, 212);
+$primaryBGPageColor: rgb(195, 212, 212);
 
 $primaryTextColor: rgb(43, 53, 53);
 $secondaryTextColor: rgb(78, 92, 92);
@@ -14,3 +14,6 @@ $separatorColor: rgba(85, 114, 114);
 $bgBorderColor: rgb(154, 255, 255);
 
 $linksColor: rgb(158, 126, 233);
+
+$defaultTextShadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+$defaultContainerShadow: 0 1px 6px rgba(0, 0, 0, 8);

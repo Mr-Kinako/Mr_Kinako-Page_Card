@@ -1,6 +1,11 @@
 import { CardContainer } from "@/components/UI-Kit/CardContainer";
 import s from "./Goals.module.scss";
-import { getGoalsStatsList, goalStatCategory } from "./GoalsUtils";
+import {
+   getGoalsStatsList,
+   goalStatCategory,
+   PRIORITY_CLASSES,
+   STATUS_CLASSES,
+} from "./GoalsUtils";
 import { constantStatuses, GoalsData } from "./GoalsData";
 
 interface GoalsProps {
@@ -48,19 +53,19 @@ export const Goals = ({ stats }: GoalsProps) => {
          </CardContainer>
 
          <CardContainer customClass={s["tasks-container"]}>
-            <div className={s.tasksContentContainer}>
-               {Object.entries(GoalsData).map(([projectKey, project]) => {
-                  const tasks = Object.entries(project.content || {});
-                  const activeGoalsCount = Object.values(
-                     project.content || {},
-                  ).filter(
-                     (task) => task.status !== constantStatuses.completed,
-                  ).length;
-                  const goalsCount = activeGoalsCount ? activeGoalsCount : 0;
+            {Object.entries(GoalsData).map(([projectKey, project]) => {
+               const tasks = Object.entries(project.content || {});
+               const activeGoalsCount = Object.values(
+                  project.content || {},
+               ).filter(
+                  (task) => task.status !== constantStatuses.completed,
+               ).length;
+               const goalsCount = activeGoalsCount ? activeGoalsCount : 0;
 
-                  return (
-                     <div key={projectKey} className={s.projectCard}>
-                        <div className={s.projectHeaderTitle}>
+               return (
+                  <div key={projectKey} className={s.projectCard}>
+                     <div className={s.projectHeaderTitle}>
+                        <div className={s.projectInfoContainer}>
                            <h3 className={s.projectTitle}>{project.title}</h3>
                            <CardContainer customClass={s.projectGoals}>
                               <span className={s.goals}>
@@ -73,34 +78,49 @@ export const Goals = ({ stats }: GoalsProps) => {
                               {project.description}
                            </p>
                         )}
-
-                        {tasks.length > 0 ? (
-                           <ul className={s.taskList}>
-                              {Object.entries(project.content || {}).map(
-                                 ([taskKey, task]) => (
-                                    <CardContainer key={taskKey}>
-                                       <h4>{task.title}</h4>
-                                       <p>{task.description}</p>
-
-                                       <div className={s.taskMeta}>
-                                          <span>{task.priority}</span>
-                                          <span>{task.status}</span>
-                                       </div>
-                                    </CardContainer>
-                                 ),
-                              )}
-                           </ul>
-                        ) : (
-                           <div className={s.emptyContentFallback}>
-                              <span>
-                                 Задачи для этого проекта пока не сформированы.
-                              </span>
-                           </div>
-                        )}
                      </div>
-                  );
-               })}
-            </div>
+
+                     {tasks.length > 0 ? (
+                        <ul className={s.taskList}>
+                           {Object.entries(project.content || {}).map(
+                              ([taskKey, task]) => (
+                                 <CardContainer
+                                    key={taskKey}
+                                    customClass={s.contentContainer}
+                                 >
+                                    <h4 className={s.taskTitle}>
+                                       {task.title}
+                                    </h4>
+                                    <p className={s.taskDesc}>
+                                       {task.description}
+                                    </p>
+
+                                    <div className={s.taskMeta}>
+                                       <CardContainer
+                                          customClass={`${s.taskStatus} ${s.metaItem} ${STATUS_CLASSES[task.status] || ""}`}
+                                       >
+                                          {task.status}
+                                       </CardContainer>
+                                       <CardContainer
+                                          customClass={`${s.taskPriority} ${s.metaItem} ${PRIORITY_CLASSES[task.priority] || ""}`}
+                                       >
+                                          {task.priority}
+                                       </CardContainer>
+                                    </div>
+                                 </CardContainer>
+                              ),
+                           )}
+                        </ul>
+                     ) : (
+                        <div className={s.emptyContentFallback}>
+                           <span>
+                              Задачи для этого проекта пока не сформированы.
+                           </span>
+                        </div>
+                     )}
+                  </div>
+               );
+            })}
          </CardContainer>
       </div>
    );

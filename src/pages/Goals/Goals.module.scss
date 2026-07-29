@@ -2,25 +2,28 @@
 
 .goals-page {
    @include shared.page-styles;
+   max-width: 940px !important;
 
    .header-container {
+      width: 100%;
       max-width: 640px;
-      background: rgba(51, 51, 51, 0.7);
+      background: rgba(22, 22, 22, 0.7);
       color: #d8d8d8;
       line-height: 1.2;
       padding: 0 8px 8px 8px;
       border: none;
-      border-radius: 2px;
+      border-radius: 0.2rem;
       box-shadow:
          0 4px 6px rgb(0, 0, 0, 0.5),
          0 -4px 6px rgba(0, 0, 0, 0.5),
          4px 0 6px rgba(0, 0, 0, 0.5),
          -4px 0 6px rgba(0, 0, 0, 0.5);
-      margin: 6px 6px 16px 6px;
+      margin: 4px 4px 16px 4px;
 
       .headerInfo {
          margin: 4px 0 16px 0;
          border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+         overflow: hidden;
 
          .headerTitle {
             font-size: 1.4rem;
@@ -36,6 +39,7 @@
          position: relative;
          max-width: 100%;
          max-height: 14rem;
+         border-radius: 0.2rem;
          scrollbar-width: thin;
          scrollbar-color: rgba(0, 0, 0, 0.25) rgba(0, 0, 0, 0);
          overflow-y: auto;
@@ -110,16 +114,240 @@
    }
 
    .tasks-container {
-      display: flex;
-      flex-direction: column;
+      width: fit-content;
+      max-width: 860px;
+      background: rgba(22, 22, 22, 0.7);
+      color: #d8d8d8;
+      line-height: 1.2;
+      border: none;
+      border-radius: 0.6rem;
+      padding: 0;
+      box-shadow:
+         0 4px 6px rgb(0, 0, 0, 0.5),
+         0 -4px 6px rgba(0, 0, 0, 0.5),
+         4px 0 6px rgba(0, 0, 0, 0.5),
+         -4px 0 6px rgba(0, 0, 0, 0.5);
+      margin: 4px 4px 16px 4px;
 
-      .tasksContentContainer {
-         .projectCard {
-            .projectHeaderTitle {
+      .projectCard {
+         width: 100%;
+         height: 100%;
+         display: flex;
+         flex-direction: column;
+
+         .projectHeaderTitle {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+            line-height: 1;
+            padding: 6px 12px 12px 12px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.35);
+            margin: 6px 0 0 0;
+
+            .projectInfoContainer {
+               width: 100%;
                display: flex;
+               flex-direction: row;
                justify-content: space-between;
-               align-items: center;
-               gap: 1rem;
+               gap: 10px;
+
+               .projectTitle {
+                  width: 100%;
+                  display: flex;
+                  align-self: center;
+                  font-family: "JetBrains Mono SemiBold", monospace;
+                  font-size: 1rem;
+                  font-weight: 500;
+                  line-height: 1.2;
+                  text-shadow: $defaultTextShadow;
+                  margin-left: 8px;
+               }
+            }
+            .projectDesc {
+               width: fit-content;
+               max-width: 80%;
+               font-family: "JetBrains Mono Thin", monospace;
+               font-size: 0.88rem;
+               font-weight: 400;
+               color: #d1d1d1;
+               text-shadow: $defaultTextShadow;
+               padding: 5px;
+               border-radius: 0.4rem;
+               margin-left: 6px;
+            }
+
+            .projectGoals {
+               display: flex;
+               align-self: start;
+               background: rgba(0, 0, 0, 0.65);
+               padding: 8px 8px;
+               border: 1px solid rgba(0, 0, 0, 0.65);
+               border-radius: 0.8rem;
+               box-shadow: $defaultContainerShadow;
+               margin-right: 8px;
+
+               .goals {
+                  font-family: "JetBrains Mono Light", monospace;
+                  font-size: 0.8rem;
+                  font-weight: 500;
+                  color: rgb(172, 172, 172);
+                  text-wrap: nowrap;
+                  text-shadow: $defaultTextShadow;
+               }
+            }
+         }
+
+         .taskList {
+            --max-items: 1;
+            width: fit-content;
+            max-width: 100%;
+            display: grid;
+            align-self: center;
+            grid-template-columns: repeat(var(--max-items), 1fr);
+            gap: 10px;
+            padding: 10px;
+            overflow: hidden;
+
+            @media (min-width: 625px) {
+               --max-items: 2;
+            }
+            @media (min-width: 860px) {
+               --max-items: 3;
+
+               .contentContainer {
+                  max-width: 480px;
+               }
+            }
+
+            .contentContainer {
+               width: 100%;
+               max-width: 100%;
+               display: flex;
+               flex-direction: column;
+               background: rgba(22, 22, 22, 0.2);
+               padding: 6px 10px 8px 10px;
+               border: 2px solid rgba(0, 0, 0, 0.06);
+               border-radius: 0.6rem;
+               box-shadow: 0 1px 8px rgba(22, 22, 22, 0.35);
+               text-shadow: $defaultTextShadow;
+
+               .taskTitle {
+                  font-size: 1.14rem;
+                  padding-left: 8px;
+                  margin-bottom: 5px;
+               }
+               .taskDesc {
+                  width: fit-content;
+                  max-width: 100%;
+                  font-size: 0.96rem;
+                  margin-bottom: 0.8rem;
+               }
+
+               .taskMeta {
+                  width: 100%;
+                  display: flex;
+                  flex-direction: row;
+                  gap: 0.8rem;
+                  font-size: 0.8rem;
+                  margin: 0;
+
+                  .metaItem {
+                     max-width: fit-content;
+                     background: rgba(0, 0, 0, 0.06);
+                     padding: 8px;
+                     border: none;
+                     border-radius: 0.3rem;
+                     box-shadow: 0 0 6px rgba(0, 0, 0, 0.25);
+
+                     &.statusCompleted {
+                        $statusColor: rgb(40, 167, 69);
+                        background-color: color.change(
+                           $statusColor,
+                           $alpha: 0.04
+                        );
+                        color: #28a745;
+                        border: 1px solid
+                           color.change($statusColor, $alpha: 0.02);
+                        box-shadow: 0 0 6px
+                           color.change($statusColor, $alpha: 0.16);
+                     }
+                     &.statusInProcess {
+                        $statusColor: rgb(99, 221, 255);
+                        background-color: color.change(
+                           $statusColor,
+                           $alpha: 0.04
+                        );
+                        color: #63ddff;
+                        border: 1px solid
+                           color.change($statusColor, $alpha: 0.02);
+                        box-shadow: 0 0 6px
+                           color.change($statusColor, $alpha: 0.16);
+                     }
+                     &.statusAwaiting {
+                        $statusColor: rgb(246, 192, 32);
+                        background-color: color.change(
+                           $statusColor,
+                           $alpha: 0.04
+                        );
+                        color: #f6c020;
+                        border: 1px solid
+                           color.change($statusColor, $alpha: 0.02);
+                        box-shadow: 0 0 6px
+                           color.change($statusColor, $alpha: 0.16);
+                     }
+                     &.statusAbandoned {
+                        $statusColor: rgb(108, 117, 125);
+                        background-color: color.change(
+                           $statusColor,
+                           $alpha: 0.04
+                        );
+                        color: #7b838a;
+                        border: 1px solid
+                           color.change($statusColor, $alpha: 0.02);
+                        box-shadow: 0 0 6px
+                           color.change($statusColor, $alpha: 0.16);
+                     }
+
+                     /* Модификаторы для приоритетов */
+                     &.priorityHigh {
+                        $statusColor: rgb(224, 71, 86);
+                        background-color: color.change(
+                           $statusColor,
+                           $alpha: 0.04
+                        );
+                        color: #e04756;
+                        border: 1px solid
+                           color.change($statusColor, $alpha: 0.02);
+                        box-shadow: 0 0 6px
+                           color.change($statusColor, $alpha: 0.16);
+                     }
+                     &.priorityMedium {
+                        $statusColor: rgb(242, 150, 38);
+                        background-color: color.change(
+                           $statusColor,
+                           $alpha: 0.04
+                        );
+                        color: #f29626;
+                        border: 1px solid
+                           color.change($statusColor, $alpha: 0.02);
+                        box-shadow: 0 0 6px
+                           color.change($statusColor, $alpha: 0.16);
+                     }
+                     &.priorityLow {
+                        $statusColor: rgb(83, 205, 111);
+                        background-color: color.change(
+                           $statusColor,
+                           $alpha: 0.04
+                        );
+                        color: #53cd6f;
+                        border: 1px solid
+                           color.change($statusColor, $alpha: 0.02);
+                        box-shadow: 0 0 6px
+                           color.change($statusColor, $alpha: 0.16);
+                     }
+                  }
+               }
             }
          }
       }
