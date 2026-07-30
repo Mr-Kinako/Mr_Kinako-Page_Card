@@ -47,21 +47,28 @@ export const GoalsData: Record<string, ProjectData> = {
 
          1: {
             title: "Интерактивный плеер реплеев прямо на сайте",
-            description: "Чтобы можно было смотреть топ-плеи через Canvas/WebGL прямо в браузере, не скачивая сам реплей в игру",
+            description: "Чтобы можно было смотреть топ-плеи через Canvas/WebGL прямо в браузере, не скачивая сам реплей в игру.",
             priority: constantPriorities.low,
             status: constantStatuses.abandoned
          },
 
          2: {
             title: "Онлайн-превьюер скинов",
-            description: "Раздел, где можно загрузить свой скин и посмотреть, как будут выглядеть кружки, курсор и интерфейс на тестовом геймплее",
+            description: "Раздел, где можно загрузить свой скин и посмотреть, как будут выглядеть кружки, курсор и интерфейс на тестовом геймплее.",
             priority: constantPriorities.low,
             status: constantStatuses.abandoned
          },
 
          3: {
             title: "Показ активности",
-            description: "Сделать вместо текста \"Оффлайн\" зеленый значок возле аватарки, когда игрок онлайн, и серый когда оффлайн",
+            description: "Сделать вместо текста \"Оффлайн\" зеленый значок возле аватарки, когда игрок онлайн, и серый когда оффлайн.",
+            priority: constantPriorities.high,
+            status: constantStatuses.awaiting
+         },
+
+         4: {
+            title: "Регистрация",
+            description: "Выбор страны: Цвет списка и цвет текста должны быть разными, а не одинаковыми.",
             priority: constantPriorities.high,
             status: constantStatuses.awaiting
          },
