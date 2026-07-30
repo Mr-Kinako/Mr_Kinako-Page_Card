@@ -5,7 +5,7 @@ import {
    PRIORITY_CLASSES,
    STATUS_CLASSES,
 } from "./GoalsUtils";
-import { constantStatuses, GoalsData, goalStatCategory } from "./GoalsData";
+import { GoalsData, goalStatCategory } from "./GoalsData";
 import { useState } from "react";
 
 interface GoalsProps {
@@ -104,8 +104,6 @@ export const Goals = ({ stats }: GoalsProps) => {
                const tasks = Object.entries(project.content || {});
                const activeGoalsCount = Object.values(
                   project.content || {},
-               ).filter(
-                  (task) => task.status !== constantStatuses.completed,
                ).length;
                const goalsCount = activeGoalsCount ? activeGoalsCount : 0;
 
