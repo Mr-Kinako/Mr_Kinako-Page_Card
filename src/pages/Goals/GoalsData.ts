@@ -70,7 +70,7 @@ export const GoalsData: Record<string, ProjectData> = {
             title: "Регистрация",
             description: "Выбор страны: Цвет списка и цвет текста должны быть разными, а не одинаковыми.",
             priority: constantPriorities.high,
-            status: constantStatuses.inProcess
+            status: constantStatuses.completed
          },
       }
    },
