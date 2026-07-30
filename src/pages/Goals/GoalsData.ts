@@ -59,18 +59,18 @@ export const GoalsData: Record<string, ProjectData> = {
             status: constantStatuses.abandoned
          },
 
-         3: {
+         4: {
             title: "Показ активности",
             description: "Сделать вместо текста \"Оффлайн\" зеленый значок возле аватарки, когда игрок онлайн, и серый когда оффлайн.",
             priority: constantPriorities.high,
-            status: constantStatuses.inProcess
+            status: constantStatuses.completed
          },
 
-         4: {
+         3: {
             title: "Регистрация",
             description: "Выбор страны: Цвет списка и цвет текста должны быть разными, а не одинаковыми.",
             priority: constantPriorities.high,
-            status: constantStatuses.awaiting
+            status: constantStatuses.inProcess
          },
       }
    },
