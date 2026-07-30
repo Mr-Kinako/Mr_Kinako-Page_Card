@@ -110,10 +110,10 @@ export const getGoalsStatsList = (): goalStatCategory => {
       const importantAnomalies = (stats.abandonedMediumGoals * 0.5);
       console.log("importantAnomalies: " + importantAnomalies.toFixed(3));
 
-      const rawLongtime = 1.0;
-      const rawDeadline = 0.0;
-      const rawMoral = 0.47;
-      const rawMyselfPrice = 2.7;
+      const rawLongtime = 0.0;
+      const rawDeadline = 0.2;
+      const rawMoral = 0.58;
+      const rawMyselfPrice = 2.9;
       // ----------
       const longtime = Math.min(30.0, Math.max(0.0, rawLongtime));
       const deadline = Math.min(1.0, Math.max(0.0, rawDeadline));
