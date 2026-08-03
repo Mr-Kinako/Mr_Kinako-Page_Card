@@ -41,7 +41,7 @@ export const GoalsData: Record<string, ProjectData> = {
          0: {
             title: "Pull changes",
             description: "Возможность изменять пока что только mosu!wiki. вместо мгновенных изменений они должны отправляться на сервер, на проверку. Также должна быть админ панель для людей, кто будет рассматривать эти правки. Если правка принята - правки применяются к какой-то текущей правленной ветки, а само изменение архивируется в архив изменении условно до 7 дней. Если отклонена - изменения не применяются, а текущая ветка правок удаляется из очереди.",
-            priority: constantPriorities.medium,
+            priority: constantPriorities.low,
             status: constantStatuses.awaiting
          },
 
@@ -52,21 +52,21 @@ export const GoalsData: Record<string, ProjectData> = {
             status: constantStatuses.abandoned
          },
 
-         2: {
+         100: {
             title: "Онлайн-превьюер скинов",
             description: "Раздел, где можно загрузить свой скин и посмотреть, как будут выглядеть кружки, курсор и интерфейс на тестовом геймплее.",
             priority: constantPriorities.low,
             status: constantStatuses.abandoned
          },
 
-         4: {
+         102: {
             title: "Показ активности",
             description: "Сделать вместо текста \"Оффлайн\" зеленый значок возле аватарки, когда игрок онлайн, и серый когда оффлайн.",
             priority: constantPriorities.high,
             status: constantStatuses.completed
          },
 
-         3: {
+         101: {
             title: "Регистрация",
             description: "Выбор страны: Цвет списка и цвет текста должны быть разными, а не одинаковыми.",
             priority: constantPriorities.high,
@@ -83,7 +83,7 @@ export const GoalsData: Record<string, ProjectData> = {
             title: "Проработать цветовую палитру",
             description: "Поэкспериментировать с цветами, с сочетаниями; Посмотреть пару десятков современных сайтов для общей наглядности/картины; Проработать \"_variables.scss\", от сортировки до категории, также вынеся туда все наиболее встречающиеся варианты цветов в проекте, приведя их к одному виду; Нужно будет пересмотреть использование \"$variables\" и \"--variable\".",
             priority: constantPriorities.medium,
-            status: constantStatuses.abandoned
+            status: constantStatuses.awaiting
          },
          3: {
             title: "Улучшить бг",
@@ -91,17 +91,11 @@ export const GoalsData: Record<string, ProjectData> = {
             priority: constantPriorities.low,
             status: constantStatuses.abandoned
          },
-         5: {
+         101: {
             title: "Пересмотреть проект",
             description: "Структуру файлов, внутреннюю структуру файлов, зависимости",
             priority: constantPriorities.medium,
-            status: constantStatuses.awaiting
-         },
-         4: {
-            title: "Привести что-то одно к единому подходу",
-            description: "Например, хотя бы, привести Home в более порядочный вид.",
-            priority: constantPriorities.low,
-            status: constantStatuses.awaiting
+            status: constantStatuses.completed
          },
          1: {
             title: "Пересмотреть вариант с плашками",

@@ -5,15 +5,33 @@ import { Footer } from "./components/Footer";
 import { Media } from "./pages/Media";
 import styles from "./App.module.scss";
 import { Goals } from "./pages/Goals";
+import { isDev } from "./tumblers";
 
-const Layout = () => {
+const MainLayout = ({
+   isGlobalFooter = false,
+}: {
+   isGlobalFooter?: boolean;
+}) => {
    return (
       <>
          <NavContainer />
 
          <Outlet />
 
-         <Footer />
+         {isGlobalFooter && <Footer />}
+      </>
+   );
+};
+const GoalsLayout = ({
+   isGlobalFooter = false,
+}: {
+   isGlobalFooter?: boolean;
+}) => {
+   return (
+      <>
+         <Outlet />
+
+         {isGlobalFooter && <Footer />}
       </>
    );
 };
@@ -23,13 +41,15 @@ function App() {
       <div className={styles.appWrapper}>
          <BrowserRouter>
             <Routes>
-               <Route element={<Layout />}>
+               <Route element={<MainLayout />}>
                   <Route path="/" element={<Home />} />
 
-                  <Route path="/media" element={<Media />} />
+                  {isDev && <Route path="/media" element={<Media />} />}
                </Route>
 
-               <Route path="/goals" element={<Goals />} />
+               <Route element={<GoalsLayout />}>
+                  <Route path="/goals" element={<Goals />} />
+               </Route>
 
                <Route path="*" element={<Navigate to="/" />} />
             </Routes>

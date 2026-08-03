@@ -13,14 +13,16 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
+    "types": ["vite/client"],
 
-    /* Linting */
+    /* Linting & Extra checks */
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
+    "noImplicitOverride": true,
 
-    /* Современная настройка путей без baseUrl */
+    /* Paths */
     "paths": {
       "@/*": ["./src/*"]
     }

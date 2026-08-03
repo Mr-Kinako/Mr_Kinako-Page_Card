@@ -10,6 +10,15 @@ export const AboutMe = ({ isOpen }: AboutMeProps) => {
    const [shouldRender, setShouldRender] = useState<boolean>(isOpen);
    const [isSpoiler, setIsSpoiler] = useState<boolean>(true);
 
+   const InfoMap = {
+      hello: "Я Мистер Кинако, или же просто Кинако.",
+      names: "Ко мне также можно обращаться как к: Кино, Кина, Кинак, Лисёнок.",
+      moreInfo:
+         "В основном люблю играть в игры и смотреть ютуб. Ну и также слушать музыку, скорее даже обожаю. По жизни особо ничем не занимаюсь пока, только вот программированием интересуюсь немного, уже даже есть некоторое понимание в этом.",
+      spoiler:
+         "Кажется, я не отпущу одного человека. В конце концов, даже сейчас, иногда он делает меня довольно счастливым человеком, пусть и есть проблемы.",
+   };
+
    useEffect(() => {
       if (isOpen) setShouldRender(true);
    }, [isOpen]);
@@ -36,22 +45,14 @@ export const AboutMe = ({ isOpen }: AboutMeProps) => {
             <h2 className={s.aboutMe_header}>Немного информации обо мне</h2>
 
             <div className={s.aboutMe_contentContainer}>
-               <span>Я Мистер Кинако, или же просто Кинако.</span>
+               <span>{InfoMap.hello}</span>
                <br />
 
-               <span>
-                  Ко мне также можно обращаться как к: Кино, Кина, Кинак,
-                  Лисёнок.
-               </span>
+               <span>{InfoMap.names}</span>
                <br />
                <br />
 
-               <span>
-                  В основном люблю играть в игры и смотреть ютуб. Ну и также
-                  слушать музыку, скорее даже обожаю. По жизни особо ничем не
-                  занимаюсь пока, только вот программированием интересуюсь
-                  немного, уже даже есть некоторое понимание в этом.
-               </span>
+               <span>{InfoMap.moreInfo}</span>
                <br />
                <br />
 
@@ -62,9 +63,7 @@ export const AboutMe = ({ isOpen }: AboutMeProps) => {
                   <span
                      className={`${s.spoilerText} ${!isSpoiler ? s.visible : null}`}
                   >
-                     Кажется, я не отпущу одного человека. В конце концов, даже
-                     сейчас, иногда он делает меня довольно счастливым
-                     человеком, пусть и есть проблемы.
+                     {InfoMap.spoiler}
                   </span>
                </div>
             </div>

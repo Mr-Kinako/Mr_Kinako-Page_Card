@@ -1,3 +1,3 @@
-import { KContainer } from "./KContainer/KContainer";
+import { CardContainer } from "./CardContainer";
 
-export { KContainer };
+export { CardContainer };

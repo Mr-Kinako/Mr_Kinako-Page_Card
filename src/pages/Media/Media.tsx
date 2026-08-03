@@ -2,11 +2,14 @@ import { useState } from "react";
 import cn from "classnames";
 import styles from "./Media.module.scss";
 import { isDev } from "@/tumblers";
+import { Footer } from "@/components/Footer";
 
-// @ts-ignore
-const imageModules = import.meta.glob("/public/media/*.{jpg,jpeg,png,webp}", {
-   eager: true,
-});
+const imageModules = import.meta.glob<{ default: string }>(
+   "@/assets/media/*.{jpg,jpeg,png,webp}",
+   {
+      eager: true,
+   },
+);
 
 const mediaList = Object.keys(imageModules).map((path, index) => ({
    id: index + 1,
@@ -44,55 +47,61 @@ export const Media = () => {
 
    if (isDev)
       return (
-         <div className={styles.mediaContainer}>
-            <h2 className={styles.pageTitle}>Галерея Медиа</h2>
+         <>
+            <main className={styles.mediaContainer}>
+               <h2 className={styles.pageTitle}>Галерея Медиа</h2>
 
-            <div className={styles.contentWindow}>
-               <div className={styles.masonryGrid}>
-                  {mediaList.map((item) => (
-                     <div
-                        key={item.id}
-                        className={styles.card}
-                        onClick={() => openOverlay(item.src)}
-                     >
-                        <img
-                           src={item.src}
-                           alt={`Media asset ${item.id}`}
-                           loading="lazy"
-                        />
-                     </div>
-                  ))}
-               </div>
-            </div>
-
-            {activeSrc && (
-               <div
-                  className={cn(
-                     styles.overlay,
-                     isClosing ? styles.fadeOut : styles.fadeIn,
-                  )}
-                  onClick={closeOverlay}
-               >
-                  <div
-                     className={styles.overlayContent}
-                     onClick={(e) => e.stopPropagation()}
-                  >
-                     <img
-                        src={activeSrc}
-                        alt="Full size view"
-                        decoding="async"
-                        onClick={closeOverlay}
-                     />
-
-                     <button
-                        className={styles.closeButton}
-                        onClick={closeOverlay}
-                     >
-                        ×
-                     </button>
+               <div className={styles.contentWindow}>
+                  <div className={styles.masonryGrid}>
+                     {mediaList.map((item) => (
+                        <div
+                           key={item.id}
+                           className={styles.card}
+                           onClick={() => openOverlay(item.src)}
+                        >
+                           <img
+                              src={item.src}
+                              alt={`Media asset ${item.id}`}
+                              loading="lazy"
+                              draggable={false}
+                           />
+                        </div>
+                     ))}
                   </div>
                </div>
-            )}
-         </div>
+
+               {activeSrc && (
+                  <div
+                     className={cn(
+                        styles.overlay,
+                        isClosing ? styles.fadeOut : styles.fadeIn,
+                     )}
+                     onClick={closeOverlay}
+                  >
+                     <div
+                        className={styles.overlayContent}
+                        onClick={(e) => e.stopPropagation()}
+                     >
+                        <img
+                           src={activeSrc}
+                           alt="Full size view"
+                           decoding="async"
+                           onClick={closeOverlay}
+                           draggable={false}
+                        />
+
+                        <button
+                           className={styles.closeButton}
+                           onClick={closeOverlay}
+                        >
+                           ×
+                        </button>
+                     </div>
+                  </div>
+               )}
+            </main>
+
+            <Footer />
+         </>
       );
 };

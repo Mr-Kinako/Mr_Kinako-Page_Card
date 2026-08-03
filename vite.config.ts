@@ -7,7 +7,14 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: "/",
   plugins: [react()],
+  publicDir: "public",
+  server: {
+    host: "localhost",
+    port: 5173,
+    open: false
+  },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
@@ -16,7 +23,9 @@ export default defineConfig({
   css: {
     modules: {
       // Делает имена классов в DOM удобными для чтения при разработке (напр. Home_container__H3aK1)
-      generateScopedName: '[name]__[local]___[hash:base64:5]',
+      generateScopedName: process.env.NODE_ENV === 'production'
+        ? '[hash:base64:7]'
+        : '[name]__[local]___[hash:base64:5]'
     },
     preprocessorOptions: {
       scss: {
@@ -27,4 +36,9 @@ export default defineConfig({
       },
     },
   },
+  build: {
+    outDir: "dist",
+    assetsDir: "assets",
+    target: "es2022",
+  }
 });

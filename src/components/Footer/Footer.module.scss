@@ -1,26 +1,41 @@
 $footerColor: rgb(201, 223, 223);
 
 .footer {
-    width: 100%;
-    position: static;
-    bottom: 0;
-    display: flex;
-    flex-direction: column;
-    padding: 10px 0;
-    align-items: center;
-    background: color.adjust($primaryBGPageColor, $lightness: -16%, $saturation: -6%);
+   width: 100%;
+   position: absolute;
+   bottom: 0;
+   display: flex;
+   flex-direction: column;
+   padding: 10px 0;
+   align-items: center;
+   background: color.change(
+      $primaryBGPageColor,
+      $lightness: 24%,
+      $saturation: 10%,
+      $alpha: 0.369
+   );
+   backdrop-filter: blur(4px);
+   border-top: 4px solid
+      color.change(
+         $primaryBGPageColor,
+         $lightness: 36%,
+         $saturation: 18%,
+         $alpha: 0.369
+      );
 
-    
-    p {
-        font-size: 0.85rem;
-        font-weight: 600;
-        color: color.change($footerColor, $alpha: 0.8);
-    }
+   p {
+      font-family: "JetBrains Mono SemiBold", monospace;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: color.change($footerColor, $alpha: 0.8);
+   }
 
-    .sourceCode {
-        color: $linksColor;
-        font-weight: 700;
-        text-decoration: none;
-        &:hover { text-decoration: underline; }
-    }
+   .sourceCode {
+      color: $linksColor;
+      font-weight: 700;
+      text-decoration: none;
+      &:hover {
+         text-decoration: underline;
+      }
+   }
 }

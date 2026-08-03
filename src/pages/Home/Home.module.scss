@@ -6,12 +6,13 @@ $max-width: 700px;
    @include shared.page-styles;
 
    .openAboutMe {
-      margin: 12px 0;
+      margin: 12px 0 0 0;
 
       button {
          background: rgba(255, 255, 255, 0.6);
          color: $primaryTextColor;
-         font-size: 1rem;
+         font-family: "JetBrains Mono Light", monospace;
+         font-size: 0.84rem;
          font-weight: 600;
          padding: 14px 16px;
          border: 1px solid rgba(0, 0, 0, 0.32);
@@ -37,6 +38,7 @@ $max-width: 700px;
       display: flex;
       flex-direction: column;
       gap: 8px;
+      font-family: "JetBrains Mono Light", monospace;
 
       .title {
          font-size: 2.2rem;
@@ -46,7 +48,7 @@ $max-width: 700px;
 
       .subtitle {
          font-size: 1.15rem;
-         font-weight: 500;
+         font-weight: 400;
          color: $secondaryTextColor;
          line-height: 1.4;
          max-width: 600px;
