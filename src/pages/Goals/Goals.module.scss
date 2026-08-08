@@ -321,8 +321,7 @@
    inset: 0;
    z-index: var(--z-modal);
    background: rgba(0, 0, 0, 0.6);
-   backdrop-filter: blur(8px);
-   -webkit-backdrop-filter: blur(8px);
+   backdrop-filter: blur(var(--blur-glass));
 
    display: flex;
    align-items: center;

@@ -1,321 +1,164 @@
-@use "@/styles/mixins" as *;
+@use "@/styles/_variables.scss" as *;
 
-.commandLine {
-   /* =========================================
-      MOBILE FIRST (Телефоны) - Стиль "Шторки"
-      ========================================= */
+.terminalContainer {
    position: fixed;
-   bottom: 0; // Прижимаем к низу
-   left: 0;
-   width: 100%;
-   max-height: 55dvh; // Используем dvh (учитывает мобильную клавиатуру)
+   bottom: 2rem;
+   right: 2rem;
+   width: min(540px, calc(100vw - 2rem));
+   z-index: var(--z-modal);
 
    background: var(--bg-content);
    border: 1px solid var(--bg-content-border);
-   border-bottom: none; // Убираем нижнюю рамку, так как прижато к краю
-   backdrop-filter: var(--blur-glass);
-   border-radius: var(--radius-md) var(--radius-md) 0 0; // Скругляем только верх
-   box-shadow: 0 -4px 32px rgba(0, 0, 0, 0.35); // Тень вверх
-   z-index: var(--z-modal);
+   border-radius: var(--radius-md);
+   backdrop-filter: blur(var(--blur-glass));
+   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
 
    display: flex;
    flex-direction: column;
    overflow: hidden;
-   font-family: monospace;
-   opacity: 1;
-   transform: scale(1) translateY(0);
-   transform-origin: bottom center;
+
+   font-family: "JetBrains Mono", "Fira Code", "Courier New", monospace;
+   font-size: var(--font-sm);
+   color: var(--text-primary);
 
    transition:
-      transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-      opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1),
-      max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-      width 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-      height 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-      border-radius 0.3s ease;
+      height var(--transition-base),
+      opacity var(--transition-base);
+}
 
-   /* =========================================
-      DESKTOP & TABLET (От 768px и выше)
-      ========================================= */
-   // Если у тебя в mixins есть @include md, используй его вместо @media
-   @media (min-width: 768px) {
-      bottom: 24px;
-      right: 24px;
-      left: auto;
-      width: 380px;
-      max-height: 360px;
-      border-bottom: 1px solid var(--bg-content-border);
-      border-radius: var(--radius-md); // Скругляем все углы
-      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35); // Обычная тень вниз
-      transform-origin: center center;
+.header {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   padding: 0.6rem 1rem;
+
+   background: var(--bg-secondary);
+   border-bottom: 1px solid var(--bg-content-border);
+   user-select: none;
+}
+
+.title {
+   font-size: var(--font-xs);
+   font-weight: 600;
+   letter-spacing: 0.05em;
+   color: var(--accent);
+}
+
+.controls {
+   display: flex;
+   align-items: center;
+   gap: 0.4rem;
+}
+
+.controlBtn {
+   background: transparent;
+   border: none;
+   color: var(--text-secondary);
+   width: 24px;
+   height: 24px;
+   border-radius: var(--radius-sm);
+   cursor: pointer;
+
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   font-size: 0.75rem;
+
+   transition:
+      background var(--transition-base),
+      color var(--transition-base);
+
+   &:hover:not(:disabled) {
+      background: var(--bg-content-border);
+      color: var(--text-primary);
    }
 
-   /* =========================================
-      СОСТОЯНИЯ (States)
-      ========================================= */
-   &.isClosed {
-      opacity: 0;
-      pointer-events: none;
-      transform: translateY(100%); // На мобильных уезжает вниз за экран
-
-      @media (min-width: 768px) {
-         transform: scale(0.95) translateY(12px); // На десктопе сжимается
-      }
+   &.closeBtn:hover {
+      background: var(--status-abandoned);
+      color: #ffffff;
    }
 
-   &.isMinimized {
-      max-height: 38px; // Высота хедера
-
-      .header {
-         border-bottom-color: transparent;
-      }
-
-      .bodyWrapper {
-         grid-template-rows: 0fr;
-         opacity: 0;
-      }
+   &.disabled,
+   &:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
    }
+}
 
-   &.isFullscreen {
-      bottom: 0;
-      right: 0;
-      left: 0;
-      width: 100%;
-      height: 100dvh;
-      max-width: 100%;
-      max-height: 100dvh;
-      border-radius: 0;
-      border: none;
+.body {
+   display: flex;
+   flex-direction: column;
+   height: 320px;
+   padding: 1rem;
+   overflow-y: auto;
+
+   scrollbar-width: thin;
+   scrollbar-color: var(--scrollbar) transparent;
+
+   cursor: text;
+}
+
+.historyList {
+   display: flex;
+   flex-direction: column;
+   gap: 0.75rem;
+}
+
+.historyItem {
+   display: flex;
+   flex-direction: column;
+   gap: 0.25rem;
+}
+
+.promptLine {
+   display: flex;
+   align-items: center;
+   gap: 0.5rem;
+}
+
+.promptSymbol {
+   color: var(--accent);
+   font-weight: 600;
+}
+
+.commandText {
+   color: var(--text-primary);
+   word-break: break-all;
+}
+
+.outputLine {
+   white-space: pre-wrap;
+   color: var(--text-secondary);
+   line-height: 1.4;
+   padding-left: 0.5rem;
+   border-left: 2px solid var(--accent);
+
+   &.errorOutput {
+      border-left-color: var(--status-abandoned);
+      color: var(--status-abandoned);
    }
+}
 
-   /* =========================================
-      ВНУТРЕННИЕ ЭЛЕМЕНТЫ
-      ========================================= */
-   .header {
-      height: 38px;
-      padding: 0 12px;
-      background: rgba(0, 0, 0, 0.25);
-      border-bottom: 1px solid var(--bg-content-border);
-      display: flex;
-      align-items: center;
-      position: relative;
-      user-select: none;
-      flex-shrink: 0;
-      transition: border-color 0.2s ease;
+.inputForm {
+   display: flex;
+   align-items: center;
+   gap: 0.5rem;
+   margin-top: auto;
+   padding-top: 0.5rem;
+}
 
-      .controls {
-         display: flex;
-         gap: 8px; // Чуть увеличил gap для удобного тапа пальцем на мобилках
+.inputField {
+   flex-grow: 1;
+   background: transparent;
+   border: none;
+   outline: none;
 
-         span,
-         button {
-            width: 12px; // Увеличил с 10px до 12px для тач-зон
-            height: 12px;
-            border-radius: 50%;
-            border: none;
-            padding: 0;
-            cursor: pointer;
-            opacity: 0.8;
-            transition: opacity var(--transition-base);
+   font-family: inherit;
+   font-size: inherit;
+   color: var(--text-primary);
 
-            &:hover {
-               opacity: 1;
-            }
-         }
-
-         .btnClose {
-            background: #ff5f56;
-         }
-         .btnMinimize {
-            background: #ffbd2e;
-         }
-         .btnFullscreen {
-            background: #27c93f;
-         }
-      }
-
-      .title {
-         max-width: calc(100% - 100px);
-         position: absolute;
-         left: 50%;
-         transform: translateX(-50%);
-         font-size: var(--font-xs);
-         color: var(--text-secondary);
-         text-overflow: ellipsis;
-         pointer-events: none;
-         white-space: nowrap;
-         overflow: hidden;
-
-         .pathHint {
-            color: var(--accent);
-            font-weight: bold;
-         }
-      }
-   }
-
-   .bodyWrapper {
-      min-height: 0;
-      display: grid;
-      grid-template-rows: 1fr;
-      flex: 1;
-      overflow: hidden;
-      opacity: 1;
-      transition:
-         grid-template-rows 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-         opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-   }
-
-   .body {
-      display: flex;
-      flex-direction: column;
-      min-height: 0;
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch; // Плавный скролл на iOS
-
-      &::-webkit-scrollbar {
-         width: 4px;
-      }
-      &::-webkit-scrollbar-thumb {
-         background: var(--scrollbar);
-         border-radius: 4px;
-      }
-
-      .logs {
-         padding: 12px;
-         display: flex;
-         flex-direction: column;
-         gap: 12px; // Чуть больше воздуха для чтения с телефона
-         font-size: var(--font-xs);
-         color: var(--text-primary);
-
-         .welcome {
-            color: var(--text-secondary);
-            span {
-               color: var(--accent);
-               font-weight: bold;
-            }
-         }
-
-         .logRow {
-            min-width: 0;
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-
-            .commandLinePrompt {
-               color: var(--text-secondary);
-               .promptSymbol {
-                  color: var(--accent);
-                  font-weight: bold;
-               }
-            }
-
-            .commandOutput {
-               min-width: 0;
-               padding-left: 10px;
-               color: var(--text-primary);
-               line-height: 1.5; // Слегка увеличил межстрочный интервал
-               word-break: break-word;
-               overflow-x: auto;
-
-               pre {
-                  margin: 0;
-                  white-space: pre;
-                  word-break: normal;
-                  font-family: inherit;
-               }
-
-               &.isError {
-                  color: var(--priority-high);
-               }
-
-               .fileContent {
-                  margin: 0;
-                  white-space: pre-wrap;
-                  word-break: break-word;
-                  font-family: inherit;
-                  color: var(--text-secondary);
-               }
-
-               .lsGrid {
-                  display: flex;
-                  flex-wrap: wrap;
-                  gap: 12px 16px; // Отступы побольше для тапа
-                  .dirItem {
-                     color: var(--accent);
-                     font-weight: bold;
-                  }
-                  .fileItem {
-                     color: var(--text-primary);
-                  }
-               }
-
-               .helpBlock,
-               .infoBlock {
-                  p {
-                     margin: 0 0 6px 0;
-                  }
-                  ul {
-                     margin: 0;
-                     padding-left: 16px;
-                     li {
-                        margin-bottom: 6px;
-                        code {
-                           color: var(--accent);
-                           font-weight: bold;
-                        }
-                     }
-                  }
-               }
-            }
-         }
-      }
-
-      .inputRow {
-         min-width: 0;
-         margin-top: auto;
-         padding: 12px; // Больше padding для мобилок (легче попасть пальцем)
-         background: rgba(0, 0, 0, 0.2);
-         border-top: 1px solid var(--bg-content-border);
-         display: flex;
-         align-items: center;
-         gap: 10px;
-
-         @media (min-width: 768px) {
-            padding: 8px 12px; // Возвращаем компактность на десктопе
-         }
-
-         .promptSymbol {
-            flex-shrink: 0;
-            color: var(--accent);
-            font-weight: bold;
-            font-size: var(--font-sm);
-            white-space: nowrap;
-         }
-
-         .input {
-            min-width: 0;
-            width: 100%;
-            background: transparent;
-            border: none;
-            outline: none;
-            color: var(--text-primary);
-            font-family: inherit;
-
-            /* ВАЖНО: 16px защищает от автоматического зума инпутов в Safari на iOS */
-            font-size: 16px;
-
-            @media (min-width: 768px) {
-               font-size: var(
-                  --font-xs
-               ); // На десктопе возвращаем родной размер
-            }
-
-            &::placeholder {
-               color: var(--text-secondary);
-               opacity: 0.6;
-            }
-         }
-      }
+   &::placeholder {
+      color: var(--text-secondary);
+      opacity: 0.5;
    }
 }

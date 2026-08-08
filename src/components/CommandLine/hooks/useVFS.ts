@@ -1,25 +1,12 @@
-// src/components/CommandLine/vfs/types.ts
+import { useState } from "react";
 
-export interface VFSMetadata {
-   createdAt: number;
-   updatedAt: number;
-   owner: string;
-   permissions: string; // например, 'rwxr-xr-x'
-   size: number;
-}
+export const useVFS = (initialPath = "/home") => {
+    const [cwd, setCwd] = useState(initialPath);
 
-export interface VFSFile {
-   type: "file";
-   content: string;
-   meta: VFSMetadata;
-   targetRoute?: string;
-   isExecutable?: boolean;
-}
-
-export interface VFSDir {
-   type: "dir";
-   children: Record<string, VFSNode>;
-   meta: VFSMetadata;
-}
-
-export type VFSNode = VFSFile | VFSDir;
+    return {
+        cwd,
+        setCwd,
+        // Сокращаем путь для красивого отображения (например /home/projects -> ~/projects)
+        displayPath: cwd.replace(/^\/home/, "~") 
+    };
+};

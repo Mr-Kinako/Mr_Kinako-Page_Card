@@ -22,9 +22,9 @@
    --scrollbar: #ce93d8;
 }
 
-:root:not([data-theme]),
-[data-theme="dark"],
-[data-theme="auto"] {
+/* Тёмная тема по умолчанию */
+:root,
+[data-theme="dark"] {
    --bg-primary: #18181b;
    --bg-secondary: #27272a;
    --bg-content: rgba(39, 39, 42, 0.5);
@@ -37,18 +37,34 @@
    --scrollbar: #3f3f46;
 }
 
+/* Поддержка системной темы при data-theme="auto" или отсутствии атрибута */
 @media (prefers-color-scheme: light) {
    :root:not([data-theme]),
    [data-theme="auto"] {
       --bg-primary: #f8fafc;
       --bg-secondary: #f1f5f9;
       --bg-content: rgba(255, 255, 255, 0.7);
-      --bg-content-border: rgb(0, 0, 0, 0.1);
+      --bg-content-border: rgba(0, 0, 0, 0.1);
       --text-primary: #0f172a;
       --text-secondary: #475569;
       --accent: #da8059;
       --accent-gradient: linear-gradient(145deg, #ff9567 0%, #6b2b1c 100%);
       --nav-bg: rgba(248, 250, 252, 0.7);
       --scrollbar: #cbd5e1;
+   }
+}
+
+@media (prefers-color-scheme: dark) {
+   [data-theme="auto"] {
+      --bg-primary: #18181b;
+      --bg-secondary: #27272a;
+      --bg-content: rgba(39, 39, 42, 0.5);
+      --bg-content-border: rgba(255, 255, 255, 0.08);
+      --text-primary: #f4f4f5;
+      --text-secondary: #a1a1aa;
+      --accent: #ff9567;
+      --accent-gradient: linear-gradient(145deg, #ff9567 0%, #6b2b1c 100%);
+      --nav-bg: rgba(24, 24, 27, 0.6);
+      --scrollbar: #3f3f46;
    }
 }

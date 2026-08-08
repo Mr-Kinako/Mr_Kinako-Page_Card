@@ -8,9 +8,9 @@ const imageModules = import.meta.glob<{ default: string }>(
    { eager: true },
 );
 
-const mediaList = Object.keys(imageModules).map((path, index) => ({
+const mediaList = Object.entries(imageModules).map(([_, module], index) => ({
    id: index + 1,
-   src: path.replace("/public", ""),
+   src: module.default,
 }));
 
 export const Media = () => {

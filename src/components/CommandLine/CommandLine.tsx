@@ -1,273 +1,162 @@
-import React, { useState, useRef, useEffect, useCallback } from "react";
-import { useNavigate } from "react-router";
-import s from "./CommandLine.module.scss";
-import { Theme, VFSDir, LogItem } from "./types";
-import { initialVFS } from "./vfs/structure";
-import { CLI_NAME, ALLOWED_THEMES, commandRegistry } from "./core/commands";
-import { executeCommandPipeline } from "./core/CommandExec";
-import { useCommandHistory } from "./hooks/useCommandHistory";
+import React, { useState, useRef, useEffect } from "react";
+import { HistoryItem, WindowState } from "./types";
+import { parseCommand } from "./core/parser";
+import { executeCommand } from "./core/CommandExec";
+import styles from "./CommandLine.module.scss";
 
-interface CommandLineProps {
-   customClass?: string;
-}
+export const CommandLine: React.FC = () => {
+   const [windowState, setWindowState] = useState<WindowState>({
+      isOpen: true,
+      isMinimized: false,
+      isFullscreen: false,
+   });
 
-export const CommandLine: React.FC<CommandLineProps> = ({
-   customClass = "",
-}) => {
-   const [value, setValue] = useState("");
-   const [logs, setLogs] = useState<LogItem[]>([]);
-   const [vfs, setVfs] = useState<VFSDir>(initialVFS);
-
-   const [isClosed, setIsClosed] = useState(true);
-   const [isMinimized, setIsMinimized] = useState(false);
-   const [isFullscreen, setIsFullscreen] = useState(false);
-
-   const [currentDir, setCurrentDir] = useState("/");
-   const navigate = useNavigate();
-
+   const [inputVal, setInputVal] = useState<string>("");
+   const [history, setHistory] = useState<HistoryItem[]>([]);
    const inputRef = useRef<HTMLInputElement>(null);
-   const bodyRef = useRef<HTMLDivElement>(null);
+   const terminalEndRef = useRef<HTMLDivElement>(null);
 
-   const { addToHistory, getPreviousCommand, getNextCommand } =
-      useCommandHistory();
+   // Автоскролл вниз при добавлении новых записей
+   useEffect(() => {
+      if (!windowState.isMinimized && windowState.isOpen) {
+         terminalEndRef.current?.scrollIntoView({ behavior: "smooth" });
+      }
+   }, [history, windowState.isMinimized, windowState.isOpen]);
 
-   const resetConsole = useCallback(() => {
-      setValue("");
-      setLogs([]);
-      setCurrentDir("/");
-      setVfs(initialVFS);
-      setIsMinimized(false);
-      setIsFullscreen(false);
-   }, []);
+   const handleClose = () => {
+      console.log("[kinako.sh:ui] Закрытие консоли.");
+      setWindowState((prev) => ({ ...prev, isOpen: false }));
+   };
 
-   const handleClose = useCallback(() => {
-      setIsClosed(true);
-      resetConsole();
-   }, [resetConsole]);
+   const handleToggleMinimize = () => {
+      console.log("[kinako.sh:ui] Переключение сворачивания консоли.");
+      setWindowState((prev) => ({ ...prev, isMinimized: !prev.isMinimized }));
+   };
 
-   const clearLogs = useCallback(() => setLogs([]), []);
+   const handleSubmit = async (e: React.FormEvent) => {
+      e.preventDefault();
+      const rawInput = inputVal;
+      if (!rawInput.trim()) return;
 
-   const applyTheme = useCallback((theme: string) => {
-      if (!ALLOWED_THEMES.includes(theme as Theme)) {
-         return {
-            success: false,
-            msg: `Недопустимая тема "${theme}". Доступны: ${ALLOWED_THEMES.join(", ")}`,
+      setInputVal("");
+      console.log("[kinako.sh:ui] Ввод пользователя:", rawInput);
+
+      try {
+         const parsed = parseCommand(rawInput);
+
+         if (!parsed) {
+            return;
+         }
+
+         // Специальная обработка команды -clear на уровне React-состояния
+         if (parsed.name === "-clear") {
+            console.log("[kinako.sh:ui] Выполнение очистки буфера истории");
+            setHistory([]);
+            return;
+         }
+
+         const execResult = await executeCommand(parsed);
+
+         const newItem: HistoryItem = {
+            id: `${Date.now()}-${Math.random()}`,
+            command: rawInput,
+            output: execResult.output,
+            timestamp: new Date(),
+            isError: !execResult.success,
          };
-      }
 
-      if (theme === "auto") {
-         document.documentElement.setAttribute("data-theme", "auto");
-         localStorage.setItem("theme", "auto");
-         return { success: true, msg: "Установлена автоматическая тема" };
-      }
-
-      document.documentElement.setAttribute("data-theme", theme);
-      localStorage.setItem("theme", theme);
-      return { success: true, msg: `Тема успешно изменена на "${theme}"` };
-   }, []);
-
-   // Горячая клавиша (Ctrl + I)
-   useEffect(() => {
-      const handleKeyDown = (e: KeyboardEvent) => {
-         if (e.repeat) return;
-         if (e.ctrlKey && e.code === "KeyI") {
-            e.preventDefault();
-            setIsClosed((prev) => {
-               const nextState = !prev;
-               if (nextState) resetConsole();
-               return nextState;
-            });
-         }
-      };
-      window.addEventListener("keydown", handleKeyDown);
-      return () => window.removeEventListener("keydown", handleKeyDown);
-   }, [resetConsole]);
-
-   // Автоскролл
-   useEffect(() => {
-      if (bodyRef.current) {
-         bodyRef.current.scrollTop = bodyRef.current.scrollHeight;
-      }
-   }, [logs]);
-
-   // Фокус при открытии
-   useEffect(() => {
-      if (!isClosed && !isMinimized) {
-         const timer = setTimeout(() => inputRef.current?.focus(), 150);
-         return () => clearTimeout(timer);
-      }
-   }, [isClosed, isMinimized]);
-
-   // Инициализация темы
-   useEffect(() => {
-      const savedTheme = localStorage.getItem("theme") || "auto";
-      if (ALLOWED_THEMES.includes(savedTheme as Theme)) {
-         applyTheme(savedTheme);
-      }
-   }, [applyTheme]);
-
-   useEffect(() => {
-      let touchStartY: number | null = null;
-
-      const handleTouchStart = (e: TouchEvent) => {
-         const startY = e.touches[0].clientY;
-         // Фиксируем старт только если попали в нижние 100px
-         if (startY > window.innerHeight - 100) {
-            touchStartY = startY;
-         } else {
-            touchStartY = null;
-         }
-      };
-
-      const handleTouchEnd = (e: TouchEvent) => {
-         // Если старт был не в нижней зоне — игнорируем
-         if (touchStartY === null) return;
-
-         const touchEndY = e.changedTouches[0].clientY;
-         const diffY = touchStartY - touchEndY;
-
-         // Свайп вверх более чем на 100px (150px на мобилке бывает многовато для короткого свайпа)
-         if (diffY > 100) {
-            window.dispatchEvent(
-               new KeyboardEvent("keydown", {
-                  code: "KeyI",
-                  ctrlKey: true,
-                  bubbles: true,
-               }),
-            );
-         }
-
-         touchStartY = null; // Обязательно сбрасываем
-      };
-
-      window.addEventListener("touchstart", handleTouchStart);
-      window.addEventListener("touchend", handleTouchEnd);
-      return () => {
-         window.removeEventListener("touchstart", handleTouchStart);
-         window.removeEventListener("touchend", handleTouchEnd);
-      };
-   }, []);
-
-   const handleCommandExecution = (rawInput: string) => {
-      const trimmed = rawInput.trim();
-      if (!trimmed) return;
-
-      addToHistory(trimmed);
-
-      const executedLogs = executeCommandPipeline({
-         rawInput: trimmed,
-         vfs,
-         setVfs,
-         currentDir,
-         setCurrentDir,
-         clearLogs,
-         applyTheme,
-         navigate,
-      });
-
-      setLogs((prev) => [...prev, ...executedLogs]);
-      setValue("");
-   };
-
-   const handleInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-      if (e.key === "Enter") {
-         handleCommandExecution(value);
-      } else if (e.key === "Tab") {
-         e.preventDefault();
-         const trimmed = value.trim();
-         if (!trimmed) return;
-
-         const matches = Object.keys(commandRegistry).filter((cmd) =>
-            cmd.startsWith(trimmed),
+         setHistory((prev) => [...prev, newItem]);
+      } catch (uiError) {
+         console.error(
+            "[kinako.sh:ui] Ошибка верхнего уровня при обработке ввода:",
+            uiError,
          );
-         if (matches.length === 1) setValue(matches[0] + " ");
-      } else if (e.key === "ArrowUp") {
-         e.preventDefault();
-         const prevCmd = getPreviousCommand();
-         if (prevCmd !== null) setValue(prevCmd);
-      } else if (e.key === "ArrowDown") {
-         e.preventDefault();
-         const nextCmd = getNextCommand();
-         if (nextCmd !== null) setValue(nextCmd);
       }
    };
 
-   const wrapperClass = [
-      s.commandLine,
-      isClosed ? s.isClosed : "",
-      isMinimized ? s.isMinimized : "",
-      isFullscreen ? s.isFullscreen : "",
-      customClass,
-   ]
-      .filter(Boolean)
-      .join(" ");
+   if (!windowState.isOpen) {
+      return null;
+   }
 
    return (
-      <div className={wrapperClass} onClick={() => inputRef.current?.focus()}>
-         <div className={s.header}>
-            <div className={s.controls}>
+      <div className={styles.terminalContainer}>
+         {/* Шапка окна */}
+         <div className={styles.header}>
+            <div className={styles.title}>kinako.sh</div>
+            <div className={styles.controls}>
                <button
-                  className={s.btnClose}
-                  title="Закрыть"
+                  type="button"
+                  className={styles.controlBtn}
+                  onClick={handleToggleMinimize}
+                  title={windowState.isMinimized ? "Развернуть" : "Свернуть"}
+               >
+                  {windowState.isMinimized ? "🗖" : "🗕"}
+               </button>
+               <button
+                  type="button"
+                  className={`${styles.controlBtn} ${styles.disabled}`}
+                  disabled
+                  title="Полноэкранный режим недоступен (ожидает реализации перемещения)"
+               >
+                  🗖
+               </button>
+               <button
+                  type="button"
+                  className={`${styles.controlBtn} ${styles.closeBtn}`}
                   onClick={handleClose}
-               />
-               <button
-                  className={s.btnMinimize}
-                  title="Свернуть/Развернуть"
-                  onClick={() => setIsMinimized((prev) => !prev)}
-               />
-               <button
-                  className={s.btnFullscreen}
-                  title="Полноэкранный режим"
-                  onClick={() => setIsFullscreen((prev) => !prev)}
-               />
-            </div>
-            <div className={s.title}>
-               {CLI_NAME} <span className={s.pathHint}>[{currentDir}]</span>
+                  title="Закрыть"
+               >
+                  ✕
+               </button>
             </div>
          </div>
 
-         <div className={s.bodyWrapper}>
-            <div className={s.body} ref={bodyRef}>
-               <div className={s.logs}>
-                  <div className={s.welcome}>
-                     Консоль {CLI_NAME}. Введите <span>help</span> для списка
-                     команд.
-                  </div>
-
-                  {logs.map((log) => (
-                     <div key={log.id} className={s.logRow}>
-                        <div className={s.commandLinePrompt}>
-                           <span className={s.promptSymbol}>&gt;</span>{" "}
-                           {log.command}
+         {/* Тело терминала */}
+         {!windowState.isMinimized && (
+            <div
+               className={styles.body}
+               onClick={() => inputRef.current?.focus()}
+            >
+               <div className={styles.historyList}>
+                  {history.map((item) => (
+                     <div key={item.id} className={styles.historyItem}>
+                        <div className={styles.promptLine}>
+                           <span className={styles.promptSymbol}>
+                              kinako.sh&gt;
+                           </span>
+                           <span className={styles.commandText}>
+                              {item.command}
+                           </span>
                         </div>
-                        <div
-                           className={`${s.commandOutput} ${
-                              log.isError ? s.isError : ""
-                           }`}
-                        >
-                           {log.output}
-                        </div>
+                        {item.output && (
+                           <div
+                              className={`${styles.outputLine} ${
+                                 item.isError ? styles.errorOutput : ""
+                              }`}
+                           >
+                              {item.output}
+                           </div>
+                        )}
                      </div>
                   ))}
+                  <div ref={terminalEndRef} />
                </div>
 
-               <div className={s.inputRow}>
-                  <span className={s.promptSymbol}>{currentDir} &gt;</span>
+               {/* Строка ввода */}
+               <form onSubmit={handleSubmit} className={styles.inputForm}>
+                  <span className={styles.promptSymbol}>kinako.sh&gt;</span>
                   <input
                      ref={inputRef}
                      type="text"
-                     className={s.input}
-                     value={value}
-                     onChange={(e) => setValue(e.target.value)}
-                     onKeyDown={handleInputKeyDown}
-                     placeholder="Введите команду..."
-                     spellCheck={false}
-                     autoComplete="off"
+                     className={styles.inputField}
+                     value={inputVal}
+                     onChange={(e) => setInputVal(e.target.value)}
+                     placeholder="Введите команду (-help)..."
+                     autoFocus
                   />
-               </div>
+               </form>
             </div>
-         </div>
+         )}
       </div>
    );
 };

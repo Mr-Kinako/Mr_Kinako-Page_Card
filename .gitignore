@@ -61,6 +61,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+src/components/CommandLine/README.md
 
 # Vercel
 .vercel

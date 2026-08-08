@@ -6,39 +6,38 @@ import path from 'path';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // https://vitejs.dev/config/
-export default defineConfig({
-  base: "/",
-  plugins: [react()],
-  publicDir: "public",
-  server: {
-    host: "localhost",
-    port: 5173,
-    open: false
-  },
-  resolve: {
-    alias: {
-      '@': path.resolve(__dirname, './src'),
+export default defineConfig(({ mode }) => {
+  const isProd = mode === "production";
+
+  return {
+    base: "/",
+    plugins: [react()],
+    publicDir: "public",
+    server: {
+      host: "localhost",
+      port: 5173,
+      open: false
     },
-  },
-  css: {
-    modules: {
-      // Делает имена классов в DOM удобными для чтения при разработке (напр. Home_container__H3aK1)
-      generateScopedName: process.env.NODE_ENV === 'production'
-        ? '[hash:base64:7]'
-        : '[name]__[local]___[hash:base64:5]'
-    },
-    preprocessorOptions: {
-      scss: {
-        additionalData: `
-          @use "sass:color";
-          @use "@/styles/_variables.scss" as *;
-        `
+    resolve: {
+      alias: {
+        '@': path.resolve(__dirname, './src'),
       },
     },
-  },
-  build: {
-    outDir: "dist",
-    assetsDir: "assets",
-    target: "es2022",
-  }
+    css: {
+      modules: {
+        // Делает имена классов в DOM удобными для чтения при разработке (напр. Home_container__H3aK1)
+        generateScopedName: '[name]__[local]___[hash:base64:5]'
+      },
+      preprocessorOptions: {
+        scss: {
+          additionalData: `@use "sass:color";`
+        },
+      },
+    },
+    build: {
+      outDir: "dist",
+      assetsDir: "assets",
+      target: "es2022",
+    }
+  };
 });

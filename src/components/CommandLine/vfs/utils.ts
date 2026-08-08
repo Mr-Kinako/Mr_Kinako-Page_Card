@@ -1,37 +1,37 @@
-import { VFSDir, VFSNode } from "./types";
+import { VFS_ROOT } from "./structure";
+import { VFSNode } from "./types";
 
-export const normalizePath = (currentDir: string, targetPath: string): string => {
-  if (targetPath.startsWith("/")) {
-    return targetPath.replace(/\/+/g, "/") || "/";
-  }
+// Превращает относительный путь в абсолютный (например cd ../projects)
+export const resolvePath = (cwd: string, target: string): string => {
+    if (!target) return cwd;
+    if (target === "/") return "/home"; // По дефолту кидаем в home
 
-  const parts = (currentDir + "/" + targetPath).split("/").filter(Boolean);
-  const stack: string[] = [];
+    const currentParts = target.startsWith("/") ? [] : cwd.split("/").filter(Boolean);
+    const targetParts = target.split("/").filter(Boolean);
 
-  for (const part of parts) {
-    if (part === ".") continue;
-    if (part === "..") {
-      stack.pop();
-    } else {
-      stack.push(part);
+    for (const part of targetParts) {
+        if (part === ".") continue;
+        if (part === "..") {
+            currentParts.pop();
+        } else {
+            currentParts.push(part);
+        }
     }
-  }
 
-  return "/" + stack.join("/");
+    return "/" + currentParts.join("/");
 };
 
-export const getNodeByPath = (root: VFSDir, path: string): VFSNode | null => {
-  if (path === "/" || path === "") return root;
+// Ищет ноду (папку или файл) по абсолютному пути
+export const getNodeByPath = (absolutePath: string): VFSNode | null => {
+    const parts = absolutePath.split("/").filter(Boolean);
+    let current: VFSNode = VFS_ROOT;
 
-  const parts = path.split("/").filter(Boolean);
-  let current: VFSNode = root;
-
-  for (const part of parts) {
-    if (current.type !== "dir" || !current.children[part]) {
-      return null;
+    for (const part of parts) {
+        if (current.type !== "dir" || !current.children || !current.children[part]) {
+            return null; // Путь не найден
+        }
+        current = current.children[part];
     }
-    current = current.children[part];
-  }
 
-  return current;
+    return current;
 };

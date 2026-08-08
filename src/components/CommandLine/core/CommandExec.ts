@@ -1,76 +1,52 @@
-import React from "react";
-import { LogItem } from "../types";
-import { parsePipeline } from "./parser";
-import { parseSingleCommand } from "./parser";
-import { commandRegistry } from "./commands";
+import { ParsedCommand, ExecutionResult } from './types';
+import { COMMANDS_REGISTRY } from './commands';
 
-interface ExecuteParams {
-   rawInput: string;
-   vfs: any;
-   setVfs: React.Dispatch<React.SetStateAction<any>>;
-   currentDir: string;
-   setCurrentDir: (dir: string) => void;
-   clearLogs: () => void;
-   applyTheme: (theme: string) => { success: boolean; msg: string };
-   navigate: any;
+/**
+ * Главный диспетчер выполнения команд.
+ * Гарантирует отказоустойчивость: перехватывает любые runtime-ошибки внутри команд.
+ */
+export async function executeCommand(parsed: ParsedCommand): Promise<ExecutionResult> {
+  const startTime = performance.now();
+  console.log(`[kinako.sh:exec] Старт выполнения команды: "${parsed.name}"`, {
+    args: parsed.args,
+    raw: parsed.raw,
+  });
+
+  try {
+    const commandDef = COMMANDS_REGISTRY[parsed.name];
+
+    if (!commandDef) {
+      console.warn(`[kinako.sh:exec] Команда "${parsed.name}" не найдена в реестре.`);
+      return {
+        success: false,
+        output: `Команда "${parsed.name}" не найдена. Введите -help для списка доступных команд.`,
+      };
+    }
+
+    // Выполняем логику команды (поддерживает как синхронный, так и async вызов)
+    const result = await Promise.resolve(commandDef.execute(parsed.args));
+    
+    console.log(`[kinako.sh:exec] Команда "${parsed.name}" успешно завершена.`, result);
+    return result;
+
+  } catch (criticalError) {
+    // Верхнеуровневый перехват: если в самом коде команды произошла необработанная ошибка
+    console.error(
+      `[kinako.sh:exec] КРИТИЧЕСКИЙ СБОЙ при исполнении "${parsed.name}":`,
+      criticalError
+    );
+
+    const errInstance = criticalError instanceof Error 
+      ? criticalError 
+      : new Error(String(criticalError));
+
+    return {
+      success: false,
+      output: `[System Error] Произошел внутренний сбой при выполнении команды "${parsed.name}".`,
+      error: errInstance,
+    };
+  } finally {
+    const duration = (performance.now() - startTime).toFixed(2);
+    console.log(`[kinako.sh:exec] Завершение цикла обработки "${parsed.name}" (${duration}ms)`);
+  }
 }
-
-export const executeCommandPipeline = ({
-   rawInput,
-   vfs,
-   setVfs,
-   currentDir,
-   setCurrentDir,
-   clearLogs,
-   applyTheme,
-   navigate,
-}: ExecuteParams): LogItem[] => {
-   const trimmed = rawInput.trim();
-   if (!trimmed) return [];
-
-   const steps = parsePipeline(trimmed);
-   const newLogs: LogItem[] = [];
-   let stopPipeline = false;
-
-   for (const step of steps) {
-      if (stopPipeline) break;
-
-      const parsed = parseSingleCommand(step.raw);
-      const targetCmd = commandRegistry[parsed.cmdName];
-
-      let output: React.ReactNode = "";
-      let isError = false;
-
-      if (targetCmd) {
-         const result = targetCmd.handler(parsed, {
-            clearLogs,
-            applyTheme,
-            navigate,
-            currentDir,
-            setCurrentDir,
-            vfs,
-            setVfs,
-         });
-
-         if (!result) continue; // Если команда вернула null (например, clear)
-         output = result.output;
-         isError = !!result.isError;
-      } else {
-         output = `Команда "${parsed.cmdName}" не найдена. Введите help для списка команд.`;
-         isError = true;
-      }
-
-      newLogs.push({
-         id: crypto.randomUUID(),
-         command: step.raw,
-         output,
-         isError,
-      });
-
-      if (isError && step.operator === "AND") {
-         stopPipeline = true;
-      }
-   }
-
-   return newLogs;
-};
