@@ -4,7 +4,6 @@ import { NavContainer } from "./components/NavContainer";
 import { Media } from "./pages/Media";
 import styles from "./App.module.scss";
 import { Goals } from "./pages/Goals";
-import { isDev } from "./tumblers";
 import { CustomCursor } from "./CustomCursor";
 import { Background } from "./components/Background";
 import { CommandLine } from "./components/CommandLine";
