@@ -1,37 +1,19 @@
 import { BrowserRouter, Routes, Route, Navigate, Outlet } from "react-router";
 import { Home } from "@/pages/Home";
 import { NavContainer } from "./components/NavContainer";
-import { Footer } from "./components/Footer";
 import { Media } from "./pages/Media";
 import styles from "./App.module.scss";
 import { Goals } from "./pages/Goals";
 import { isDev } from "./tumblers";
+import { CustomCursor } from "./CustomCursor";
+import { Background } from "./components/Background";
+import { CommandLine } from "./components/CommandLine";
 
-const MainLayout = ({
-   isGlobalFooter = false,
-}: {
-   isGlobalFooter?: boolean;
-}) => {
+const MainLayout = () => {
    return (
       <>
          <NavContainer />
-
          <Outlet />
-
-         {isGlobalFooter && <Footer />}
-      </>
-   );
-};
-const GoalsLayout = ({
-   isGlobalFooter = false,
-}: {
-   isGlobalFooter?: boolean;
-}) => {
-   return (
-      <>
-         <Outlet />
-
-         {isGlobalFooter && <Footer />}
       </>
    );
 };
@@ -39,15 +21,16 @@ const GoalsLayout = ({
 function App() {
    return (
       <div className={styles.appWrapper}>
+         <CustomCursor />
+         <Background />
          <BrowserRouter>
+            <CommandLine />
             <Routes>
                <Route element={<MainLayout />}>
                   <Route path="/" element={<Home />} />
 
-                  {isDev && <Route path="/media" element={<Media />} />}
-               </Route>
+                  <Route path="/media" element={<Media />} />
 
-               <Route element={<GoalsLayout />}>
                   <Route path="/goals" element={<Goals />} />
                </Route>
 

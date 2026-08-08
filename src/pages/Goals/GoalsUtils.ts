@@ -112,8 +112,8 @@ export const getGoalsStatsList = (): goalStatCategory => {
 
       const rawLongtime = 0.0;
       const rawDeadline = 0.0;
-      const rawMoral = 0.51;
-      const rawMyselfPrice = 2.1;
+      const rawMoral = 0.49;
+      const rawMyselfPrice = 3.9;
       // ----------
       const longtime = Math.min(30.0, Math.max(0.0, rawLongtime));
       const deadline = Math.min(1.0, Math.max(0.0, rawDeadline));

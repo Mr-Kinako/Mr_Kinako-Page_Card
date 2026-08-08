@@ -1,61 +1,50 @@
+@use "@/styles/_mixins.scss" as mix;
+
 .navigationContainer {
-   width: 100%;
+   width: max-content;
    position: fixed;
+   top: 1rem;
+   left: 50%;
+   transform: translateX(-50%);
+   z-index: var(--z-nav);
+}
+
+.navBubble {
+   @include mix.glass-panel;
    display: flex;
-   justify-content: center;
-   margin: 12px 0 12px 0;
-   z-index: 100;
+   align-items: center;
+   gap: 0.6rem;
+   padding: 0.4rem 0.5rem;
+   border-radius: 1rem;
+   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 
-   .navBubble {
-      display: flex;
-      padding: 10px 16px 10px 16px;
-      background: rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(3px);
-      border: 1px solid rgba(255, 255, 255, 0.4);
-      border-radius: 32px;
-      gap: 10px;
-      user-select: none;
-   }
-
-   .separator {
-      content: "";
-      width: 1px;
-      height: 100%;
-      position: relative;
-      display: block;
-      background: color.change($separatorColor, $alpha: 0.8);
-
-      &.notDev {
-         display: none;
-      }
-   }
-
-   a {
+   .link {
       text-decoration: none;
-      color: $pageLinkColor;
-      font-weight: 400;
-      box-shadow: 1;
-      transition:
-         color 0.2s ease,
-         transform 0.2s ease;
+      color: var(--text-secondary);
+      padding: 0.5rem 0.8rem;
+      border-radius: 0.6rem;
+      transition: all 0.3s ease;
+      font-weight: 600;
+      font-size: var(--font-sm);
 
       &:hover {
-         color: $pageLinkColorHover;
-         transform: translateY(-1px);
+         color: var(--text-primary);
+         background: rgba(255, 255, 255, 0.05);
       }
 
       &.active {
-         color: $pageLinkActiveColor;
-         font-weight: 500;
-         text-decoration: overline;
-         transform: translateY(-1px);
+         color: #fff;
+         background: var(--accent);
+         // Если есть градиент, используем его:
+         background: var(--accent-gradient, var(--accent));
+         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
       }
-      &.active:hover {
-         color: color.adjust($pageLinkActiveColor, $lightness: 16%);
-      }
+   }
 
-      &.notDev {
-         display: none;
-      }
+   .separator {
+      width: 4px;
+      height: 16px;
+      border-radius: 50%;
+      background-color: var(--bg-content-border);
    }
 }

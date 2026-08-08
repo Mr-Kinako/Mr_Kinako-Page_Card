@@ -42,7 +42,7 @@ export const GoalsData: Record<string, ProjectData> = {
             title: "Pull changes",
             description: "Возможность изменять пока что только mosu!wiki. вместо мгновенных изменений они должны отправляться на сервер, на проверку. Также должна быть админ панель для людей, кто будет рассматривать эти правки. Если правка принята - правки применяются к какой-то текущей правленной ветки, а само изменение архивируется в архив изменении условно до 7 дней. Если отклонена - изменения не применяются, а текущая ветка правок удаляется из очереди.",
             priority: constantPriorities.low,
-            status: constantStatuses.awaiting
+            status: constantStatuses.abandoned
          },
 
          1: {
@@ -50,6 +50,13 @@ export const GoalsData: Record<string, ProjectData> = {
             description: "Чтобы можно было смотреть топ-плеи через Canvas/WebGL прямо в браузере, не скачивая сам реплей в игру.",
             priority: constantPriorities.low,
             status: constantStatuses.abandoned
+         },
+
+         2: {
+            title: "Создание и комментарии про Taiko&Catch",
+            description: "Добавить на роуте rankings в режимы новые режимы TaikoRX & CatchRX. Сделать при их выборе фоллбэк с информацией что данный режим будет в ближайшем будущем.",
+            priority: constantPriorities.medium,
+            status: constantStatuses.awaiting
          },
 
          100: {
@@ -79,19 +86,19 @@ export const GoalsData: Record<string, ProjectData> = {
       title: "Mr_Kinako Personal-Page",
       description: "Собственно, моя собственная страница, захосченная на Vercel.",
       content: {
-         0: {
+         101: {
             title: "Проработать цветовую палитру",
             description: "Поэкспериментировать с цветами, с сочетаниями; Посмотреть пару десятков современных сайтов для общей наглядности/картины; Проработать \"_variables.scss\", от сортировки до категории, также вынеся туда все наиболее встречающиеся варианты цветов в проекте, приведя их к одному виду; Нужно будет пересмотреть использование \"$variables\" и \"--variable\".",
             priority: constantPriorities.medium,
-            status: constantStatuses.awaiting
+            status: constantStatuses.completed
          },
-         3: {
+         100: {
             title: "Улучшить бг",
             description: "Вероятно достаточно поиграть с вариациями видов бг генерируя их чистым кодом. Используя условный linear-gradient.",
             priority: constantPriorities.low,
-            status: constantStatuses.abandoned
+            status: constantStatuses.completed
          },
-         101: {
+         102: {
             title: "Пересмотреть проект",
             description: "Структуру файлов, внутреннюю структуру файлов, зависимости",
             priority: constantPriorities.medium,
@@ -101,15 +108,21 @@ export const GoalsData: Record<string, ProjectData> = {
             title: "Пересмотреть вариант с плашками",
             description: "Нужно будет кардинально изменить общий свод в \"/goals\", чтобы он не мешал изначально, а также был красиво подан. Также можно Добавить \"Вкладки\" для проектов, ограничивая до двух-трёх карточек на контейнерную вкладку.",
             priority: constantPriorities.low,
+            status: constantStatuses.abandoned
+         },
+         3: {
+            title: "Улучшить категоризацию целей",
+            description: "Добавить две категории: Выполненные/Невыполненные. Также можно добавить фильтр по приоритетам, добавив по умолчанию условно средний приоритет.",
+            priority: constantPriorities.medium,
             status: constantStatuses.awaiting
          },
-         2: {
+         103: {
             title: "Поработать с адаптацией",
             description: "Немного поработать с общей адаптацией, поправить возможные косяки. Также дополнительно улучшить читаемость, вёрстку при надобности где это надо для скрин-ридеров, ну и в целом проработать UX.",
             priority: constantPriorities.medium,
-            status: constantStatuses.abandoned
+            status: constantStatuses.completed
          },
-         100: {
+         104: {
             title: "Довести до рабочего и приемлемого состояния",
             description: "Роут \"/goals\" нужно довести до рабочего состояния. Остальные правки позже.",
             priority: constantPriorities.high,

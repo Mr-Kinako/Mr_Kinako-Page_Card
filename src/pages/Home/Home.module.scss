@@ -1,88 +1,81 @@
-@use "@/styles/_shared.scss" as shared;
-
-$max-width: 700px;
+@use "@/styles/_shared.scss";
 
 .home {
    @include shared.page-styles;
+}
 
-   .openAboutMe {
-      margin: 12px 0 0 0;
+.heroSection {
+   text-align: center;
+   margin-bottom: 3rem;
+   animation: fadeInDown 0.8s ease backwards;
+}
 
-      button {
-         background: rgba(255, 255, 255, 0.6);
-         color: $primaryTextColor;
-         font-family: "JetBrains Mono Light", monospace;
-         font-size: 0.84rem;
-         font-weight: 600;
-         padding: 14px 16px;
-         border: 1px solid rgba(0, 0, 0, 0.32);
-         border-radius: 32px;
+.title {
+   font-size: 3.5rem;
+   font-weight: 800;
+   margin-bottom: 0.5rem;
 
-         cursor: pointer;
-         user-select: none;
-         transition: background-color 0.2s ease;
+   background: var(--accent-gradient, var(--text-primary));
+   background-clip: text;
+   -webkit-background-clip: text;
+   -webkit-text-fill-color: transparent;
+   letter-spacing: -1px;
+}
 
-         appearance: none;
+.subtitle {
+   font-size: var(--font-md);
+   color: var(--text-secondary);
+   max-width: 80%;
+   margin: 0 auto;
+   line-height: 1.5;
+}
 
-         &:disabled {
-            background: rgba(255, 255, 255, 0.2);
-            color: color.change($primaryTextColor, $alpha: 0.5);
-            border: 1px solid transparent;
-            cursor: not-allowed;
-         }
+.openAboutMe {
+   margin-bottom: 2rem;
+   animation: fadeIn 1s ease 0.3s backwards;
+
+   button {
+      background: transparent;
+      border: 2px solid var(--accent);
+      color: var(--text-primary);
+      padding: 0.8rem 2rem;
+      border-radius: 12px;
+      font-family: inherit;
+      font-size: var(--font-md);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+
+      &:hover:not(:disabled) {
+         background: var(--accent);
+         color: #fff;
+         box-shadow: 0 0 20px color-mix(in srgb, var(--accent) 40%, transparent);
+         transform: translateY(-2px);
+      }
+
+      &:disabled {
+         opacity: 0.7;
+         cursor: not-allowed;
       }
    }
+}
 
-   .heroSection {
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      font-family: "JetBrains Mono Light", monospace;
-
-      .title {
-         font-size: 2.2rem;
-         color: $primaryTextColor;
-         font-weight: 700;
-      }
-
-      .subtitle {
-         font-size: 1.15rem;
-         font-weight: 400;
-         color: $secondaryTextColor;
-         line-height: 1.4;
-         max-width: 600px;
-         margin: 0 auto;
-      }
+@keyframes fadeInDown {
+   from {
+      opacity: 0;
+      transform: translateY(-20px);
    }
-
-   .contentSection {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
+   to {
+      opacity: 1;
+      transform: translateY(0);
    }
+}
 
-   .placeholderCard {
-      background: rgba(255, 255, 255, 0.5);
-      backdrop-filter: blur(4px);
-      border: 1px solid rgba(255, 255, 255, 0.5);
-      border-radius: 8px;
-      padding: 16px;
-      text-align: center;
-
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-
-      h3 {
-         color: $primaryTextColor;
-         font-size: 1.25rem;
-      }
-
-      p {
-         color: $secondaryTextColor;
-         font-size: 0.95rem;
-         line-height: 1.4;
-      }
+@keyframes fadeIn {
+   from {
+      opacity: 0;
+   }
+   to {
+      opacity: 1;
    }
 }

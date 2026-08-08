@@ -1,28 +1,30 @@
 @use "@/styles/_variables.scss" as *;
-@use "sass:color";
-
-$max-width: 700px;
 
 @mixin page-styles {
    width: 100%;
-   max-width: $max-width;
-   padding: max(12vh, 3.2rem) 16px 6rem 16px;
-   margin: 0 auto;
+   max-width: var(--max-width-page);
+   margin: auto auto;
+   padding: max(15vh, 4.6rem) 1.4rem 4.6rem 1.4rem;
 
-   background-color: $primaryBGPageColor;
+   background: var(--bg-content);
+   backdrop-filter: blur(12px);
+   -webkit-backdrop-filter: blur(12px);
 
    flex-grow: 1;
    display: flex;
    flex-direction: column;
    align-items: center;
-   gap: 1rem;
+
    overflow-y: auto;
    overflow-x: hidden;
-   scrollbar-width: auto;
+
+   scrollbar-width: thin;
+   scrollbar-color: var(--scrollbar) transparent;
    scrollbar-gutter: stable both-edges;
 
-   @media (min-width: $max-width) {
-      border-left: 5px solid color.change($bgBorderColor, $alpha: 0.6);
-      border-right: 5px solid color.change($bgBorderColor, $alpha: 0.6);
+   @media (min-width: $max-width-page) {
+      border-left: 1px solid var(--bg-content-border);
+      border-right: 1px solid var(--bg-content-border);
+      box-shadow: 0 0 2rem rgba(0, 0, 0, 0.06);
    }
 }

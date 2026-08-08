@@ -1,14 +1,11 @@
 import { useState } from "react";
-import cn from "classnames";
 import styles from "./Media.module.scss";
-import { isDev } from "@/tumblers";
 import { Footer } from "@/components/Footer";
+import { Overlay } from "@/components/Overlay";
 
 const imageModules = import.meta.glob<{ default: string }>(
    "@/assets/media/*.{jpg,jpeg,png,webp}",
-   {
-      eager: true,
-   },
+   { eager: true },
 );
 
 const mediaList = Object.keys(imageModules).map((path, index) => ({
@@ -18,90 +15,51 @@ const mediaList = Object.keys(imageModules).map((path, index) => ({
 
 export const Media = () => {
    const [activeSrc, setActiveSrc] = useState<string | null>(null);
-   const [isClosing, setIsClosing] = useState(false);
-   const [isAnimating, setIsAnimating] = useState(false);
 
-   const openOverlay = (src: string) => {
-      if (isAnimating || activeSrc) return;
+   return (
+      <>
+         <main className={styles.mediaContainer}>
+            <h2 className={styles.pageTitle}>Галерея Медиа</h2>
 
-      setIsAnimating(true);
-      setActiveSrc(src);
-      setIsClosing(false);
-
-      setTimeout(() => {
-         setIsAnimating(false);
-      }, 320);
-   };
-   const closeOverlay = () => {
-      if (isAnimating || !activeSrc) return;
-
-      setIsAnimating(true);
-      setIsClosing(true);
-
-      setTimeout(() => {
-         setActiveSrc(null);
-         setIsClosing(false);
-         setIsAnimating(false);
-      }, 320);
-   };
-
-   if (isDev)
-      return (
-         <>
-            <main className={styles.mediaContainer}>
-               <h2 className={styles.pageTitle}>Галерея Медиа</h2>
-
-               <div className={styles.contentWindow}>
-                  <div className={styles.masonryGrid}>
-                     {mediaList.map((item) => (
-                        <div
-                           key={item.id}
-                           className={styles.card}
-                           onClick={() => openOverlay(item.src)}
-                        >
-                           <img
-                              src={item.src}
-                              alt={`Media asset ${item.id}`}
-                              loading="lazy"
-                              draggable={false}
-                           />
-                        </div>
-                     ))}
-                  </div>
-               </div>
-
-               {activeSrc && (
-                  <div
-                     className={cn(
-                        styles.overlay,
-                        isClosing ? styles.fadeOut : styles.fadeIn,
-                     )}
-                     onClick={closeOverlay}
-                  >
+            <div className={styles.contentWindow}>
+               <div className={styles.masonryGrid}>
+                  {mediaList.map((item) => (
                      <div
-                        className={styles.overlayContent}
-                        onClick={(e) => e.stopPropagation()}
+                        key={item.id}
+                        className={styles.card}
+                        onClick={() => setActiveSrc(item.src)}
                      >
                         <img
-                           src={activeSrc}
-                           alt="Full size view"
-                           decoding="async"
-                           onClick={closeOverlay}
+                           src={item.src}
+                           alt={`Media asset ${item.id}`}
+                           loading="lazy"
                            draggable={false}
                         />
-
-                        <button
-                           className={styles.closeButton}
-                           onClick={closeOverlay}
-                        >
-                           ×
-                        </button>
                      </div>
-                  </div>
-               )}
-            </main>
+                  ))}
+               </div>
+            </div>
 
-            <Footer />
-         </>
-      );
+            {/* Единый оверлей для полноэкранного просмотра */}
+            <Overlay
+               isOpen={Boolean(activeSrc)}
+               onClose={() => setActiveSrc(null)}
+               showCloseButton
+            >
+               {activeSrc && (
+                  <img
+                     src={activeSrc}
+                     alt="Full size view"
+                     decoding="async"
+                     onClick={() => setActiveSrc(null)}
+                     draggable={false}
+                     className={styles.overlayImage}
+                  />
+               )}
+            </Overlay>
+         </main>
+
+         <Footer />
+      </>
+   );
 };

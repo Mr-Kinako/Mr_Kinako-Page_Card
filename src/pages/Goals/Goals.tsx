@@ -1,83 +1,114 @@
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { CardContainer } from "@/components/UI-Kit/CardContainer";
-import s from "./Goals.module.scss";
+import { Footer } from "@/components/Footer";
+import { GoalsData, goalStatCategory } from "./GoalsData";
 import {
    getGoalsStatsList,
    PRIORITY_CLASSES,
    STATUS_CLASSES,
 } from "./GoalsUtils";
-import { GoalsData, goalStatCategory } from "./GoalsData";
-import { useState } from "react";
-import { Footer } from "@/components/Footer";
+
+import s from "./Goals.module.scss";
+import { Button } from "@/components/UI-Kit";
 
 interface GoalsProps {
    stats?: goalStatCategory;
 }
 
+const BATCH_SIZE = 1;
+
 export const Goals = ({ stats }: GoalsProps) => {
    const currentStats = stats || getGoalsStatsList();
    const [isPriorityModalOpen, setIsPriorityModalOpen] = useState(false);
+   const [isLoading, setIsLoading] = useState(true);
+   const [visibleCount, setVisibleCount] = useState(BATCH_SIZE);
 
-   const PriorityModal = () => {
-      if (isPriorityModalOpen)
-         return (
-            <div
-               className={s.modalOverlay}
-               onClick={() => setIsPriorityModalOpen(false)}
-            >
-               <CardContainer
-                  customClass={s.modalContent}
-                  onClick={(e) => e.stopPropagation()}
-               >
-                  <div className={s.modalHeader}>
-                     <h3>Формула расчёта приоритета</h3>
-                     <button
-                        className={s.closeBtn}
-                        onClick={() => setIsPriorityModalOpen(false)}
-                     >
-                        ⨉
-                     </button>
-                  </div>
+   const allProjects = Object.entries(GoalsData);
+   const visibleProjects = allProjects.slice(0, visibleCount);
 
-                  <div className={s.modalBody}>
-                     <p>
-                        Приоритет находится в жёстком диапазоне от{" "}
-                        <strong>1.000</strong> (высокий) до{" "}
-                        <strong>40.000</strong> (низкий).
-                     </p>
-                     <ul>
-                        <li>
-                           <strong>Backlog Score:</strong> Учитывает заброшенные
-                           и ожидающие задачи.
-                        </li>
-                        <li>
-                           <strong>Critical Anomalies:</strong> заброшенные
-                           задачи с высоким приоритетом/средним приоритетом
-                           сильно снижают число.
-                        </li>
-                        <li>
-                           <strong>Abstraction parameters:</strong> longtime,
-                           deadline, moral и myself price.
-                        </li>
-                     </ul>
-                     <p className={s.modalNote}>
-                        Обновляется автоматически каждые 24 часа.
-                     </p>
-                  </div>
-               </CardContainer>
-            </div>
-         );
+   useEffect(() => {
+      const timer = setTimeout(() => {
+         setIsLoading(false);
+      }, 100);
+      return () => clearTimeout(timer);
+   }, []);
+
+   useEffect(() => {
+      if (isPriorityModalOpen) {
+         document.body.style.overflow = "hidden";
+      } else {
+         document.body.style.overflow = "";
+      }
+
+      return () => {
+         document.body.style.overflow = "";
+      };
+   }, [isPriorityModalOpen]);
+
+   const loadMore = () => {
+      if (visibleCount < allProjects.length) {
+         setVisibleCount((prev) => prev + BATCH_SIZE);
+      }
    };
 
    return (
       <>
-         <div className={s["goals-page"]}>
-            <PriorityModal />
+         <div className={s.goalsPage}>
+            {isPriorityModalOpen &&
+               createPortal(
+                  <div
+                     className={s.modalOverlay}
+                     onClick={() => setIsPriorityModalOpen(false)}
+                  >
+                     <CardContainer
+                        customClass={s.modalContent}
+                        onClick={(e) => e.stopPropagation()}
+                     >
+                        <div className={s.modalHeader}>
+                           <h3>Формула расчёта приоритета</h3>
+                           <button
+                              className={s.closeBtn}
+                              onClick={() => setIsPriorityModalOpen(false)}
+                           >
+                              ✕
+                           </button>
+                        </div>
 
-            <CardContainer customClass={s["header-container"]}>
+                        <div className={s.modalBody}>
+                           <p>
+                              Приоритет находится в жёстком диапазоне от{" "}
+                              <strong>1.000</strong> (высокий) до{" "}
+                              <strong>40.000</strong> (низкий).
+                           </p>
+                           <ul>
+                              <li>
+                                 <strong>Backlog Score:</strong> Учитывает
+                                 заброшенные и ожидающие задачи.
+                              </li>
+                              <li>
+                                 <strong>Critical Anomalies:</strong>{" "}
+                                 Заброшенные задачи с высоким/средним
+                                 приоритетом сильно снижают число.
+                              </li>
+                              <li>
+                                 <strong>Abstraction parameters:</strong>{" "}
+                                 longtime, deadline, moral и myself price.
+                              </li>
+                           </ul>
+                           <p className={s.modalNote}>
+                              Обновляется автоматически каждые 24 часа.
+                           </p>
+                        </div>
+                     </CardContainer>
+                  </div>,
+                  document.body,
+               )}
+            <CardContainer customClass={s.headerContainer}>
                <div className={s.headerInfo}>
                   <h1 className={s.headerTitle}>Мои зафиксированные цели</h1>
                   <div className={s.headerDesc}>
-                     Тут находиться общий свод данных, в виде количества чего-то
+                     Тут находится общий свод данных, в виде количества чего-то
                      конкретного.
                   </div>
                </div>
@@ -95,8 +126,6 @@ export const Goals = ({ stats }: GoalsProps) => {
                                  isPriorityCard && setIsPriorityModalOpen(true)
                               }
                            >
-                              <div className={s.overlay}></div>
-
                               <span className={s.count}>{item.count}</span>
                               <h5 className={s.title}>{item.title}</h5>
                            </div>
@@ -105,39 +134,38 @@ export const Goals = ({ stats }: GoalsProps) => {
                   </CardContainer>
                </div>
             </CardContainer>
+            {isLoading ? (
+               <div className={s.loaderFallback}>Загрузка целей...</div>
+            ) : (
+               <div className={s.tasksContainer}>
+                  {visibleProjects.map(([projectKey, project]) => {
+                     const tasks = Object.entries(project.content || {});
+                     const goalsCount = tasks.length;
 
-            <CardContainer customClass={s["tasks-container"]}>
-               {Object.entries(GoalsData).map(([projectKey, project]) => {
-                  const tasks = Object.entries(project.content || {});
-                  const activeGoalsCount = Object.values(
-                     project.content || {},
-                  ).length;
-                  const goalsCount = activeGoalsCount ? activeGoalsCount : 0;
-
-                  return (
-                     <div key={projectKey} className={s.projectCard}>
-                        <div className={s.projectHeaderTitle}>
-                           <div className={s.projectInfoContainer}>
-                              <h3 className={s.projectTitle}>
-                                 {project.title}
-                              </h3>
-                              <CardContainer customClass={s.projectGoals}>
-                                 <span className={s.goals}>
-                                    {goalsCount} целей
-                                 </span>
-                              </CardContainer>
+                     return (
+                        <CardContainer
+                           key={projectKey}
+                           customClass={s.projectCard}
+                        >
+                           <div className={s.projectHeaderTitle}>
+                              <div className={s.projectInfoContainer}>
+                                 <h3 className={s.projectTitle}>
+                                    {project.title}
+                                 </h3>
+                                 <div className={s.projectGoals}>
+                                    <span>{goalsCount} целей</span>
+                                 </div>
+                              </div>
+                              {project.description && (
+                                 <p className={s.projectDesc}>
+                                    {project.description}
+                                 </p>
+                              )}
                            </div>
-                           {project.description && (
-                              <p className={s.projectDesc}>
-                                 {project.description}
-                              </p>
-                           )}
-                        </div>
 
-                        {tasks.length > 0 ? (
-                           <ul className={s.taskList}>
-                              {Object.entries(project.content || {}).map(
-                                 ([taskKey, task]) => (
+                           {tasks.length > 0 ? (
+                              <ul className={s.taskList}>
+                                 {tasks.map(([taskKey, task]) => (
                                     <CardContainer
                                        key={taskKey}
                                        customClass={s.contentContainer}
@@ -152,32 +180,40 @@ export const Goals = ({ stats }: GoalsProps) => {
                                        </div>
 
                                        <div className={s.taskMeta}>
-                                          <CardContainer
-                                             customClass={`${s.taskStatus} ${s.metaItem} ${STATUS_CLASSES[task.status] || ""}`}
+                                          <span
+                                             className={`${s.metaItem} ${STATUS_CLASSES[task.status] || ""}`}
                                           >
                                              {task.status}
-                                          </CardContainer>
-                                          <CardContainer
-                                             customClass={`${s.taskPriority} ${s.metaItem} ${PRIORITY_CLASSES[task.priority] || ""}`}
+                                          </span>
+                                          <span
+                                             className={`${s.metaItem} ${PRIORITY_CLASSES[task.priority] || ""}`}
                                           >
                                              {task.priority}
-                                          </CardContainer>
+                                          </span>
                                        </div>
                                     </CardContainer>
-                                 ),
-                              )}
-                           </ul>
-                        ) : (
-                           <div className={s.emptyContentFallback}>
-                              <span>
-                                 Задачи для этого проекта пока не сформированы.
-                              </span>
-                           </div>
-                        )}
-                     </div>
-                  );
-               })}
-            </CardContainer>
+                                 ))}
+                              </ul>
+                           ) : (
+                              <div className={s.emptyContentFallback}>
+                                 <span>
+                                    Задачи для этого проекта пока не
+                                    сформированы.
+                                 </span>
+                              </div>
+                           )}
+                        </CardContainer>
+                     );
+                  })}
+
+                  {visibleCount < allProjects.length && (
+                     <Button customClass={s.loadMoreBtn} onClick={loadMore}>
+                        Показать ещё проекты (
+                        {allProjects.length - visibleCount})
+                     </Button>
+                  )}
+               </div>
+            )}
          </div>
 
          <Footer />

@@ -1,19 +1,41 @@
 @use "sass:color";
 
-$primaryBGPageColor: rgb(195, 212, 212);
+$max-width-page: 768px;
 
-$primaryTextColor: rgb(43, 53, 53);
-$secondaryTextColor: rgb(78, 92, 92);
+:root {
+   --max-width-page: #{$max-width-page};
 
-$pageLinkColor: rgb(85, 102, 102);
-$pageLinkColorHover: rgb(55, 65, 65);
-$pageLinkActiveColor: rgb(49, 58, 58);
+   // Радиусы скругления
+   --radius-sm: 8px;
+   --radius-md: 16px;
+   --radius-lg: 24px;
 
-$separatorColor: rgb(85, 114, 114);
+   --font-xs: 0.75rem;
+   --font-sm: 0.875rem;
+   --font-md: 1rem;
+   --font-lg: 1.25rem;
+   --font-xl: 1.75rem;
+   --font-xxl: 2rem;
 
-$bgBorderColor: rgb(154, 255, 255);
+   --blur-glass: blur(8px);
 
-$linksColor: rgb(158, 126, 233);
+   // Анимации
+   --transition-base: 0.3s ease;
+   --transition-bounce: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 
-$defaultTextShadow: 0 1px 4px rgba(0, 0, 0, 0.6);
-$defaultContainerShadow: 0 1px 6px rgba(0, 0, 0, 8);
+   // Слои (z-index)
+   --z-nav: 100;
+   --z-overlay: 900;
+   --z-modal: 1000;
+
+   // Статусы задач
+   --status-completed: #10b981;
+   --status-in-process: #3b82f6;
+   --status-awaiting: #f59e0b;
+   --status-abandoned: #ef4444;
+
+   // Приоритеты
+   --priority-high: #ec4879;
+   --priority-medium: #8b5cf6;
+   --priority-low: #6b7280;
+}

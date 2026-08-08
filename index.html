@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" data-theme="auto">
 <head>
    <meta charset="utf-8" />
    <!-- <link rel="icon" type="image/x-icon" href="favicon.ico" /> -->
    <link rel="icon" type="image/x-icon" href="9h5CQ0Xs.ico" />
    <meta name="viewport" content="width=device-width, initial-scale=1" />
-   <meta name="theme-color" content="black" />
 
    <title>Mr_Kinako</title>
    <meta name="description" content="Персональная визитка Мистера Кинако." />
@@ -20,6 +19,11 @@
    <meta property="twitter:card" content="summary_large_image" />
    <meta property="twitter:title" content="Mr_Kinako" />
    <meta property="twitter:description" content="Персональная визитка Мистера Кинако." />
+   
+   <script>
+      const savedTheme = localStorage.getItem("theme") || "auto";
+      document.documentElement.setAttribute("data-theme", savedTheme);
+   </script>
 </head>
 <body>
    <div id="root"></div>
