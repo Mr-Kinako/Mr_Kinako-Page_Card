@@ -52,28 +52,42 @@ export const GoalsData: Record<string, ProjectData> = {
             status: constantStatuses.abandoned
          },
 
-         2: {
+         100: {
             title: "Создание и комментарии про Taiko&Catch",
             description: "Добавить на роуте rankings в режимы новые режимы TaikoRX & CatchRX. Сделать при их выборе фоллбэк с информацией что данный режим будет в ближайшем будущем.",
+            priority: constantPriorities.medium,
+            status: constantStatuses.completed
+         },
+
+         2: {
+            title: "Changelog на глав. странице",
+            description: "Добавить небольшую таблицу Changelog на главную страницу сайта",
             priority: constantPriorities.medium,
             status: constantStatuses.awaiting
          },
 
-         100: {
+         3: {
+            title: "Общее количество новорегов",
+            description: "Небольшое окно информации о общем количестве зарегистрированных игроков",
+            priority: constantPriorities.low,
+            status: constantStatuses.abandoned
+         },
+
+         101: {
             title: "Онлайн-превьюер скинов",
             description: "Раздел, где можно загрузить свой скин и посмотреть, как будут выглядеть кружки, курсор и интерфейс на тестовом геймплее.",
             priority: constantPriorities.low,
             status: constantStatuses.abandoned
          },
 
-         102: {
+         103: {
             title: "Показ активности",
             description: "Сделать вместо текста \"Оффлайн\" зеленый значок возле аватарки, когда игрок онлайн, и серый когда оффлайн.",
             priority: constantPriorities.high,
             status: constantStatuses.completed
          },
 
-         101: {
+         102: {
             title: "Регистрация",
             description: "Выбор страны: Цвет списка и цвет текста должны быть разными, а не одинаковыми.",
             priority: constantPriorities.high,
