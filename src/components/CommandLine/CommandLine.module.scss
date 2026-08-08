@@ -24,141 +24,148 @@
    transition:
       height var(--transition-base),
       opacity var(--transition-base);
-}
 
-.header {
-   display: flex;
-   align-items: center;
-   justify-content: space-between;
-   padding: 0.6rem 1rem;
+   .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.6rem 1rem;
 
-   background: var(--bg-secondary);
-   border-bottom: 1px solid var(--bg-content-border);
-   user-select: none;
-}
+      background: var(--bg-secondary);
+      border-bottom: 1px solid var(--bg-content-border);
+      user-select: none;
 
-.title {
-   font-size: var(--font-xs);
-   font-weight: 600;
-   letter-spacing: 0.05em;
-   color: var(--accent);
-}
+      .title {
+         font-size: var(--font-xs);
+         font-weight: 600;
+         letter-spacing: 0.05em;
+         color: var(--accent);
+      }
 
-.controls {
-   display: flex;
-   align-items: center;
-   gap: 0.4rem;
-}
+      .controls {
+         display: flex;
+         align-items: center;
+         gap: 0.4rem;
 
-.controlBtn {
-   background: transparent;
-   border: none;
-   color: var(--text-secondary);
-   width: 24px;
-   height: 24px;
-   border-radius: var(--radius-sm);
-   cursor: pointer;
+         .controlBtn {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            width: 24px;
+            height: 24px;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
 
-   display: flex;
-   align-items: center;
-   justify-content: center;
-   font-size: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
 
-   transition:
-      background var(--transition-base),
-      color var(--transition-base);
+            transition:
+               background var(--transition-base),
+               color var(--transition-base);
 
-   &:hover:not(:disabled) {
-      background: var(--bg-content-border);
-      color: var(--text-primary);
+            &:hover:not(:disabled) {
+               background: var(--bg-content-border);
+               color: var(--text-primary);
+            }
+
+            &.closeBtn:hover {
+               background: var(--status-abandoned);
+               color: #ffffff;
+            }
+
+            &.disabled,
+            &:disabled {
+               opacity: 0.35;
+               cursor: not-allowed;
+            }
+         }
+      }
    }
 
-   &.closeBtn:hover {
-      background: var(--status-abandoned);
-      color: #ffffff;
-   }
+   .body {
+      display: flex;
+      flex-direction: column;
+      height: 320px;
+      padding: 1rem;
+      overflow-y: auto;
 
-   &.disabled,
-   &:disabled {
-      opacity: 0.35;
-      cursor: not-allowed;
-   }
-}
+      scrollbar-width: thin;
+      scrollbar-color: var(--scrollbar) transparent;
 
-.body {
-   display: flex;
-   flex-direction: column;
-   height: 320px;
-   padding: 1rem;
-   overflow-y: auto;
+      cursor: text;
 
-   scrollbar-width: thin;
-   scrollbar-color: var(--scrollbar) transparent;
+      .historyList {
+         display: flex;
+         flex-direction: column;
+         gap: 0.75rem;
 
-   cursor: text;
-}
+         .historyItem {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
 
-.historyList {
-   display: flex;
-   flex-direction: column;
-   gap: 0.75rem;
-}
+            .promptLine {
+               display: flex;
+               align-items: center;
+               gap: 0.5rem;
 
-.historyItem {
-   display: flex;
-   flex-direction: column;
-   gap: 0.25rem;
-}
+               .promptSymbol {
+                  color: var(--accent);
+                  font-weight: 600;
+               }
 
-.promptLine {
-   display: flex;
-   align-items: center;
-   gap: 0.5rem;
-}
+               .commandText {
+                  color: var(--text-primary);
+                  word-break: break-all;
+               }
+            }
 
-.promptSymbol {
-   color: var(--accent);
-   font-weight: 600;
-}
+            .outputLine {
+               white-space: pre-wrap;
+               color: var(--text-secondary);
+               line-height: 1.4;
+               padding-left: 0.5rem;
+               border-left: 2px solid var(--accent);
 
-.commandText {
-   color: var(--text-primary);
-   word-break: break-all;
-}
+               &.errorOutput {
+                  border-left-color: var(--status-abandoned);
+                  color: var(--status-abandoned);
+               }
+            }
+         }
+      }
 
-.outputLine {
-   white-space: pre-wrap;
-   color: var(--text-secondary);
-   line-height: 1.4;
-   padding-left: 0.5rem;
-   border-left: 2px solid var(--accent);
+      .inputForm {
+         display: flex;
+         align-items: center;
+         gap: 0.5rem;
+         margin-top: auto;
+         padding-top: 0.5rem;
 
-   &.errorOutput {
-      border-left-color: var(--status-abandoned);
-      color: var(--status-abandoned);
-   }
-}
+         .promptSymbol {
+            color: var(--accent);
+            font-weight: 600;
+            user-select: none;
+            cursor: default;
+         }
 
-.inputForm {
-   display: flex;
-   align-items: center;
-   gap: 0.5rem;
-   margin-top: auto;
-   padding-top: 0.5rem;
-}
+         .inputField {
+            flex-grow: 1;
+            background: transparent;
+            border: none;
+            outline: none;
 
-.inputField {
-   flex-grow: 1;
-   background: transparent;
-   border: none;
-   outline: none;
+            font-family: inherit;
+            font-size: inherit;
+            color: var(--text-primary);
 
-   font-family: inherit;
-   font-size: inherit;
-   color: var(--text-primary);
-
-   &::placeholder {
-      color: var(--text-secondary);
-      opacity: 0.5;
+            &::placeholder {
+               color: var(--text-secondary);
+               opacity: 0.5;
+            }
+         }
+      }
    }
 }

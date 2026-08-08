@@ -90,7 +90,7 @@ export const CommandLine: React.FC = () => {
                   onClick={handleToggleMinimize}
                   title={windowState.isMinimized ? "Развернуть" : "Свернуть"}
                >
-                  {windowState.isMinimized ? "🗖" : "🗕"}
+                  {windowState.isMinimized ? "🗕" : "🗕"}
                </button>
                <button
                   type="button"
