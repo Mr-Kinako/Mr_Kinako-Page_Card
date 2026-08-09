@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { CardContainer } from "@/components/UI-Kit/CardContainer";
 import { Footer } from "@/components/Footer";
-import { GoalsData, goalStatCategory } from "./GoalsData";
+import { GoalsData } from "./GoalsData";
 import {
    getGoalsStatsList,
    PRIORITY_CLASSES,
@@ -11,6 +11,7 @@ import {
 
 import s from "./Goals.module.scss";
 import { Button } from "@/components/UI-Kit";
+import { goalStatCategory } from "./GoalsTypes";
 
 interface GoalsProps {
    stats?: goalStatCategory;
@@ -166,32 +167,47 @@ export const Goals = ({ stats }: GoalsProps) => {
                            {tasks.length > 0 ? (
                               <ul className={s.taskList}>
                                  {tasks.map(([taskKey, task]) => (
-                                    <CardContainer
-                                       key={taskKey}
-                                       customClass={s.contentContainer}
-                                    >
-                                       <div className={s.taskInfoContainer}>
-                                          <h4 className={s.taskTitle}>
-                                             {task.title}
-                                          </h4>
-                                          <p className={s.taskDesc}>
-                                             {task.description}
-                                          </p>
-                                       </div>
+                                    <>
+                                       {task.title || task.description ? (
+                                          <CardContainer
+                                             key={taskKey}
+                                             customClass={s.contentContainer}
+                                          >
+                                             <div
+                                                className={s.taskInfoContainer}
+                                             >
+                                                <h4 className={s.taskTitle}>
+                                                   {task.title}
+                                                </h4>
+                                                <p className={s.taskDesc}>
+                                                   {task.description}
+                                                </p>
+                                             </div>
 
-                                       <div className={s.taskMeta}>
-                                          <span
-                                             className={`${s.metaItem} ${STATUS_CLASSES[task.status] || ""}`}
+                                             <div className={s.taskMeta}>
+                                                <span
+                                                   className={`${s.metaItem} ${STATUS_CLASSES[task.status] || ""}`}
+                                                >
+                                                   {task.status}
+                                                </span>
+                                                <span
+                                                   className={`${s.metaItem} ${PRIORITY_CLASSES[task.priority] || ""}`}
+                                                >
+                                                   {task.priority}
+                                                </span>
+                                             </div>
+                                          </CardContainer>
+                                       ) : (
+                                          <div
+                                             className={s.emptyContentFallback}
                                           >
-                                             {task.status}
-                                          </span>
-                                          <span
-                                             className={`${s.metaItem} ${PRIORITY_CLASSES[task.priority] || ""}`}
-                                          >
-                                             {task.priority}
-                                          </span>
-                                       </div>
-                                    </CardContainer>
+                                             <span>
+                                                Существует задача, но её
+                                                основные поля отсутствуют.
+                                             </span>
+                                          </div>
+                                       )}
+                                    </>
                                  ))}
                               </ul>
                            ) : (

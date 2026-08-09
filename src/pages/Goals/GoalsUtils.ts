@@ -1,4 +1,5 @@
-import { GoalsData, constantPriorities, constantStatuses, goalStatCategory } from "./GoalsData";
+import { GoalsData, constantPriorities, constantStatuses } from "./GoalsData";
+import { goalStatCategory } from "./GoalsTypes";
 import s from "./Goals.module.scss";
 
 export const STATUS_CLASSES: Record<string, string> = {
@@ -64,6 +65,7 @@ export const calculateAllProjectStats = () => {
 
 const PRIORITY_STORAGE_KEY = "currentPriorityData";
 const TWENTY_FOUR_HOURS_MS = 24 * 60 * 60 * 1000;
+// const FOUR_HOURS_MS = 4 * 60 * 60 * 1000;
 
 interface StoredPriority {
    value: number;
@@ -111,9 +113,9 @@ export const getGoalsStatsList = (): goalStatCategory => {
       console.log("importantAnomalies: " + importantAnomalies.toFixed(3));
 
       const rawLongtime = 0.0;
-      const rawDeadline = 0.0;
+      const rawDeadline = 0.4;
       const rawMoral = 0.41;
-      const rawMyselfPrice = 3.5;
+      const rawMyselfPrice = 6.3;
       // ----------
       const longtime = Math.min(30.0, Math.max(0.0, rawLongtime));
       const deadline = Math.min(1.0, Math.max(0.0, rawDeadline));
@@ -190,7 +192,11 @@ export const getGoalsStatsList = (): goalStatCategory => {
 
 if (typeof window !== "undefined") {
    (window as any).forceUpdatePriority = () => {
-      localStorage.removeItem(PRIORITY_STORAGE_KEY);
+      const checkStorage = localStorage.getItem(PRIORITY_STORAGE_KEY);
+      console.log(checkStorage?.toString());
+
+      if (checkStorage) localStorage.removeItem(PRIORITY_STORAGE_KEY);
+
       getGoalsStatsList();
       console.log("Приоритет успешно пересчитан. Перезагрузите страницу для обновления.");
    }
