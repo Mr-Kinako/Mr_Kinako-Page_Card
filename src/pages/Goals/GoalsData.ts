@@ -23,7 +23,7 @@ export const GoalsData: Record<string, ProjectData> = {
             title: "Рефакторинг файловой структуры",
             description: "",
             priority: constantPriorities.high,
-            status: constantStatuses.awaiting
+            status: constantStatuses.inProcess
          },
 
          1: {
