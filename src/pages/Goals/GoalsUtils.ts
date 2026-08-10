@@ -113,9 +113,9 @@ export const getGoalsStatsList = (): goalStatCategory => {
       console.log("importantAnomalies: " + importantAnomalies.toFixed(3));
 
       const rawLongtime = 0.0;
-      const rawDeadline = 0.4;
-      const rawMoral = 0.41;
-      const rawMyselfPrice = 6.3;
+      const rawDeadline = 0.3;
+      const rawMoral = 0.43;
+      const rawMyselfPrice = 5.6;
       // ----------
       const longtime = Math.min(30.0, Math.max(0.0, rawLongtime));
       const deadline = Math.min(1.0, Math.max(0.0, rawDeadline));

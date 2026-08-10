@@ -23,7 +23,7 @@ export const GoalsData: Record<string, ProjectData> = {
             title: "Рефакторинг файловой структуры",
             description: "",
             priority: constantPriorities.high,
-            status: constantStatuses.inProcess
+            status: constantStatuses.awaiting
          },
 
          1: {
@@ -37,7 +37,7 @@ export const GoalsData: Record<string, ProjectData> = {
             title: "Улучшить адаптацию хэдэра",
             description: "Поведение хэдэра на узких экранах менее предсказуемо, нужно сделать поведение более предсказуемым.",
             priority: constantPriorities.medium,
-            status: constantStatuses.inProcess
+            status: constantStatuses.awaiting
          },
          
          3: {
