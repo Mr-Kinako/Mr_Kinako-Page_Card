@@ -22,14 +22,14 @@ export const GoalsData: Record<string, ProjectData> = {
          0: {
             title: "Рефакторинг файловой структуры",
             description: "",
-            priority: constantPriorities.high,
-            status: constantStatuses.awaiting
+            priority: constantPriorities.low,
+            status: constantStatuses.abandoned
          },
 
          1: {
             title: "Рефакторинг архитектуры файлов",
             description: "",
-            priority: constantPriorities.medium,
+            priority: constantPriorities.low,
             status: constantStatuses.abandoned
          },
 
@@ -113,7 +113,7 @@ export const GoalsData: Record<string, ProjectData> = {
             priority: constantPriorities.high,
             status: constantStatuses.completed
          },
-      }
+      },
    },
    
    "mr-kinako-personal-page": {
@@ -130,7 +130,7 @@ export const GoalsData: Record<string, ProjectData> = {
          2: {
             title: "Улучшить категоризацию целей",
             description: "Добавить две категории: Выполненные/Невыполненные. Также можно добавить фильтр по приоритетам, добавив по умолчанию условно средний приоритет.",
-            priority: constantPriorities.medium,
+            priority: constantPriorities.low,
             status: constantStatuses.abandoned
          },
 
@@ -167,8 +167,23 @@ export const GoalsData: Record<string, ProjectData> = {
             priority: constantPriorities.high,
             status: constantStatuses.completed
          },
-      }
+      },
    },
+
+   "mk-unified-api-host": {
+      title: "MK Unified API Host",
+      description: "Мой собственный сервер, реализация которого должна быть уникальность: Один сервер на все мои проекты, в том числе для чужих в качестве тестов у себя. Будет разрабатываться с особой внимательностью.",
+      content: {
+         1: {
+            title: "Проработать feedback действия",
+            description: "Добавить несколько эндпоинтов для работы с feedbacks. В будущем сюда подробнее запишу список, всё-равно пока заброшено в связи с обстоятельствами.",
+            priority: constantPriorities.low,
+            status: constantStatuses.abandoned
+         },
+
+      },
+   },
+
    "cozybar-discord-server": {
       title: "Discord Server \"CozyBar(sik)\"",
       description: "Discord сервер нацеленный на простое общение юзеров, вероятно также для совместных игр. В основном будет предрасположен к фурри тематике, но также будет открыт и к обычным или другим юзерам.",
@@ -180,6 +195,6 @@ export const GoalsData: Record<string, ProjectData> = {
             status: constantStatuses.abandoned
          },
 
-      }
-   }
+      },
+   },
 }

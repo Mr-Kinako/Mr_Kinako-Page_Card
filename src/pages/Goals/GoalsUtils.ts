@@ -76,7 +76,7 @@ export const getGoalsStatsList = (): goalStatCategory => {
    const stats =  calculateAllProjectStats();
    let abandonedProjectsCount: number;
    if (stats.allProjectsCount > 0) {
-      abandonedProjectsCount = Math.max(0, stats.allProjectsCount - 2);
+      abandonedProjectsCount = Math.max(0, stats.allProjectsCount - 1);
    } else {
       abandonedProjectsCount = stats.allProjectsCount;
    }
@@ -112,10 +112,10 @@ export const getGoalsStatsList = (): goalStatCategory => {
       const importantAnomalies = (stats.abandonedMediumGoals * 0.5);
       console.log("importantAnomalies: " + importantAnomalies.toFixed(3));
 
-      const rawLongtime = 0.0;
-      const rawDeadline = 0.3;
-      const rawMoral = 0.43;
-      const rawMyselfPrice = 5.6;
+      const rawLongtime = 4.0;
+      const rawDeadline = 0.1;
+      const rawMoral = 0.37;
+      const rawMyselfPrice = 6.9;
       // ----------
       const longtime = Math.min(30.0, Math.max(0.0, rawLongtime));
       const deadline = Math.min(1.0, Math.max(0.0, rawDeadline));
