@@ -1,0 +1,1 @@
+public/share-other-project/*.mp4 filter=lfs diff=lfs merge=lfs -text

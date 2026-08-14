@@ -1,0 +1,30 @@
+# http://editorconfig.org
+root = true
+
+# Общие настройки для всех файлов проекта
+[*]
+indent_style = space
+indent_size = 2
+end_of_line = lf
+charset = utf-8
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+# Служебные файлы Git и конфигурации (строго LF)
+[.git*]
+end_of_line = lf
+indent_size = 2
+
+# Настройки для Python (если используются файлы бота)
+[*.py]
+indent_style = space
+indent_size = 4
+
+# Стили для веб-файлов (HTML, CSS, SCSS, JS, TS, JSON)
+[*.{html,css,scss,js,ts,jsx,tsx,json}]
+indent_style = space
+indent_size = 2
+
+# Документация и Markdown
+[*.md]
+trim_trailing_whitespace = false
