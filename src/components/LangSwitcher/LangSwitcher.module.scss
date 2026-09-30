@@ -13,9 +13,9 @@
   border-radius: var(--radius-sm);
   color: var(--text-secondary);
   font-family: inherit;
-  font-size: var(--font-sm);
+  font-size: clamp(0.72rem, 3vw, 0.875rem);
   font-weight: 600;
-  cursor: none;
+  cursor: pointer;
   transition: var(--transition-base);
   z-index: 10000;
 

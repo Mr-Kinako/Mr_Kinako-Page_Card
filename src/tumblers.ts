@@ -1,5 +1,3 @@
-export interface Tumblers {
-  isDev?: boolean;
-}
-
-export const isDev = false;
+export const isConsole = false;
+export const isGoals = false;
+export const isMedia = false;

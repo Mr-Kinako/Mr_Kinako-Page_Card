@@ -26,4 +26,10 @@
     border-right: 1px solid var(--bg-content-border);
     box-shadow: 0 0 2rem rgba(0, 0, 0, 0.06);
   }
+
+  @media (max-width: calc(#{$max-width-page} - 1px)) {
+    width: calc(100% - 32px);
+    margin: 32px 16px;
+    scrollbar-gutter: auto;
+  }
 }

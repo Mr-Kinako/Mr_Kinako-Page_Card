@@ -3,15 +3,16 @@ import { NavLink } from "react-router";
 import { useTranslation } from "@/i18n";
 import cn from "classnames";
 import s from "./NavContainer.module.scss";
+import { isGoals, isMedia } from "@/tumblers";
 
 export const NavContainer = () => {
   const { t } = useTranslation();
 
   const NAV_LINKS = [
-    { to: "/goals", text: t("nav.goals") },
-    { to: "/", text: t("nav.home"), end: true },
-    { to: "/media", text: t("nav.media") },
-  ];
+    { to: "/goals", text: t("nav.goals"), isTrue: isGoals },
+    { to: "/", text: t("nav.home"), isTrue: true, end: true },
+    { to: "/media", text: t("nav.media"),  isTrue: isMedia },
+  ].filter(link => link.isTrue);
 
   return (
     <nav className={cn(s.navigationContainer)}>
@@ -23,7 +24,11 @@ export const NavContainer = () => {
             <NavLink
               to={to}
               end={end}
-              className={({ isActive }) => cn(s.link, { [s.active]: isActive })}
+              className={({ isActive }) =>
+                cn(s.link, {
+                  [s.active]: isActive
+                })
+              }
             >
               {text}
             </NavLink>

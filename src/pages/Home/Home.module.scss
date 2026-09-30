@@ -11,7 +11,7 @@
 }
 
 .title {
-  font-size: 3.5rem;
+  font-size: clamp(1.8rem, 8vw, 3.5rem);
   font-weight: 800;
   margin-bottom: 0.5rem;
 
@@ -22,7 +22,7 @@
 }
 
 .subtitle {
-  font-size: var(--font-md);
+  font-size: clamp(0.76rem, 2.5vw, 1rem);
   color: var(--text-secondary);
   max-width: 80%;
   margin: 0 auto;
@@ -40,7 +40,7 @@
     padding: 0.8rem 2rem;
     border-radius: 12px;
     font-family: inherit;
-    font-size: var(--font-md);
+    font-size: clamp(0.76rem, 3vw, 1rem);
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;

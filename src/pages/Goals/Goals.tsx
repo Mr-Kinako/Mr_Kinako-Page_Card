@@ -12,15 +12,11 @@ import { useProjectTranslation } from "@/i18n/useProjectTranslation";
 import { usePriority } from "@/services/priority";
 import styles from "./Goals.module.scss";
 
-interface GoalsProps {
-  stats?: goalStatCategory;
-}
-
 const BATCH_SIZE = 1;
 
 function getGoalsStatsList(
   t: (key: string) => string,
-  livePriority: number | null,
+  livePriority: number | null
 ): goalStatCategory {
   const stats = calculateRawStats();
   const abandonedProjectsCount = calculateAbandonedProjectsCount(stats.allProjectsCount);
@@ -69,7 +65,12 @@ function getGoalsStatsList(
   };
 }
 
-export const Goals = ({ stats }: GoalsProps) => {
+interface GoalsProps {
+  isTrue: boolean;
+  stats?: goalStatCategory;
+}
+
+export const Goals = ({ stats, isTrue }: GoalsProps) => {
   const { t } = useTranslation();
   const { getProject, getTask } = useProjectTranslation();
   const {
@@ -104,146 +105,148 @@ export const Goals = ({ stats }: GoalsProps) => {
     }
   };
 
-  return (
-    <>
-      <div className={styles.goalsPage}>
-        {isPriorityModalOpen &&
-          createPortal(
-            <div className={styles.modalOverlay} onClick={() => setIsPriorityModalOpen(false)}>
-              <CardContainer customClass={styles.modalContent} onClick={(e) => e.stopPropagation()}>
-                <div className={styles.modalHeader}>
-                  <h3>{t("goals.priorityModalTitle")}</h3>
-                  <button className={styles.closeBtn} onClick={() => setIsPriorityModalOpen(false)}>
-                    ✕
-                  </button>
-                </div>
-                <div className={styles.modalBody}>
-                  <p>{t("goals.priorityModal.range")}</p>
-                  <ul>
-                    <li>{t("goals.priorityModal.backlogScore")}</li>
-                    <li>{t("goals.priorityModal.criticalAnomalies")}</li>
-                    <li>{t("goals.priorityModal.abstractionParams")}</li>
-                    <li>{t("goals.priorityModal.storage")}</li>
-                    <li>{t("goals.priorityModal.autoUpdate")}</li>
-                    <li>{t("goals.priorityModal.decay")}</li>
-                    <li>{t("goals.priorityModal.versioning")}</li>
-                    <li>{t("goals.priorityModal.i18n")}</li>
-                  </ul>
-                  <p className={styles.modalNote}>{t("goals.priorityModal.updateNote")}</p>
-                </div>
-              </CardContainer>
-            </div>,
-            document.body,
-          )}
-
-        <CardContainer customClass={styles.headerContainer}>
-          <div className={styles.headerInfo}>
-            <h1 className={styles.headerTitle}>{t("goals.title")}</h1>
-            <div className={styles.headerDesc}>{t("goals.description")}</div>
-          </div>
-
-          <div className={styles.headerStatsContainer}>
-            <CardContainer customClass={styles.editContainer}>
-              {Object.values(currentStats).map((item) => {
-                const isPriorityCard = item.id === "work-priority";
-                return (
-                  <div
-                    key={item.id}
-                    className={`${styles.goalItem} ${isPriorityCard ? styles.clickable : ""}`}
-                    onClick={() => isPriorityCard && setIsPriorityModalOpen(true)}
-                  >
-                    <span className={styles.count}>{item.count}</span>
-                    <h5 className={styles.title}>{item.title}</h5>
+  if (isTrue) {
+    return (
+      <>
+        <div className={styles.goalsPage}>
+          {isPriorityModalOpen &&
+            createPortal(
+              <div className={styles.modalOverlay} onClick={() => setIsPriorityModalOpen(false)}>
+                <CardContainer customClass={styles.modalContent} onClick={(e) => e.stopPropagation()}>
+                  <div className={styles.modalHeader}>
+                    <h3>{t("goals.priorityModalTitle")}</h3>
+                    <button className={styles.closeBtn} onClick={() => setIsPriorityModalOpen(false)}>
+                      ✕
+                    </button>
                   </div>
+                  <div className={styles.modalBody}>
+                    <p>{t("goals.priorityModal.range")}</p>
+                    <ul>
+                      <li>{t("goals.priorityModal.backlogScore")}</li>
+                      <li>{t("goals.priorityModal.criticalAnomalies")}</li>
+                      <li>{t("goals.priorityModal.abstractionParams")}</li>
+                      <li>{t("goals.priorityModal.storage")}</li>
+                      <li>{t("goals.priorityModal.autoUpdate")}</li>
+                      <li>{t("goals.priorityModal.decay")}</li>
+                      <li>{t("goals.priorityModal.versioning")}</li>
+                      <li>{t("goals.priorityModal.i18n")}</li>
+                    </ul>
+                    <p className={styles.modalNote}>{t("goals.priorityModal.updateNote")}</p>
+                  </div>
+                </CardContainer>
+              </div>,
+              document.body,
+            )}
+
+          <CardContainer customClass={styles.headerContainer}>
+            <div className={styles.headerInfo}>
+              <h1 className={styles.headerTitle}>{t("goals.title")}</h1>
+              <div className={styles.headerDesc}>{t("goals.description")}</div>
+            </div>
+
+            <div className={styles.headerStatsContainer}>
+              <CardContainer customClass={styles.editContainer}>
+                {Object.values(currentStats).map((item) => {
+                  const isPriorityCard = item.id === "work-priority";
+                  return (
+                    <div
+                      key={item.id}
+                      className={`${styles.goalItem} ${isPriorityCard ? styles.clickable : ""}`}
+                      onClick={() => isPriorityCard && setIsPriorityModalOpen(true)}
+                    >
+                      <span className={styles.count}>{item.count}</span>
+                      <h5 className={styles.title}>{item.title}</h5>
+                    </div>
+                  );
+                })}
+              </CardContainer>
+            </div>
+          </CardContainer>
+
+          {isLoading ? (
+            <div className={styles.loaderFallback}>{t("goals.loading")}</div>
+          ) : (
+            <div className={styles.tasksContainer}>
+              {visibleProjects.map(([projectKey, project]) => {
+                const projectTrans = getProject(projectKey);
+                const tasks = Object.entries(project.content || {});
+                const goalsCount = tasks.length;
+
+                return (
+                  <CardContainer key={projectKey} customClass={styles.projectCard}>
+                    <div className={styles.projectHeaderTitle}>
+                      <div className={styles.projectInfoContainer}>
+                        <h3 className={styles.projectTitle}>
+                          {projectTrans?.title || project.title}
+                        </h3>
+                        <div className={styles.projectGoals}>
+                          <span>
+                            {goalsCount} {t("goals.goalsCount")}
+                          </span>
+                        </div>
+                      </div>
+                      {project.description && (
+                        <p className={styles.projectDesc}>
+                          {projectTrans?.description || project.description}
+                        </p>
+                      )}
+                    </div>
+
+                    {tasks.length > 0 ? (
+                      <ul className={styles.taskList}>
+                        {tasks.map(([taskKey, task]) => {
+                          const taskTrans = getTask(projectKey, taskKey);
+                          return task.title || task.description ? (
+                            <CardContainer key={taskKey} customClass={styles.contentContainer}>
+                              <div className={styles.taskInfoContainer}>
+                                <h4 className={styles.taskTitle}>{taskTrans?.title || task.title}</h4>
+                                <p className={styles.taskDesc}>
+                                  {taskTrans?.description || task.description}
+                                </p>
+                              </div>
+                              <div className={styles.taskMeta}>
+                                {STATUS_CLASSES[task.status] && (
+                                  <span
+                                    className={`${styles.metaItem} ${STATUS_CLASSES[task.status]}`}
+                                  >
+                                    {t(`goals.status.${task.status}`)}
+                                  </span>
+                                )}
+                                {PRIORITY_CLASSES[task.priority] && (
+                                  <span
+                                    className={`${styles.metaItem} ${PRIORITY_CLASSES[task.priority] || ""}`}
+                                  >
+                                    {t(`goals.priority.${task.priority}`)}
+                                  </span>
+                                )}
+                              </div>
+                            </CardContainer>
+                          ) : (
+                            <div key={taskKey} className={styles.emptyContentFallback}>
+                              <span>{t("goals.emptyTask")}</span>
+                            </div>
+                          );
+                        })}
+                      </ul>
+                    ) : (
+                      <div className={styles.emptyContentFallback}>
+                        <span>{t("goals.emptyProject")}</span>
+                      </div>
+                    )}
+                  </CardContainer>
                 );
               })}
-            </CardContainer>
-          </div>
-        </CardContainer>
 
-        {isLoading ? (
-          <div className={styles.loaderFallback}>{t("goals.loading")}</div>
-        ) : (
-          <div className={styles.tasksContainer}>
-            {visibleProjects.map(([projectKey, project]) => {
-              const projectTrans = getProject(projectKey);
-              const tasks = Object.entries(project.content || {});
-              const goalsCount = tasks.length;
-
-              return (
-                <CardContainer key={projectKey} customClass={styles.projectCard}>
-                  <div className={styles.projectHeaderTitle}>
-                    <div className={styles.projectInfoContainer}>
-                      <h3 className={styles.projectTitle}>
-                        {projectTrans?.title || project.title}
-                      </h3>
-                      <div className={styles.projectGoals}>
-                        <span>
-                          {goalsCount} {t("goals.goalsCount")}
-                        </span>
-                      </div>
-                    </div>
-                    {project.description && (
-                      <p className={styles.projectDesc}>
-                        {projectTrans?.description || project.description}
-                      </p>
-                    )}
-                  </div>
-
-                  {tasks.length > 0 ? (
-                    <ul className={styles.taskList}>
-                      {tasks.map(([taskKey, task]) => {
-                        const taskTrans = getTask(projectKey, taskKey);
-                        return task.title || task.description ? (
-                          <CardContainer key={taskKey} customClass={styles.contentContainer}>
-                            <div className={styles.taskInfoContainer}>
-                              <h4 className={styles.taskTitle}>{taskTrans?.title || task.title}</h4>
-                              <p className={styles.taskDesc}>
-                                {taskTrans?.description || task.description}
-                              </p>
-                            </div>
-                            <div className={styles.taskMeta}>
-                              {STATUS_CLASSES[task.status] && (
-                                <span
-                                  className={`${styles.metaItem} ${STATUS_CLASSES[task.status]}`}
-                                >
-                                  {t(`goals.status.${task.status}`)}
-                                </span>
-                              )}
-                              {PRIORITY_CLASSES[task.priority] && (
-                                <span
-                                  className={`${styles.metaItem} ${PRIORITY_CLASSES[task.priority] || ""}`}
-                                >
-                                  {t(`goals.priority.${task.priority}`)}
-                                </span>
-                              )}
-                            </div>
-                          </CardContainer>
-                        ) : (
-                          <div key={taskKey} className={styles.emptyContentFallback}>
-                            <span>{t("goals.emptyTask")}</span>
-                          </div>
-                        );
-                      })}
-                    </ul>
-                  ) : (
-                    <div className={styles.emptyContentFallback}>
-                      <span>{t("goals.emptyProject")}</span>
-                    </div>
-                  )}
-                </CardContainer>
-              );
-            })}
-
-            {visibleCount < allProjects.length && (
-              <Button customClass={styles.loadMoreBtn} onClick={loadMore}>
-                {t("goals.loadMore", { count: allProjects.length - visibleCount })}
-              </Button>
-            )}
-          </div>
-        )}
-      </div>
-      <Footer />
-    </>
-  );
+              {visibleCount < allProjects.length && (
+                <Button customClass={styles.loadMoreBtn} onClick={loadMore}>
+                  {t("goals.loadMore", { count: allProjects.length - visibleCount })}
+                </Button>
+              )}
+            </div>
+          )}
+        </div>
+        <Footer />
+      </>
+    );
+  }
 };

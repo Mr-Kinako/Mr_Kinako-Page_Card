@@ -17,7 +17,7 @@
   }
 
   .aboutMe_header {
-    font-size: var(--font-lg);
+    font-size: clamp(0.84rem, 4vw, 1.25rem);
     color: var(--text-primary);
     margin-bottom: 1.5rem;
     border-bottom: 2px dashed var(--bg-content-border);
@@ -27,14 +27,14 @@
   .aboutMe_contentContainer {
     color: var(--text-secondary);
     line-height: 1.6;
-    font-size: var(--font-sm);
+    font-size: clamp(0.69rem, 3vw, 0.875rem);
 
     span {
       display: inline-block;
     }
 
     .spoiler {
-      margin-top: 1rem;
+      margin-top: 0.6rem;
       padding: 1rem;
       border-radius: 8px;
       background: rgba(0, 0, 0, 0.05);
