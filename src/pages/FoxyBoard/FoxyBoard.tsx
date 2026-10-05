@@ -15,7 +15,7 @@ export const FoxyBoard = ({ isTrue }: { isTrue: boolean }) => {
         <h1 className={styles.title}>{pageTitle}</h1>
 
         <div className={styles.foxyBoardGrid}>
-          <div className={styles.technicalinfoContainer}>
+          <div className={styles.technicalInfoContainer}>
             <div className={styles.hardwareContainer}>
               <h2 className={`${styles.hardwareTitle} ${styles.boardTitles}`}>Hardware</h2>
 

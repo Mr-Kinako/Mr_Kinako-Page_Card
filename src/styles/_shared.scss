@@ -27,4 +27,8 @@
   scrollbar-width: auto;
   scrollbar-color: transparent transparent;
   scrollbar-gutter: stable both-edges;
+
+  @media (min-width: 784px) {
+    margin: 48px 8px;
+  }
 }
