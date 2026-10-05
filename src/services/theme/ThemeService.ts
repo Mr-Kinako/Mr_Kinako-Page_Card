@@ -12,7 +12,7 @@ const THEMES: Theme[] = [
   "auto",
 ];
 const STORAGE_KEY = "app-theme";
-const DEFAULT_THEME: Theme = "dark";
+const DEFAULT_THEME: Theme = "auto";
 
 const THEME_LABELS: Record<Theme, string> = {
   dark: "Dark",

@@ -11,8 +11,9 @@ export const NavContainer = () => {
   const NAV_LINKS = [
     { to: "/goals", text: t("nav.goals"), isTrue: isGoals },
     { to: "/", text: t("nav.home"), isTrue: true, end: true },
-    { to: "/media", text: t("nav.media"),  isTrue: isMedia },
-  ].filter(link => link.isTrue);
+    { to: "/foxyboard", text: t("nav.foxyboard"), isTrue: true },
+    { to: "/media", text: t("nav.media"), isTrue: isMedia },
+  ].filter((link) => link.isTrue);
 
   return (
     <nav className={cn(s.navigationContainer)}>
@@ -26,7 +27,7 @@ export const NavContainer = () => {
               end={end}
               className={({ isActive }) =>
                 cn(s.link, {
-                  [s.active]: isActive
+                  [s.active]: isActive,
                 })
               }
             >

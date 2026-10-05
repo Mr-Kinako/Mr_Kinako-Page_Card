@@ -1,11 +1,12 @@
 @use "@/styles/_mixins.scss" as mix;
+@use "@/styles/_theme.scss" as theme;
 
 .navigationContainer {
   width: max-content;
   position: fixed;
-  top: 1rem;
-  left: 50%;
-  transform: translateX(-50%);
+  top: var(--default-padding);
+  right: var(--default-padding);
+  // transform: translateX(-50%);
   z-index: var(--z-nav);
 }
 
@@ -15,8 +16,9 @@
   align-items: center;
   gap: 0.6rem;
   padding: 0.4rem 0.5rem;
-  border-radius: 1rem;
+  border-radius: var(--radius-md);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  user-select: none;
 
   .link {
     text-decoration: none;
@@ -25,7 +27,7 @@
     border-radius: 0.6rem;
     transition: all 0.3s ease;
     font-weight: 600;
-    font-size: var(--font-sm);
+    font-size: clamp(0.75rem, 2.5vw, 0.875rem);
 
     &:hover {
       color: var(--text-primary);
@@ -33,10 +35,13 @@
     }
 
     &.active {
+      // background: var(--accent);
       color: #fff;
-      background: var(--accent);
-      // Если есть градиент, используем его:
-      background: var(--accent-gradient, var(--accent));
+      background: linear-gradient(
+        145deg,
+        color-mix(var(--accent), oklch(0 0 0 / 0) 50%),
+        color-mix(var(--accent), black 10%, oklch(0 0 0 / 0) 50%)
+      );
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     }
   }

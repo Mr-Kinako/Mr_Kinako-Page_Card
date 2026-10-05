@@ -13,52 +13,50 @@ const mediaList = Object.entries(imageModules).map(([_, module], index) => ({
   src: module.default,
 }));
 
-export const Media = ({
-  isTrue
-}: {
-  isTrue: boolean
-}) => {
+export const Media = ({ isTrue }: { isTrue: boolean }) => {
   const [activeSrc, setActiveSrc] = useState<string | null>(null);
   const { t } = useTranslation();
 
-  if (isTrue) {
-    return (
-      <>
-        <main className={styles.mediaContainer}>
-          <h2 className={styles.pageTitle}>{t("media.title")}</h2>
-
-          <div className={styles.contentWindow}>
-            <div className={styles.masonryGrid}>
-              {mediaList.map((item) => (
-                <div key={item.id} className={styles.card} onClick={() => setActiveSrc(item.src)}>
-                  <img
-                    src={item.src}
-                    alt={`Media asset ${item.id}`}
-                    loading="lazy"
-                    draggable={false}
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Единый оверлей для полноэкранного просмотра */}
-          <Overlay isOpen={Boolean(activeSrc)} onClose={() => setActiveSrc(null)} showCloseButton>
-            {activeSrc && (
-              <img
-                src={activeSrc}
-                alt="Full size view"
-                decoding="async"
-                onClick={() => setActiveSrc(null)}
-                draggable={false}
-                className={styles.overlayImage}
-              />
-            )}
-          </Overlay>
-        </main>
-
-        <Footer />
-      </>
-    );
+  if (!isTrue) {
+    return null;
   }
+
+  return (
+    <>
+      <main className={styles.mediaContainer}>
+        <h2 className={styles.pageTitle}>{t("media.title")}</h2>
+
+        <div className={styles.contentWindow}>
+          <div className={styles.masonryGrid}>
+            {mediaList.map((item) => (
+              <div key={item.id} className={styles.card} onClick={() => setActiveSrc(item.src)}>
+                <img
+                  src={item.src}
+                  alt={`Media asset ${item.id}`}
+                  loading="lazy"
+                  draggable={false}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Единый оверлей для полноэкранного просмотра */}
+        <Overlay isOpen={Boolean(activeSrc)} onClose={() => setActiveSrc(null)} showCloseButton>
+          {activeSrc && (
+            <img
+              src={activeSrc}
+              alt="Full size view"
+              decoding="async"
+              onClick={() => setActiveSrc(null)}
+              draggable={false}
+              className={styles.overlayImage}
+            />
+          )}
+        </Overlay>
+      </main>
+
+      <Footer />
+    </>
+  );
 };

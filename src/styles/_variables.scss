@@ -1,7 +1,12 @@
+// src/styles/_variables.scss
+
 $max-width-page: 768px;
 
 :root {
   --max-width-page: #{$max-width-page};
+
+  // Дефолтные оверлей отступы
+  --default-padding: 16px;
 
   // Радиусы скругления
   --radius-sm: 8px;

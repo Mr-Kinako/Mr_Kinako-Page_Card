@@ -6,9 +6,7 @@ import path from "path";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // https://vitejs.dev/config/
-export default defineConfig(({ mode }) => {
-  const isProd = mode === "production";
-
+export default defineConfig(() => {
   return {
     base: "/",
     plugins: [react()],

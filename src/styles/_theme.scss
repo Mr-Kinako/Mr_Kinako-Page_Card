@@ -118,7 +118,7 @@
   --scrollbar: #a5d6a7;
 }
 
-// === Auto (system preference) ===
+/* === Auto (system preference) === */
 @media (prefers-color-scheme: light) {
   :root:not([data-theme]),
   [data-theme="auto"] {

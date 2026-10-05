@@ -1,3 +1,5 @@
+// src/main.tsx
+
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { I18nProvider } from "./i18n/I18nProvider.tsx";

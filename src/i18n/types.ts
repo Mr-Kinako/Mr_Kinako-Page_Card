@@ -1,8 +1,9 @@
 export interface TranslationSchema {
   nav: {
-    home: string;
-    media: string;
     goals: string;
+    home: string;
+    foxyboard: string;
+    media: string;
   };
   home: {
     welcome: string;

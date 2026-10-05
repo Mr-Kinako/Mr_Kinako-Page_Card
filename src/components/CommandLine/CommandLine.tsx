@@ -6,10 +6,10 @@ import { useTranslation } from "@/i18n";
 import styles from "./CommandLine.module.scss";
 
 interface CommandLineProps {
-  isTrue: boolean
+  isTrue: boolean;
 }
 
-export const CommandLine: React.FC<CommandLineProps> = ({isTrue}) => {
+export const CommandLine: React.FC<CommandLineProps> = ({ isTrue }) => {
   const [windowState, setWindowState] = useState<WindowState>({
     isOpen: true,
     isMinimized: false,
@@ -113,7 +113,9 @@ export const CommandLine: React.FC<CommandLineProps> = ({isTrue}) => {
                     <span className={styles.commandText}>{item.command}</span>
                   </div>
                   {item.output && (
-                    <div className={`${styles.outputLine} ${item.isError ? styles.errorOutput : ""}`}>
+                    <div
+                      className={`${styles.outputLine} ${item.isError ? styles.errorOutput : ""}`}
+                    >
                       {item.output}
                     </div>
                   )}
