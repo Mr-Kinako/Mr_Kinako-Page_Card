@@ -8,8 +8,10 @@
 
   flex-direction: column;
   align-items: center;
+  align-self: center;
 
   width: calc(100% - 16px);
+  max-width: var(--max-width-page);
 
   background: var(--bg-content);
   backdrop-filter: blur(5px);
