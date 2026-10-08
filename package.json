@@ -1,7 +1,7 @@
 {
   "name": "mr-kinako-visiting-card",
   "private": true,
-  "version": "1.4.1-rc",
+  "version": "1.4.3-rc",
   "type": "module",
   "scripts": {
     "dev": "vite",
