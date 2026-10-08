@@ -1,6 +1,6 @@
 // src/pages/DiscordServers/Kinland/data/mock.ts
 
-import type { ServerInfo } from "./types";
+import type { ServerInfo } from "./types.js";
 
 export const kinlandServerMock: ServerInfo = {
   name: "Kinland",

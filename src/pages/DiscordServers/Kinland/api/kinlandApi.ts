@@ -1,7 +1,7 @@
 // src/pages/DiscordServers/Kinland/api/kinlandApi.ts
 
-import { request } from "./client";
-import type { AuthSession, DiscordUser, ServerStats } from "./types";
+import { request } from "./client.js";
+import type { AuthSession, DiscordUser, ServerStats } from "./types.js";
 
 export const kinlandApi = {
   getServerStats: () => request<ServerStats>("/kinland/stats"),

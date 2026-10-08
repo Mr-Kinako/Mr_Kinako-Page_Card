@@ -1,7 +1,7 @@
 // api/auth/me.ts
 
 import { parseCookie } from "cookie";
-import { sql } from "../_db";
+import { sql } from "../_db.js";
 
 interface VercelRequest {
   method?: string;
