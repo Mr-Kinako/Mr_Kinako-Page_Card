@@ -1,0 +1,1 @@
+{"root":["./vite.config.ts","./api/_db.ts","./api/auth/logout.ts","./api/auth/me.ts","./api/auth/discord/callback.ts","./api/auth/discord/login.ts"],"version":"6.0.3"}

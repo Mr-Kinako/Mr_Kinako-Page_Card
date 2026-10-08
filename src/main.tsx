@@ -15,7 +15,7 @@ import App from "./App.tsx";
 PriorityService.setStatsProvider(calculateRawStats);
 ThemeService.init();
 
-if (typeof window !== "undefined") {
+if (import.meta.env.DEV && typeof window !== "undefined") {
   (window as any).forceUpdatePriority = async () => {
     await PriorityService.clear();
     const value = await PriorityService.forceRecalculate();

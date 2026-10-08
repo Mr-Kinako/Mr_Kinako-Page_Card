@@ -22,7 +22,7 @@ export const Home = () => {
 
   return (
     <>
-      <main className={styles.home}>
+      <div className={styles.home}>
         <section className={styles.heroSection}>
           <h1 className={styles.title}>Mr_Kinako</h1>
 
@@ -36,7 +36,7 @@ export const Home = () => {
         </div>
 
         <AboutMe isOpen={isActiveAboutMe} />
-      </main>
+      </div>
 
       <Footer />
     </>

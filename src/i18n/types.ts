@@ -1,5 +1,6 @@
 export interface TranslationSchema {
   nav: {
+    kinland: string;
     goals: string;
     home: string;
     foxyboard: string;

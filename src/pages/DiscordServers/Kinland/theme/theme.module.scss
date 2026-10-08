@@ -1,0 +1,47 @@
+// src/pages/DiscordServers/Kinland/theme/theme.module.scss
+
+:root,
+[data-theme="dark"] {
+  /* Тёмная тема — по умолчанию */
+  --kinland-bg: #0a0b10;
+  --kinland-panel: #11121c;
+  --kinland-card: #181926;
+  --kinland-card-hover: rgba(255, 255, 255, 0.05);
+  --kinland-modal: #161722;
+
+  --kinland-accent: #5865f2;
+  --kinland-accent-hover: #4752c4;
+  --kinland-accent-active: rgba(88, 101, 242, 0.15);
+
+  --kinland-text: #ffffff;
+  --kinland-text-muted: #8e92a4;
+  --kinland-border: #1e202e;
+  --kinland-footer-text: rgba(255, 255, 255, 0.25);
+
+  --kinland-shadow: rgba(0, 0, 0, 0.5);
+  --kinland-backdrop: rgba(0, 0, 0, 0.65);
+  --kinland-danger: #da373c;
+
+  background-color: var(--kinland-bg);
+  color: var(--kinland-text);
+}
+
+:root[data-theme="light"] {
+  --kinland-bg: #f6f7fb;
+  --kinland-panel: #ffffff;
+  --kinland-card: #f0f2f8;
+  --kinland-card-hover: rgba(0, 0, 0, 0.05);
+  --kinland-modal: #ffffff;
+
+  --kinland-accent: #5865f2;
+  --kinland-accent-hover: #4752c4;
+  --kinland-accent-active: rgba(88, 101, 242, 0.1);
+
+  --kinland-text: #11121c;
+  --kinland-text-muted: #626575;
+  --kinland-border: #e2e4ed;
+  --kinland-footer-text: rgba(0, 0, 0, 0.4);
+
+  --kinland-shadow: rgba(0, 0, 0, 0.12);
+  --kinland-backdrop: rgba(0, 0, 0, 0.4);
+}

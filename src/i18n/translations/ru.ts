@@ -2,9 +2,10 @@ import type { TranslationSchema } from "../types";
 
 export const ru = {
   nav: {
+    kinland: "Кинляндия",
     goals: "Цели",
     home: "Главная",
-    foxyboard: "FoxyBoard",
+    foxyboard: "Лисья Доска",
     media: "Медиа",
   },
   home: {

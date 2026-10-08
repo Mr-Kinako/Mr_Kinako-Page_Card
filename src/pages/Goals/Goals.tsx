@@ -248,6 +248,7 @@ export const Goals = ({ stats, isTrue }: GoalsProps) => {
           </div>
         )}
       </div>
+
       <Footer />
     </>
   );

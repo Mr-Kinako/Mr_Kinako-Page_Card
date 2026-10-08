@@ -11,7 +11,7 @@ export const FoxyBoard = ({ isTrue }: { isTrue: boolean }) => {
 
   return (
     <>
-      <main className={styles.foxyBoard}>
+      <div className={styles.foxyBoard}>
         <h1 className={styles.title}>{pageTitle}</h1>
 
         <div className={styles.foxyBoardGrid}>
@@ -19,7 +19,10 @@ export const FoxyBoard = ({ isTrue }: { isTrue: boolean }) => {
             <div className={styles.hardwareContainer}>
               <h2 className={`${styles.hardwareTitle} ${styles.boardTitles}`}>Hardware</h2>
 
-              <ul className={`${styles.hardwareList} ${styles.boardLists}`} style={{ listStyleType: "none" }}>
+              <ul
+                className={`${styles.hardwareList} ${styles.boardLists}`}
+                style={{ listStyleType: "none" }}
+              >
                 <li className={`${styles.hardwareItem} ${styles.boardItems}`}>
                   <strong>Monitor:</strong> <code>23.8" DEXP DF24N1</code>
                 </li>
@@ -68,7 +71,10 @@ export const FoxyBoard = ({ isTrue }: { isTrue: boolean }) => {
               <h2 className={`${styles.perepheralsTitle} ${styles.boardTitles}`}>Perepherals</h2>
 
               <div className={styles.perepherals}>
-                <ul className={`${styles.perepheralsList} ${styles.boardLists}`} style={{ listStyleType: "none" }}>
+                <ul
+                  className={`${styles.perepheralsList} ${styles.boardLists}`}
+                  style={{ listStyleType: "none" }}
+                >
                   <li className={`${styles.perepheralsItem} ${styles.boardItems}`}>
                     <strong>Headphones:</strong> <code>ARDOR GAMING Edge</code>
                   </li>
@@ -101,31 +107,24 @@ export const FoxyBoard = ({ isTrue }: { isTrue: boolean }) => {
             <h2 className={`${styles.gamesTitle} ${styles.boardTitles}`}>Current Games</h2>
 
             <div className={styles.gamesContent}>
-              <ul className={`${styles.gamesList} ${styles.boardLists}`} style={{ listStyleType: "none" }}>
-                <li className={`${styles.gamesItem} ${styles.boardItems}`}>
-                  Rain World
-                </li>
+              <ul
+                className={`${styles.gamesList} ${styles.boardLists}`}
+                style={{ listStyleType: "none" }}
+              >
+                <li className={`${styles.gamesItem} ${styles.boardItems}`}>Rain World</li>
 
-                <li className={`${styles.gamesItem} ${styles.boardItems}`}>
-                  Osu! Lazer
-                </li>
+                <li className={`${styles.gamesItem} ${styles.boardItems}`}>Osu! Lazer</li>
 
-                <li className={`${styles.gamesItem} ${styles.boardItems}`}>
-                  Casualties: Unknown
-                </li>
+                <li className={`${styles.gamesItem} ${styles.boardItems}`}>Casualties: Unknown</li>
 
-                <li className={`${styles.gamesItem} ${styles.boardItems}`}>
-                  Counter-Strike 2
-                </li>
+                <li className={`${styles.gamesItem} ${styles.boardItems}`}>Counter-Strike 2</li>
 
-                <li className={`${styles.gamesItem} ${styles.boardItems}`}>
-                  VR Chat
-                </li>
+                <li className={`${styles.gamesItem} ${styles.boardItems}`}>VR Chat</li>
               </ul>
             </div>
           </div>
         </div>
-      </main>
+      </div>
 
       <Footer />
     </>

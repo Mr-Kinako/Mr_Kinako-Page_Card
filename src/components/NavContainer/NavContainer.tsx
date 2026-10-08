@@ -3,15 +3,16 @@ import { NavLink } from "react-router";
 import { useTranslation } from "@/i18n";
 import cn from "classnames";
 import s from "./NavContainer.module.scss";
-import { isGoals, isMedia } from "@/tumblers";
+import { isGoals, isMedia, isFoxyBoard, isKinland } from "@/tumblers";
 
 export const NavContainer = () => {
   const { t } = useTranslation();
 
   const NAV_LINKS = [
+    { to: "/kinland", text: t("nav.kinland"), isTrue: isKinland },
     { to: "/goals", text: t("nav.goals"), isTrue: isGoals },
     { to: "/", text: t("nav.home"), isTrue: true, end: true },
-    { to: "/foxyboard", text: t("nav.foxyboard"), isTrue: true },
+    { to: "/foxyboard", text: t("nav.foxyboard"), isTrue: isFoxyBoard },
     { to: "/media", text: t("nav.media"), isTrue: isMedia },
   ].filter((link) => link.isTrue);
 

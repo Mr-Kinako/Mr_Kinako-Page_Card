@@ -23,7 +23,7 @@ export const Media = ({ isTrue }: { isTrue: boolean }) => {
 
   return (
     <>
-      <main className={styles.mediaContainer}>
+      <div className={styles.mediaContainer}>
         <h2 className={styles.pageTitle}>{t("media.title")}</h2>
 
         <div className={styles.contentWindow}>
@@ -54,7 +54,7 @@ export const Media = ({ isTrue }: { isTrue: boolean }) => {
             />
           )}
         </Overlay>
-      </main>
+      </div>
 
       <Footer />
     </>
