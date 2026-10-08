@@ -47,7 +47,7 @@ export const KinlandLayout: React.FC = () => {
           style={{ opacity: 1 }}
         >
           <span>&copy; 2026 Kinland. Все права защищены.</span> <br />
-          <span>Для юзеров с главной странице существует: <code style={{ backgroundColor: "rgba(29, 29, 33, 0.1)", fontWeight: 600, opacity: 0.6 }}>CTRL + X</code></span>
+          <span>Для юзеров с главной странице существует: <code style={{ backgroundColor: "rgba(29, 29, 33, 0.1)", fontWeight: 600, opacity: 0.6 }}>SHIFT + X</code></span>
         </footer>
       </div>
 
