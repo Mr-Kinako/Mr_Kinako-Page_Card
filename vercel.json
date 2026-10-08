@@ -11,6 +11,10 @@
         }
       ],
       "destination": "/kinland-og.html"
+    },
+    {
+      "source": "/kinland/(.*)",
+      "destination": "/kinland/index.html"
     }
   ]
 }
