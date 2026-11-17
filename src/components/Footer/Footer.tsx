@@ -1,5 +1,6 @@
 import { useTranslation } from "@/i18n";
 import styles from "./Footer.module.scss";
+import { githubLink } from "@/shared/constants";
 
 const years: string = `${new Date().getFullYear()}`;
 const ownerNickname: string = "Mr_Kinako";
@@ -7,7 +8,6 @@ const ownerNickname: string = "Mr_Kinako";
 export const Footer = () => {
   const { t } = useTranslation();
 
-  const githubLink: string = "https://github.com/Mr-Kinako/Mr_Kinako-Page_Card";
   const rel: string = "noreferrer";
 
   return (

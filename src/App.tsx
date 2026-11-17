@@ -2,30 +2,33 @@
 
 import { BrowserRouter, Routes, Route, Navigate, Outlet } from "react-router";
 
-import { Home } from "@/pages/Home";
+// import { Home } from "@/pages/Home";
 import { Media } from "./pages/Media";
 import { Goals } from "./pages/Goals";
 import { FoxyBoard } from "./pages/FoxyBoard";
 import {
   Kinland,
   KinlandProfile,
+  KinlandMembersList,
   DiscordCallback,
   KinlandLayout,
 } from "./pages/DiscordServers/Kinland";
 
-import { NavContainer } from "./components/NavContainer";
-import { Background } from "./components/Background";
+// import { NavContainer } from "./components/NavContainer";
+// import { Background } from "./components/Background";
 import { CommandLine } from "./components/CommandLine";
-import { LangSwitcher } from "./components/LangSwitcher";
+// import { LangSwitcher } from "./components/LangSwitcher";
 import { isGoals, isConsole, isMedia, isFoxyBoard, isKinland } from "./tumblers";
-import styles from "./App.module.scss";
 import { KinlandAuthProvider } from "./pages/DiscordServers/Kinland/KinlandAuthContext";
+import { TempFreeze } from "./pages/TempFreeze/TempFreeze";
+import styles from "./App.module.scss";
 
 const MainLayout = () => {
   return (
     <>
-      <NavContainer />
-      <LangSwitcher />
+      {/* <Background /> */}
+      {/* <NavContainer /> */}
+      {/* <LangSwitcher /> */}
 
       <main className={styles.appContent}>
         <Outlet />
@@ -36,28 +39,30 @@ const MainLayout = () => {
 
 const KinlandMainLayout = () => {
   return (
-    <main className={styles.appContent}>
-      <Outlet />
-    </main>
+    <>
+      <main className={styles.appContent}>
+        <Outlet />
+      </main>
+    </>
   );
 };
 
 function App() {
   return (
     <div className={styles.appWrapper}>
-      <Background />
       <BrowserRouter>
         {isConsole && <CommandLine isTrue={isConsole} />}
 
         <Routes>
           <Route element={<MainLayout />}>
-            {isGoals && <Route path="/goals" element={<Goals isTrue={isGoals} />} />}
+            <Route path="/">
+              {/* <Route index element={<Home />} /> */}
+              <Route index element={<TempFreeze />} />
 
-            <Route path="/" element={<Home />} />
-
-            <Route path="/foxyboard" element={<FoxyBoard isTrue={isFoxyBoard} />} />
-
-            {isMedia && <Route path="/media" element={<Media isTrue={isMedia} />} />}
+              {isFoxyBoard && <Route path="foxyboard" element={<FoxyBoard isTrue={isFoxyBoard} />} />}
+              {isMedia && <Route path="media" element={<Media isTrue={isMedia} />} />}
+              {isGoals && <Route path="goals" element={<Goals isTrue={isGoals} />} />}
+            </Route>
           </Route>
 
           <Route path="*" element={<Navigate to="/" />} />
@@ -78,9 +83,10 @@ function App() {
                 <Route path="auth/callback" element={<DiscordCallback />} />
                 <Route path="callback" element={<DiscordCallback />} />
 
-                {/* Роуты профиля */}
+                {/* Роуты профиля и участников */}
                 <Route path="profile" element={<KinlandProfile />} />
                 <Route path="profile/:id" element={<KinlandProfile />} />
+                <Route path="members" element={<KinlandMembersList />} />
               </Route>
             )}
           </Route>
