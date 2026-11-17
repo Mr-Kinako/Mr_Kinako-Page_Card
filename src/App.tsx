@@ -9,7 +9,7 @@ import { FoxyBoard } from "./pages/FoxyBoard";
 import {
   Kinland,
   KinlandProfile,
-  KinlandMembersList,
+  // KinlandMembersList,
   DiscordCallback,
   KinlandLayout,
 } from "./pages/DiscordServers/Kinland";
@@ -86,7 +86,7 @@ function App() {
                 {/* Роуты профиля и участников */}
                 <Route path="profile" element={<KinlandProfile />} />
                 <Route path="profile/:id" element={<KinlandProfile />} />
-                <Route path="members" element={<KinlandMembersList />} />
+                {/* <Route path="members" element={<KinlandMembersList />} /> */}
               </Route>
             )}
           </Route>
